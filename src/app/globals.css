@@ -1,0 +1,191 @@
+@import "tailwindcss";
+
+/*
+ * Top Surgery Care — design tokens.
+ * A single, deliberate light theme (no auto dark mode): a premium
+ * international medical brand reads as consistent, not adaptive.
+ */
+@theme {
+  /* Ink (text) */
+  --color-ink: #14171f;
+  --color-ink-soft: #4b4f5a;
+  --color-ink-faint: #8a8d96;
+
+  /* Paper (surfaces) */
+  --color-paper: #faf8f4;
+  --color-paper-alt: #f2efe9;
+  --color-paper-deep: #ece7dd;
+  --color-line: #e2ded4;
+
+  /* Deep band (footer, final CTA) */
+  --color-navy: #12172a;
+  --color-navy-soft: #a9afc0;
+  --color-navy-line: #2a3048;
+
+  /* Brand accent, drawn from the logo — used sparingly as hairlines and rings */
+  --color-accent-rose: #e7a6bc;
+  --color-accent-violet: #b79ad6;
+  --color-accent-sky: #8fbbe3;
+
+  --color-focus: #3d5a99;
+
+  /* Type */
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-inter), Arial, sans-serif;
+
+  --text-display: clamp(2.75rem, 2rem + 3.2vw, 4.75rem);
+  --text-display--line-height: 1.05;
+  --text-h2: clamp(2rem, 1.6rem + 1.6vw, 3rem);
+  --text-h2--line-height: 1.12;
+  --text-h3: clamp(1.375rem, 1.2rem + 0.7vw, 1.75rem);
+  --text-h3--line-height: 1.25;
+  --text-lead: clamp(1.125rem, 1.02rem + 0.4vw, 1.375rem);
+  --text-lead--line-height: 1.6;
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.75;
+
+  --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+/* Safari renders its own disclosure triangle on <summary>; the FAQ accordion
+   supplies its own chevron icon instead. */
+summary::-webkit-details-marker {
+  display: none;
+}
+
+::selection {
+  background-color: var(--color-accent-violet);
+  color: var(--color-paper);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -3rem;
+  z-index: 100;
+  background-color: var(--color-ink);
+  color: var(--color-paper);
+  padding: 0.75rem 1.25rem;
+  border-radius: 2px;
+  transition: top 0.2s var(--ease-premium);
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* Scroll-reveal, driven by Reveal.tsx toggling `.is-visible` via IntersectionObserver */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.7s var(--ease-premium),
+    transform 0.7s var(--ease-premium);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Slow, soft drift for the header nav's FTM-inspired hover/focus gradient
+   text (Header.tsx's NavLink). Kept glacial (7s/loop) so it reads as a
+   subtle shimmer, not motion. */
+@keyframes ftm-flow {
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: 200% 50%;
+  }
+}
+
+/* Plain, colorless entrance for the mobile menu's nav items (Header.tsx's
+   MobileNavLink): a short opacity/position fade-in, staggered per item via
+   animation-delay. No color change here — the FTM gradient only ever
+   appears on real touch/keyboard interaction, never automatically. */
+@keyframes menu-item-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Single-element FTM gradient text (Header.tsx's MobileNavLink, mobile
+   menu only). Registering the gradient stops as typed custom properties
+   lets the browser smoothly animate a background-clip:text gradient on
+   the SAME text node the user is reading — normal off-white at rest
+   (all three stops equal --color-paper, so it renders as flat off-white,
+   not a gradient) and the real blue/white/pink gradient only while
+   :hover/:focus-visible/:active actually matches. No second/duplicate
+   text layer involved. */
+@property --ftm-c1 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #faf8f4;
+}
+@property --ftm-c2 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #faf8f4;
+}
+@property --ftm-c3 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #faf8f4;
+}
+
+.ftm-text {
+  background-image: linear-gradient(90deg, var(--ftm-c1), var(--ftm-c2), var(--ftm-c3));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  transition:
+    --ftm-c1 350ms ease,
+    --ftm-c2 350ms ease,
+    --ftm-c3 350ms ease;
+}
+
+.ftm-text:hover,
+.ftm-text:focus-visible,
+.ftm-text:active {
+  --ftm-c1: var(--color-accent-sky);
+  --ftm-c2: #ffffff;
+  --ftm-c3: var(--color-accent-rose);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .ftm-text {
+    transition: none;
+  }
+}

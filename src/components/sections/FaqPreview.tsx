@@ -1,0 +1,29 @@
+import { Container } from "@/components/ui/Container";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { Button } from "@/components/ui/Button";
+import { Reveal } from "@/components/ui/Reveal";
+import { FaqAccordion } from "@/components/ui/FaqAccordion";
+import { faqItems } from "@/data/faq";
+import { homeContent } from "@/content/home";
+
+export function FaqPreview() {
+  const { faqPreview } = homeContent;
+
+  return (
+    <section aria-label={faqPreview.eyebrow}>
+      <Container className="py-20 md:py-28">
+        <Reveal>
+          <SectionHeading eyebrow={faqPreview.eyebrow} title={faqPreview.heading} />
+        </Reveal>
+
+        <FaqAccordion items={faqItems} className="mt-10 max-w-3xl" />
+
+        <Reveal delay={faqItems.length * 60}>
+          <Button href={faqPreview.cta.href} variant="secondary" size="md" showArrow className="mt-8">
+            {faqPreview.cta.label}
+          </Button>
+        </Reveal>
+      </Container>
+    </section>
+  );
+}
