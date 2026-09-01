@@ -8,19 +8,36 @@ const inputClasses =
 
 export function ConsultationForm() {
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    // Visual-only in this phase — the production form, email delivery, and
-    // WhatsApp handoff are implemented in a later phase per the project spec.
     event.preventDefault();
+
+    const data = new FormData(event.currentTarget);
+    const name = String(data.get("name") ?? "").trim();
+    const email = String(data.get("email") ?? "").trim();
+    const country = String(data.get("country") ?? "").trim();
+    const contactMethod = String(data.get("contact-method") ?? "").trim();
+    const message = String(data.get("message") ?? "").trim();
+
+    const lines: string[] = [
+      "New consultation request from topsurgerycare.com",
+      `Name: ${name}`,
+      `Email: ${email}`,
+    ];
+    if (country) lines.push(`Country: ${country}`);
+    if (contactMethod) lines.push(`Preferred contact method: ${contactMethod}`);
+    lines.push("", "Message:", message);
+
+    const whatsappUrl = `${siteConfig.contact.whatsappHref}?text=${encodeURIComponent(lines.join("\n"))}`;
+    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
   }
 
   return (
-    <form onSubmit={handleSubmit} className="border border-line bg-paper p-6 md:p-8" noValidate>
+    <form onSubmit={handleSubmit} className="border border-line bg-paper p-6 md:p-8">
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label="Full name" htmlFor="name">
-          <input id="name" name="name" type="text" autoComplete="name" className={inputClasses} />
+          <input id="name" name="name" type="text" autoComplete="name" required className={inputClasses} />
         </Field>
         <Field label="Email" htmlFor="email">
-          <input id="email" name="email" type="email" autoComplete="email" className={inputClasses} />
+          <input id="email" name="email" type="email" autoComplete="email" required className={inputClasses} />
         </Field>
         <Field label="Country" htmlFor="country">
           <input id="country" name="country" type="text" autoComplete="country-name" className={inputClasses} />
@@ -38,6 +55,7 @@ export function ConsultationForm() {
           id="message"
           name="message"
           rows={4}
+          required
           className={inputClasses}
           placeholder="Tell us a little about what you're looking for."
         />
@@ -62,16 +80,7 @@ export function ConsultationForm() {
       </button>
 
       <p className="mt-4 text-xs text-ink-faint">
-        This form isn&apos;t connected yet. For now, message us directly on{" "}
-        <a
-          href={siteConfig.contact.whatsappHref}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="underline underline-offset-2 hover:text-ink-soft"
-        >
-          WhatsApp
-        </a>
-        .
+        Submitting opens WhatsApp with your details pre-filled, ready to send.
       </p>
     </form>
   );
