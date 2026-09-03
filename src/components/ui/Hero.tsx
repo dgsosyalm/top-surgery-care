@@ -175,7 +175,7 @@ export function Hero() {
                 */}
                 <span
                   aria-hidden="true"
-                  className="pointer-events-none absolute -inset-x-3 -inset-y-2 md:-inset-x-10 md:-inset-y-6 lg:-inset-x-14 lg:-inset-y-8"
+                  className="pointer-events-none absolute -inset-x-3 -inset-y-2 hidden md:block md:-inset-x-10 md:-inset-y-6 lg:-inset-x-14 lg:-inset-y-8"
                   style={{
                     background:
                       "radial-gradient(ellipse 55% 70% at 50% 50%, rgba(7,26,43,0.65) 0%, rgba(7,26,43,0.42) 35%, rgba(7,26,43,0.18) 60%, rgba(7,26,43,0) 82%)",
