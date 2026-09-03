@@ -160,27 +160,49 @@ export function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              <motion.span
-                className="block font-light text-white/90 text-4xl md:text-5xl lg:text-6xl mb-2 tracking-wider"
-                style={{
-                  background:
-                    "linear-gradient(135deg, #ffffff 0%, var(--color-accent-sky) 30%, var(--color-accent-rose) 70%, #ffffff 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                  filter: "url(#text-glow)",
-                }}
-                animate={{
-                  backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-                }}
-                transition={{
-                  duration: 8,
-                  repeat: Number.POSITIVE_INFINITY,
-                  ease: "linear",
-                }}
-              >
-                {hero.headlineLead}
-              </motion.span>
+              <span className="relative mb-2 block">
+                {/*
+                  Localized contrast pad: the shader background cycles through
+                  the same pink used in this line's own gradient fill, so at
+                  certain animation phases the text can match its background
+                  almost exactly. A soft navy radial glow sitting only behind
+                  this line guarantees luminosity contrast regardless of which
+                  color the gradient (or the shader) is showing — it darkens
+                  the patch of shader directly behind the letters without
+                  boxing/badging the text or dimming the rest of the Hero. A
+                  radial fade (rather than a flat blurred pill) has no edge to
+                  read as a shape at all, just a soft aura.
+                */}
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -inset-x-6 -inset-y-4 md:-inset-x-10 md:-inset-y-6 lg:-inset-x-14 lg:-inset-y-8"
+                  style={{
+                    background:
+                      "radial-gradient(ellipse 55% 70% at 50% 50%, rgba(7,26,43,0.65) 0%, rgba(7,26,43,0.42) 35%, rgba(7,26,43,0.18) 60%, rgba(7,26,43,0) 82%)",
+                  }}
+                />
+                <motion.span
+                  className="relative block font-light text-white/90 text-4xl md:text-5xl lg:text-6xl tracking-wider"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, #ffffff 0%, var(--color-accent-sky) 30%, var(--color-accent-rose) 70%, #ffffff 100%)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                    filter: "url(#text-glow)",
+                  }}
+                  animate={{
+                    backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                  }}
+                  transition={{
+                    duration: 8,
+                    repeat: Number.POSITIVE_INFINITY,
+                    ease: "linear",
+                  }}
+                >
+                  {hero.headlineLead}
+                </motion.span>
+              </span>
               <span className="block font-black text-white drop-shadow-2xl">{hero.headlineMain}</span>
               <span className="block font-light text-white/80 italic">{hero.headlineTail}</span>
             </motion.h1>
