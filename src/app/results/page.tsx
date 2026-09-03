@@ -34,7 +34,7 @@ export default function ResultsPage() {
   return (
     <>
       <section className="border-b border-line">
-        <Container className="py-20 md:py-28">
+        <Container className="pt-14 pb-20 md:py-28">
           <Reveal>
             <p className="mb-4 flex items-center gap-3 text-xs font-medium uppercase tracking-[0.16em] text-ink-soft">
               <span className="h-px w-8 bg-linear-to-r from-accent-rose via-accent-violet to-accent-sky" />
