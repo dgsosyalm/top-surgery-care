@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
+import { ResultsAgeGate } from "@/components/ui/ResultsAgeGate";
 import { ArrowRightIcon } from "@/components/icons";
 import { results } from "@/data/results";
 import { homeContent } from "@/content/home";
@@ -23,33 +24,35 @@ export function ResultsPreview() {
           <SectionHeading title={resultsPreview.heading} description={resultsPreview.body} />
         </Reveal>
 
-        <div className="mt-10 grid grid-cols-3 items-start gap-3 md:gap-4">
-          <Reveal className="col-span-2 row-span-2">
-            <Link href={`/results#${featured.id}`} className={IMAGE_CLASS} aria-label={featured.alt}>
-              <Image
-                src={featured.src}
-                alt={featured.alt}
-                fill
-                sizes="(min-width: 768px) 44vw, 66vw"
-                className={PHOTO_CLASS}
-              />
-            </Link>
-          </Reveal>
-
-          {rest.map((image, index) => (
-            <Reveal key={image.id} delay={80 + index * 60}>
-              <Link href={`/results#${image.id}`} className={IMAGE_CLASS} aria-label={image.alt}>
+        <ResultsAgeGate>
+          <div className="mt-10 grid grid-cols-3 items-start gap-3 md:gap-4">
+            <Reveal className="col-span-2 row-span-2">
+              <Link href={`/results#${featured.id}`} className={IMAGE_CLASS} aria-label={featured.alt}>
                 <Image
-                  src={image.src}
-                  alt={image.alt}
+                  src={featured.src}
+                  alt={featured.alt}
                   fill
-                  sizes="(min-width: 768px) 22vw, 33vw"
+                  sizes="(min-width: 768px) 44vw, 66vw"
                   className={PHOTO_CLASS}
                 />
               </Link>
             </Reveal>
-          ))}
-        </div>
+
+            {rest.map((image, index) => (
+              <Reveal key={image.id} delay={80 + index * 60}>
+                <Link href={`/results#${image.id}`} className={IMAGE_CLASS} aria-label={image.alt}>
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    fill
+                    sizes="(min-width: 768px) 22vw, 33vw"
+                    className={PHOTO_CLASS}
+                  />
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+        </ResultsAgeGate>
 
         <Reveal delay={220}>
           <Link

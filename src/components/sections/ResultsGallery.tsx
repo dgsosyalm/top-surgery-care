@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { Reveal } from "@/components/ui/Reveal";
 import { Lightbox } from "@/components/ui/Lightbox";
+import { ResultsAgeGate } from "@/components/ui/ResultsAgeGate";
 import { results } from "@/data/results";
 
 // Desktop bento rhythm: large / small / small, alternating which side is
@@ -23,7 +24,7 @@ export function ResultsGallery() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <>
+    <ResultsAgeGate>
       <div className="grid grid-cols-1 items-start gap-4 sm:grid-cols-2 sm:gap-5 md:grid-cols-3">
         {results.map((image, index) => (
           <Reveal key={image.id} delay={index * 70} className={`${TILE_SPAN[index]} ${TILE_RHYTHM[index]}`}>
@@ -54,6 +55,6 @@ export function ResultsGallery() {
           onIndexChange={setOpenIndex}
         />
       )}
-    </>
+    </ResultsAgeGate>
   );
 }

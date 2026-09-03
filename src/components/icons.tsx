@@ -79,6 +79,16 @@ export function ImagePendingIcon({ className }: IconProps) {
   );
 }
 
+export function EyeOffIcon({ className }: IconProps) {
+  return (
+    <svg {...base} className={className} aria-hidden="true">
+      <path d="M3.5 12S6.75 5.5 12 5.5 20.5 12 20.5 12 17.25 18.5 12 18.5 3.5 12 3.5 12z" />
+      <circle cx="12" cy="12" r="2.75" />
+      <path d="M4 20L20 4" />
+    </svg>
+  );
+}
+
 export function WhatsAppIcon({ className }: IconProps) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">

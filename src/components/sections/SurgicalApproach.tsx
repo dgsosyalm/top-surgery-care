@@ -32,6 +32,7 @@ export function SurgicalApproach() {
                     src={technique.image}
                     alt={technique.imageAlt}
                     fill
+                    quality={100}
                     sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                     className="object-cover transition-transform duration-500 ease-[var(--ease-premium)] group-hover:scale-105"
                   />
