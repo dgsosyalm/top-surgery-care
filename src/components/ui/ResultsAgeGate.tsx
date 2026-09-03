@@ -66,14 +66,14 @@ export function ResultsAgeGate({ children }: { children: ReactNode }) {
   };
 
   return (
-    <div className="relative overflow-hidden">
+    <div className={`relative ${confirmed ? "" : "min-h-[500px] sm:min-h-0"}`}>
       <div
         aria-hidden={!confirmed}
         inert={!confirmed || undefined}
         className={
           confirmed
             ? undefined
-            : "pointer-events-none scale-105 select-none blur-[44px] brightness-[0.32] saturate-50"
+            : "overflow-hidden pointer-events-none scale-105 select-none blur-[44px] brightness-[0.32] saturate-50"
         }
       >
         {children}
@@ -89,22 +89,22 @@ export function ResultsAgeGate({ children }: { children: ReactNode }) {
         >
           <div className="absolute inset-0 bg-[#071A2B]/85" />
 
-          <div className="relative w-full max-w-md border border-white/10 bg-[#071A2B] px-6 py-8 text-center shadow-2xl sm:px-10 sm:py-10">
+          <div className="relative w-full max-w-md border border-white/10 bg-[#071A2B] px-6 py-6 text-center shadow-2xl sm:px-10 sm:py-10">
             <span className="mx-auto mb-1 block h-px w-10 bg-linear-to-r from-[#A9DDF5] via-white to-[#F3C2D4]" />
 
-            <span className="mx-auto mt-6 flex h-11 w-11 items-center justify-center rounded-full border border-[#A9DDF5]/40 text-[#A9DDF5]">
+            <span className="mx-auto mt-4 flex h-11 w-11 items-center justify-center rounded-full border border-[#A9DDF5]/40 text-[#A9DDF5] sm:mt-6">
               <EyeOffIcon className="h-5 w-5" />
             </span>
 
-            <h2 id={headingId} className="mt-5 font-display text-xl font-medium text-white sm:text-2xl">
+            <h2 id={headingId} className="mt-4 font-display text-xl font-medium text-white sm:mt-5 sm:text-2xl">
               18+ Content Warning
             </h2>
-            <p id={descId} className="mt-4 text-sm leading-relaxed text-white/70">
+            <p id={descId} className="mt-3 text-sm leading-relaxed text-white/70 sm:mt-4">
               This section contains real surgical before-and-after images. These images
               are provided for medical and informational purposes.
             </p>
 
-            <div className="mt-8 flex flex-col gap-3">
+            <div className="mt-6 flex flex-col gap-3 sm:mt-8">
               <button
                 ref={confirmButtonRef}
                 type="button"
