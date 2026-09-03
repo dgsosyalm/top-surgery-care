@@ -114,7 +114,7 @@ export function Hero() {
           alt=""
           fill
           sizes="100vw"
-          className={`object-cover object-[60%_28%] saturate-[0.9] transition-opacity duration-700 ${
+          className={`object-cover object-[72%_28%] saturate-[0.9] transition-opacity duration-700 ${
             isActive ? "opacity-[0.36]" : "opacity-[0.3]"
           }`}
           style={{
