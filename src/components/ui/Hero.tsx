@@ -114,14 +114,14 @@ export function Hero() {
           alt=""
           fill
           sizes="100vw"
-          className={`object-cover object-[72%_28%] saturate-[0.9] transition-opacity duration-700 ${
-            isActive ? "opacity-[0.36]" : "opacity-[0.4]"
+          className={`object-cover object-[28%_28%] saturate-[0.9] transition-opacity duration-700 ${
+            isActive ? "opacity-[0.36]" : "opacity-[0.5]"
           }`}
           style={{
             maskImage:
-              "radial-gradient(78% 82% at 78% 30%, black 0%, black 26%, rgba(0,0,0,0.5) 55%, transparent 88%)",
+              "radial-gradient(78% 82% at 88% 30%, black 0%, black 34%, rgba(0,0,0,0.55) 62%, transparent 88%)",
             WebkitMaskImage:
-              "radial-gradient(78% 82% at 78% 30%, black 0%, black 26%, rgba(0,0,0,0.5) 55%, transparent 88%)",
+              "radial-gradient(78% 82% at 88% 30%, black 0%, black 34%, rgba(0,0,0,0.55) 62%, transparent 88%)",
             maskRepeat: "no-repeat",
             WebkitMaskRepeat: "no-repeat",
           }}
@@ -175,7 +175,7 @@ export function Hero() {
                 */}
                 <span
                   aria-hidden="true"
-                  className="pointer-events-none absolute -inset-x-6 -inset-y-4 md:-inset-x-10 md:-inset-y-6 lg:-inset-x-14 lg:-inset-y-8"
+                  className="pointer-events-none absolute -inset-x-3 -inset-y-2 md:-inset-x-10 md:-inset-y-6 lg:-inset-x-14 lg:-inset-y-8"
                   style={{
                     background:
                       "radial-gradient(ellipse 55% 70% at 50% 50%, rgba(7,26,43,0.65) 0%, rgba(7,26,43,0.42) 35%, rgba(7,26,43,0.18) 60%, rgba(7,26,43,0) 82%)",
