@@ -115,13 +115,13 @@ export function Hero() {
           fill
           sizes="100vw"
           className={`object-cover object-[72%_28%] saturate-[0.9] transition-opacity duration-700 ${
-            isActive ? "opacity-[0.36]" : "opacity-[0.3]"
+            isActive ? "opacity-[0.36]" : "opacity-[0.4]"
           }`}
           style={{
             maskImage:
-              "radial-gradient(78% 82% at 68% 30%, black 0%, black 26%, rgba(0,0,0,0.5) 55%, transparent 88%)",
+              "radial-gradient(78% 82% at 78% 30%, black 0%, black 26%, rgba(0,0,0,0.5) 55%, transparent 88%)",
             WebkitMaskImage:
-              "radial-gradient(78% 82% at 68% 30%, black 0%, black 26%, rgba(0,0,0,0.5) 55%, transparent 88%)",
+              "radial-gradient(78% 82% at 78% 30%, black 0%, black 26%, rgba(0,0,0,0.5) 55%, transparent 88%)",
             maskRepeat: "no-repeat",
             WebkitMaskRepeat: "no-repeat",
           }}
