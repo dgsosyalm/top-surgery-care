@@ -1,46 +1,19 @@
 "use client";
 
-import { useEffect, useId, useRef, useSyncExternalStore } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { EyeOffIcon } from "@/components/icons";
 
-// Session-only content warning for the real surgical before/after photos in
-// the Results section. Not an age-verification system — a confirmation the
-// visitor can dismiss, remembered only for this browser session so it
-// reappears after the tab/browser is closed.
-const STORAGE_KEY = "top-surgery-care-results-18-confirmed";
-// Same-tab sessionStorage writes don't fire the native "storage" event (that
-// only fires in *other* tabs), so confirming re-broadcasts this event itself
-// to notify every mounted gate — e.g. the homepage preview and /results —
-// in the current tab.
-const CONFIRM_EVENT = "top-surgery-care:results-gate-change";
-
-function subscribe(onStoreChange: () => void) {
-  window.addEventListener(CONFIRM_EVENT, onStoreChange);
-  window.addEventListener("storage", onStoreChange);
-  return () => {
-    window.removeEventListener(CONFIRM_EVENT, onStoreChange);
-    window.removeEventListener("storage", onStoreChange);
-  };
-}
-
-function getSnapshot() {
-  try {
-    return sessionStorage.getItem(STORAGE_KEY) === "true";
-  } catch {
-    // sessionStorage unavailable (private browsing, etc.) — the warning
-    // simply asks again, which is the safe default.
-    return false;
-  }
-}
-
-function getServerSnapshot() {
-  return false;
-}
-
+// Content warning for the real surgical before/after photos in the Results
+// section. Not an age-verification system — a per-view confirmation held
+// only in React state, deliberately not persisted anywhere (no sessionStorage,
+// localStorage, or cookies), so it reappears on every fresh mount: a page
+// refresh, or navigating away and back. Initial state is `false` on both
+// server and client, so there's nothing to reconcile on hydration and no
+// frame where the protected content could be exposed unblurred.
 export function ResultsAgeGate({ children }: { children: ReactNode }) {
-  const confirmed = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const [confirmed, setConfirmed] = useState(false);
   const headingId = useId();
   const descId = useId();
   const confirmButtonRef = useRef<HTMLButtonElement>(null);
@@ -53,12 +26,7 @@ export function ResultsAgeGate({ children }: { children: ReactNode }) {
   }, [confirmed]);
 
   const handleConfirm = () => {
-    try {
-      sessionStorage.setItem(STORAGE_KEY, "true");
-    } catch {
-      // Ignore — worst case the warning re-appears on the next image.
-    }
-    window.dispatchEvent(new Event(CONFIRM_EVENT));
+    setConfirmed(true);
   };
 
   const handleGoBack = () => {
