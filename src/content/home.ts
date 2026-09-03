@@ -74,7 +74,6 @@ export const homeContent = {
 
   resultsPreview: {
     heading: "Results",
-    body: "Selected before & after results.",
   },
 
   patientStories: {

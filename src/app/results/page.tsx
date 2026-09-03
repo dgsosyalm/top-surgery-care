@@ -43,9 +43,6 @@ export default function ResultsPage() {
             <h1 className="font-display text-display font-medium leading-[1.05] text-ink text-balance">
               Results
             </h1>
-            <p className="mt-6 max-w-xl text-lead text-ink-soft text-pretty">
-              Selected before &amp; after results.
-            </p>
           </Reveal>
         </Container>
       </section>

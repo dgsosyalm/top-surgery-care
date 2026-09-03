@@ -21,7 +21,7 @@ export function ResultsPreview() {
     <section aria-label={resultsPreview.heading}>
       <Container className="py-20 md:py-28">
         <Reveal>
-          <SectionHeading title={resultsPreview.heading} description={resultsPreview.body} />
+          <SectionHeading title={resultsPreview.heading} />
         </Reveal>
 
         <ResultsAgeGate>

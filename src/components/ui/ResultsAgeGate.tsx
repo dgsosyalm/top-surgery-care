@@ -21,7 +21,11 @@ export function ResultsAgeGate({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (!confirmed) {
-      confirmButtonRef.current?.focus();
+      // preventScroll: focusing this button must not yank the viewport down
+      // to wherever this gate happens to sit on the page (e.g. the homepage
+      // preview, well below Hero/DoctorIntro/etc.) — it should only move
+      // keyboard focus, never the scroll position.
+      confirmButtonRef.current?.focus({ preventScroll: true });
     }
   }, [confirmed]);
 
