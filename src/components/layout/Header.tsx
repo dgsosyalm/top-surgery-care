@@ -60,7 +60,7 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-5 lg:flex">
+        <div className="hidden items-center gap-5 md:flex">
           <LanguageSwitcher />
         </div>
 
