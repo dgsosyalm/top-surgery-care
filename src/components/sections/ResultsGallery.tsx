@@ -6,21 +6,26 @@ import { Reveal } from "@/components/ui/Reveal";
 import { Lightbox } from "@/components/ui/Lightbox";
 import { ResultsAgeGate } from "@/components/ui/ResultsAgeGate";
 import { results } from "@/data/results";
+import { useLocale } from "@/i18n/LocaleProvider";
+import { uiContent } from "@/content/ui";
 
 export function ResultsGallery() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const locale = useLocale();
+  const images = results[locale];
+  const { openLargerViewPrefix } = uiContent[locale].resultsPage;
 
   return (
     <ResultsAgeGate>
       <div className="grid grid-cols-1 items-start gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
-        {results.map((image, index) => (
+        {images.map((image, index) => (
           <Reveal key={image.id} delay={index * 70}>
             <button
               type="button"
               id={image.id}
               onClick={() => setOpenIndex(index)}
               className="group relative block aspect-square w-full scroll-mt-24 overflow-hidden rounded-[2px]"
-              aria-label={`Open larger view: ${image.alt}`}
+              aria-label={`${openLargerViewPrefix}${image.alt}`}
             >
               <Image
                 src={image.src}
@@ -36,7 +41,7 @@ export function ResultsGallery() {
 
       {openIndex !== null && (
         <Lightbox
-          images={results}
+          images={images}
           index={openIndex}
           onClose={() => setOpenIndex(null)}
           onIndexChange={setOpenIndex}

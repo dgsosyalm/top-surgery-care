@@ -4,22 +4,27 @@ import { useState } from "react";
 import Image from "next/image";
 import { Lightbox } from "@/components/ui/Lightbox";
 import { certificates } from "@/data/certificates";
+import { useLocale } from "@/i18n/LocaleProvider";
+import { uiContent } from "@/content/ui";
 
 export function FooterCertificates() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const locale = useLocale();
+  const list = certificates[locale];
+  const { footerCertificates: t } = uiContent[locale];
 
   return (
     <div className="mt-5">
       <h3 className="text-xs font-medium uppercase tracking-[0.14em] text-navy-soft">
-        Certifications
+        {t.heading}
       </h3>
       <div className="mt-3 flex flex-wrap gap-3">
-        {certificates.map((cert, index) => (
+        {list.map((cert, index) => (
           <button
             key={cert.id}
             type="button"
             onClick={() => setOpenIndex(index)}
-            aria-label={`Open larger view: ${cert.alt}`}
+            aria-label={`${t.openLargerPrefix}${cert.alt}`}
             className="w-[85px] shrink-0 overflow-hidden rounded-[2px] border border-paper/20 bg-paper p-1 transition-opacity hover:opacity-90 sm:w-[100px] md:w-[115px]"
           >
             <Image
@@ -36,7 +41,7 @@ export function FooterCertificates() {
 
       {openIndex !== null && (
         <Lightbox
-          images={certificates}
+          images={list}
           index={openIndex}
           onClose={() => setOpenIndex(null)}
           onIndexChange={setOpenIndex}

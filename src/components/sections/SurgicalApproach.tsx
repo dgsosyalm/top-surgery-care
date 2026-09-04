@@ -6,9 +6,12 @@ import { Reveal } from "@/components/ui/Reveal";
 import { ArrowRightIcon } from "@/components/icons";
 import { homeContent } from "@/content/home";
 import { techniques } from "@/data/techniques";
+import { getLocale } from "@/i18n/getLocale";
 
-export function SurgicalApproach() {
-  const { surgicalApproach } = homeContent;
+export async function SurgicalApproach() {
+  const locale = await getLocale();
+  const { surgicalApproach } = homeContent[locale];
+  const techniqueList = techniques[locale];
 
   return (
     <section aria-label={surgicalApproach.eyebrow}>
@@ -21,7 +24,7 @@ export function SurgicalApproach() {
         </Reveal>
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {techniques.map((technique, index) => (
+          {techniqueList.map((technique, index) => (
             <Reveal key={technique.id} delay={index * 100}>
               <a
                 href={`/top-surgery#${technique.id}`}

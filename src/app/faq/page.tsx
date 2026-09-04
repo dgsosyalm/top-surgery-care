@@ -3,27 +3,35 @@ import { Container } from "@/components/ui/Container";
 import { FaqAccordion } from "@/components/ui/FaqAccordion";
 import { faqItems } from "@/data/faq";
 import { siteConfig } from "@/lib/site";
+import { getLocale } from "@/i18n/getLocale";
+import { uiContent } from "@/content/ui";
 
-const PAGE_TITLE = "Frequently Asked Questions";
-const PAGE_DESCRIPTION =
-  "Answers to common questions about FTM top surgery, technique options, and what to expect as an international patient at Top Surgery Care.";
 const PAGE_PATH = "/faq";
 
-export const metadata: Metadata = {
-  title: PAGE_TITLE,
-  description: PAGE_DESCRIPTION,
-  alternates: {
-    canonical: PAGE_PATH,
-  },
-  openGraph: {
-    title: PAGE_TITLE,
-    description: PAGE_DESCRIPTION,
-    url: PAGE_PATH,
-    type: "website",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  const { faqPage } = uiContent[locale];
 
-export default function FaqPage() {
+  return {
+    title: faqPage.metaTitle,
+    description: faqPage.metaDescription,
+    alternates: {
+      canonical: PAGE_PATH,
+    },
+    openGraph: {
+      title: faqPage.metaTitle,
+      description: faqPage.metaDescription,
+      url: PAGE_PATH,
+      type: "website",
+    },
+  };
+}
+
+export default async function FaqPage() {
+  const locale = await getLocale();
+  const { faqPage } = uiContent[locale];
+  const items = faqItems[locale];
+
   return (
     <>
       <script
@@ -35,7 +43,7 @@ export default function FaqPage() {
             "@context": "https://schema.org",
             "@type": "FAQPage",
             url: `${siteConfig.url}${PAGE_PATH}`,
-            mainEntity: faqItems.map((item) => ({
+            mainEntity: items.map((item) => ({
               "@type": "Question",
               name: item.question,
               acceptedAnswer: {
@@ -50,14 +58,14 @@ export default function FaqPage() {
       <section className="border-b border-line">
         <Container className="py-20 md:py-28">
           <h1 className="font-display text-display font-medium leading-[1.05] text-ink">
-            {PAGE_TITLE}
+            {faqPage.metaTitle}
           </h1>
         </Container>
       </section>
 
       <section>
         <Container className="py-16 md:py-20">
-          <FaqAccordion items={faqItems} className="max-w-3xl" />
+          <FaqAccordion items={items} className="max-w-3xl" />
         </Container>
       </section>
     </>

@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { ImagePendingIcon } from "@/components/icons";
 import type { VideoStoryItem } from "@/data/videos";
+import { useLocale } from "@/i18n/LocaleProvider";
+import { uiContent } from "@/content/ui";
 
 const CARD_WIDTH = "clamp(220px, 22vw, 280px)";
 
@@ -48,6 +50,8 @@ function VideoStoryCard({ item, index }: { item: VideoStoryItem; index: number }
   const [isMuted, setIsMuted] = useState(true);
   const [hasError, setHasError] = useState(false);
   const userPausedRef = useRef(false);
+  const locale = useLocale();
+  const t = uiContent[locale].videoStories;
 
   useEffect(() => {
     const video = videoRef.current;
@@ -100,7 +104,7 @@ function VideoStoryCard({ item, index }: { item: VideoStoryItem; index: number }
       {hasError ? (
         <div className="flex h-full w-full flex-col items-center justify-center gap-2 text-ink-faint">
           <ImagePendingIcon className="h-8 w-8" />
-          <span className="sr-only">Video preview unavailable</span>
+          <span className="sr-only">{t.unavailable}</span>
         </div>
       ) : (
         <video
@@ -123,7 +127,7 @@ function VideoStoryCard({ item, index }: { item: VideoStoryItem; index: number }
           <button
             type="button"
             onClick={togglePlay}
-            aria-label={isPlaying ? `Pause video ${index + 1}` : `Play video ${index + 1}`}
+            aria-label={isPlaying ? `${t.pausePrefix} ${index + 1}` : `${t.playPrefix} ${index + 1}`}
             className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors duration-300 focus-visible:bg-black/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
           >
             <span
@@ -140,7 +144,7 @@ function VideoStoryCard({ item, index }: { item: VideoStoryItem; index: number }
           <button
             type="button"
             onClick={toggleMute}
-            aria-label={isMuted ? `Unmute video ${index + 1}` : `Mute video ${index + 1}`}
+            aria-label={isMuted ? `${t.unmutePrefix} ${index + 1}` : `${t.mutePrefix} ${index + 1}`}
             className="absolute bottom-3 right-3 flex h-7 w-7 items-center justify-center rounded-full bg-black/35 text-white backdrop-blur-sm transition-colors duration-300 hover:bg-black/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
           >
             <MuteGlyph muted={isMuted} />

@@ -6,11 +6,13 @@ import Link from "next/link";
 import { MeshGradient, PulsingBorder } from "@paper-design/shaders-react";
 import { motion } from "framer-motion";
 import { homeContent } from "@/content/home";
+import { useLocale } from "@/i18n/LocaleProvider";
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isActive, setIsActive] = useState(false);
-  const { hero } = homeContent;
+  const locale = useLocale();
+  const { hero } = homeContent[locale];
 
   useEffect(() => {
     const handleMouseEnter = () => setIsActive(true);

@@ -9,32 +9,40 @@ import { FinalCta } from "@/components/sections/FinalCta";
 import { ArrowRightIcon } from "@/components/icons";
 import { techniques } from "@/data/techniques";
 import { faqItems } from "@/data/faq";
-import { patientJourneyPreviewSteps } from "@/data/patientJourney";
+import { getPatientJourneyPreviewSteps } from "@/data/patientJourney";
 import { homeContent } from "@/content/home";
-import { topSurgeryPageContent as copy } from "@/content/topSurgeryPage";
+import { topSurgeryPageContent } from "@/content/topSurgeryPage";
 import { siteConfig } from "@/lib/site";
+import { getLocale } from "@/i18n/getLocale";
 
-const PAGE_TITLE = "FTM Top Surgery";
-const PAGE_DESCRIPTION =
-  "Learn what FTM top surgery involves, the surgical techniques available, and what to expect as an international patient at Top Surgery Care.";
 const PAGE_PATH = "/top-surgery";
 
-export const metadata: Metadata = {
-  title: PAGE_TITLE,
-  description: PAGE_DESCRIPTION,
-  alternates: {
-    canonical: PAGE_PATH,
-  },
-  openGraph: {
-    title: PAGE_TITLE,
-    description: PAGE_DESCRIPTION,
-    url: PAGE_PATH,
-    type: "website",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  const copy = topSurgeryPageContent[locale];
 
-export default function TopSurgeryPage() {
-  const { topSurgeryOverview, surgicalApproach, patientJourney } = homeContent;
+  return {
+    title: copy.metaTitle,
+    description: copy.metaDescription,
+    alternates: {
+      canonical: PAGE_PATH,
+    },
+    openGraph: {
+      title: copy.metaTitle,
+      description: copy.metaDescription,
+      url: PAGE_PATH,
+      type: "website",
+    },
+  };
+}
+
+export default async function TopSurgeryPage() {
+  const locale = await getLocale();
+  const copy = topSurgeryPageContent[locale];
+  const { hero, topSurgeryOverview, surgicalApproach, patientJourney, faqPreview } = homeContent[locale];
+  const techniqueList = techniques[locale];
+  const items = faqItems[locale];
+  const patientJourneyPreviewSteps = getPatientJourneyPreviewSteps(locale);
 
   return (
     <>
@@ -44,8 +52,8 @@ export default function TopSurgeryPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "MedicalProcedure",
-            name: "FTM Top Surgery",
-            alternateName: "Chest Masculinization Surgery",
+            name: copy.intro.heading,
+            alternateName: locale === "de" ? "Brustmaskulinisierende Operation" : "Chest Masculinization Surgery",
             description: topSurgeryOverview.body,
             url: `${siteConfig.url}${PAGE_PATH}`,
           }),
@@ -60,7 +68,7 @@ export default function TopSurgeryPage() {
             "@context": "https://schema.org",
             "@type": "FAQPage",
             url: `${siteConfig.url}${PAGE_PATH}`,
-            mainEntity: faqItems.map((item) => ({
+            mainEntity: items.map((item) => ({
               "@type": "Question",
               name: item.question,
               acceptedAnswer: { "@type": "Answer", text: item.answer },
@@ -81,7 +89,7 @@ export default function TopSurgeryPage() {
               {copy.intro.heading}
             </h1>
             <p className="mt-6 max-w-xl text-lead text-ink-soft text-pretty">
-              {homeContent.hero.subtext}
+              {hero.subtext}
             </p>
           </Reveal>
         </Container>
@@ -121,7 +129,7 @@ export default function TopSurgeryPage() {
           </Reveal>
 
           <div className="mt-12 grid gap-6 sm:grid-cols-3">
-            {techniques.map((technique, index) => (
+            {techniqueList.map((technique, index) => (
               <Reveal key={technique.id} delay={index * 100}>
                 <a
                   href={`#${technique.id}`}
@@ -154,7 +162,7 @@ export default function TopSurgeryPage() {
           </div>
 
           <div className="mt-16 md:mt-20">
-            {techniques.map((technique, index) => (
+            {techniqueList.map((technique, index) => (
               <div
                 key={technique.id}
                 id={technique.id}
@@ -277,10 +285,10 @@ export default function TopSurgeryPage() {
           <Reveal>
             <SectionHeading eyebrow={copy.faq.eyebrow} title={copy.faq.heading} />
           </Reveal>
-          <FaqAccordion items={faqItems} className="mt-10 max-w-3xl" />
-          <Reveal delay={faqItems.length * 60}>
+          <FaqAccordion items={items} className="mt-10 max-w-3xl" />
+          <Reveal delay={items.length * 60}>
             <Button href="/faq" variant="secondary" size="md" showArrow className="mt-8">
-              See all FAQs
+              {faqPreview.cta.label}
             </Button>
           </Reveal>
         </Container>

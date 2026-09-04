@@ -10,66 +10,74 @@ import {
   MailIcon,
 } from "@/components/icons";
 import { homeContent } from "@/content/home";
-import { contactPageContent as copy } from "@/content/contactPage";
+import { contactPageContent } from "@/content/contactPage";
 import { siteConfig } from "@/lib/site";
+import { getLocale } from "@/i18n/getLocale";
 
-const PAGE_TITLE = "Contact";
-const PAGE_DESCRIPTION =
-  "Get in touch with Top Surgery Care on WhatsApp, Instagram, or YouTube, or send a consultation request directly.";
 const PAGE_PATH = "/contact/";
 
-export const metadata: Metadata = {
-  title: PAGE_TITLE,
-  description: PAGE_DESCRIPTION,
-  alternates: {
-    canonical: PAGE_PATH,
-  },
-  openGraph: {
-    title: PAGE_TITLE,
-    description: PAGE_DESCRIPTION,
-    url: PAGE_PATH,
-    type: "website",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  const copy = contactPageContent[locale];
 
-const contactMethods = [
-  {
-    label: "WhatsApp",
-    display: siteConfig.contact.whatsappDisplay,
-    href: siteConfig.contact.whatsappHref,
-    icon: WhatsAppIcon,
-  },
-  {
-    label: "Instagram",
-    display: "@topsurgerycare",
-    href: siteConfig.contact.instagram,
-    icon: InstagramIcon,
-  },
-  {
-    label: "YouTube",
-    display: "@topsurgeryturkey",
-    href: siteConfig.contact.youtube,
-    icon: YouTubeIcon,
-  },
-  {
-    label: "Reddit Community",
-    display: "r/topsurgeryturkey",
-    href: siteConfig.contact.reddit,
-    icon: RedditIcon,
-  },
-  ...(siteConfig.contact.email
-    ? [
-        {
-          label: "Email",
-          display: siteConfig.contact.email,
-          href: `mailto:${siteConfig.contact.email}`,
-          icon: MailIcon,
-        },
-      ]
-    : []),
-];
+  return {
+    title: copy.metaTitle,
+    description: copy.metaDescription,
+    alternates: {
+      canonical: PAGE_PATH,
+    },
+    openGraph: {
+      title: copy.metaTitle,
+      description: copy.metaDescription,
+      url: PAGE_PATH,
+      type: "website",
+    },
+  };
+}
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const locale = await getLocale();
+  const copy = contactPageContent[locale];
+  const { finalCta } = homeContent[locale];
+  const { methodLabels } = copy;
+
+  const contactMethods = [
+    {
+      label: methodLabels.whatsapp,
+      display: siteConfig.contact.whatsappDisplay,
+      href: siteConfig.contact.whatsappHref,
+      icon: WhatsAppIcon,
+    },
+    {
+      label: methodLabels.instagram,
+      display: "@topsurgerycare",
+      href: siteConfig.contact.instagram,
+      icon: InstagramIcon,
+    },
+    {
+      label: methodLabels.youtube,
+      display: "@topsurgeryturkey",
+      href: siteConfig.contact.youtube,
+      icon: YouTubeIcon,
+    },
+    {
+      label: methodLabels.reddit,
+      display: "r/topsurgeryturkey",
+      href: siteConfig.contact.reddit,
+      icon: RedditIcon,
+    },
+    ...(siteConfig.contact.email
+      ? [
+          {
+            label: methodLabels.email,
+            display: siteConfig.contact.email,
+            href: `mailto:${siteConfig.contact.email}`,
+            icon: MailIcon,
+          },
+        ]
+      : []),
+  ];
+
   return (
     <>
       <script
@@ -79,11 +87,11 @@ export default function ContactPage() {
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
             itemListElement: [
-              { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.url },
+              { "@type": "ListItem", position: 1, name: locale === "de" ? "Startseite" : "Home", item: siteConfig.url },
               {
                 "@type": "ListItem",
                 position: 2,
-                name: PAGE_TITLE,
+                name: copy.metaTitle,
                 item: `${siteConfig.url}${PAGE_PATH}`,
               },
             ],
@@ -103,7 +111,7 @@ export default function ContactPage() {
               {copy.intro.heading}
             </h1>
             <p className="mt-6 max-w-xl text-lead text-ink-soft text-pretty">
-              {homeContent.finalCta.body}
+              {finalCta.body}
             </p>
           </Reveal>
         </Container>

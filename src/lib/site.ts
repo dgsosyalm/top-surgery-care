@@ -1,9 +1,6 @@
 export const siteConfig = {
   name: "Top Surgery Care",
-  tagline: "Care. Confidence. You.",
   url: "https://topsurgerycare.com",
-  description:
-    "Top Surgery Care provides FTM top surgery for international patients, led by Dr. Serkan Dinar. Explore techniques, the patient journey, and how to arrange a consultation.",
   doctor: {
     name: "Dr. Serkan Dinar",
   },
@@ -22,17 +19,6 @@ export const siteConfig = {
     email: null as string | null,
     pageHref: "/contact/",
   },
-  primaryNav: [
-    { label: "Top Surgery", href: "/top-surgery" },
-    { label: "The Journey", href: "/patient-journey/" },
-    { label: "Results", href: "/results" },
-    { label: "Dr. Serkan Dinar", href: "/about-dr-serkan-dinar/" },
-    { label: "FAQ", href: "/faq" },
-    { label: "Contact", href: "/contact/" },
-  ],
-  legalNav: [
-    { label: "Privacy Policy", href: "/privacy-policy" },
-    { label: "Terms", href: "/terms" },
-    { label: "Medical Disclaimer", href: "/medical-disclaimer" },
-  ],
+  // Nav labels (primary + legal) are translated — see src/content/ui.ts
+  // → uiContent[locale].nav. Only hrefs live here.
 } as const;

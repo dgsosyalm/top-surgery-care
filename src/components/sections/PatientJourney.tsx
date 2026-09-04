@@ -3,10 +3,13 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { homeContent } from "@/content/home";
-import { patientJourneyPreviewSteps } from "@/data/patientJourney";
+import { getPatientJourneyPreviewSteps } from "@/data/patientJourney";
+import { getLocale } from "@/i18n/getLocale";
 
-export function PatientJourney() {
-  const { patientJourney } = homeContent;
+export async function PatientJourney() {
+  const locale = await getLocale();
+  const { patientJourney } = homeContent[locale];
+  const patientJourneyPreviewSteps = getPatientJourneyPreviewSteps(locale);
 
   return (
     <section className="bg-paper-alt/45" aria-label={patientJourney.eyebrow}>

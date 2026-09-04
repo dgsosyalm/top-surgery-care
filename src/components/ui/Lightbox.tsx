@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useRef } from "react";
 import Image from "next/image";
 import { CloseIcon, ArrowRightIcon } from "@/components/icons";
+import { useLocale } from "@/i18n/LocaleProvider";
+import { uiContent } from "@/content/ui";
 
 const SWIPE_THRESHOLD_PX = 40;
 
@@ -18,6 +20,8 @@ export function Lightbox({
   onIndexChange: (index: number) => void;
 }) {
   const dialogRef = useRef<HTMLDivElement>(null);
+  const locale = useLocale();
+  const { lightbox: t } = uiContent[locale];
   const touchStartX = useRef<number | null>(null);
 
   const showPrev = useCallback(
@@ -73,7 +77,7 @@ export function Lightbox({
       <button
         type="button"
         onClick={onClose}
-        aria-label="Close"
+        aria-label={t.close}
         className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full text-white/80 transition-colors hover:bg-white/10 hover:text-white md:right-8 md:top-8"
       >
         <CloseIcon className="h-6 w-6" />
@@ -82,7 +86,7 @@ export function Lightbox({
       <button
         type="button"
         onClick={showPrev}
-        aria-label="Previous image"
+        aria-label={t.previous}
         className="absolute left-2 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full text-white/80 transition-colors hover:bg-white/10 hover:text-white md:left-6"
       >
         <ArrowRightIcon className="h-6 w-6 rotate-180" />
@@ -91,7 +95,7 @@ export function Lightbox({
       <button
         type="button"
         onClick={showNext}
-        aria-label="Next image"
+        aria-label={t.next}
         className="absolute right-2 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full text-white/80 transition-colors hover:bg-white/10 hover:text-white md:right-6"
       >
         <ArrowRightIcon className="h-6 w-6" />

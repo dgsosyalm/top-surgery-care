@@ -3,11 +3,13 @@ import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { NedaServiceIcon, type NedaServiceIconType } from "@/components/ui/neda-service-icon";
 import { homeContent } from "@/content/home";
+import { getLocale } from "@/i18n/getLocale";
 
 const supportIconTypes: NedaServiceIconType[] = ["airport", "accommodation", "coordination", "city-tour"];
 
-export function PatientCoordination() {
-  const { patientCoordination } = homeContent;
+export async function PatientCoordination() {
+  const locale = await getLocale();
+  const { patientCoordination } = homeContent[locale];
 
   return (
     <section className="border-b border-line" aria-label={patientCoordination.eyebrow}>

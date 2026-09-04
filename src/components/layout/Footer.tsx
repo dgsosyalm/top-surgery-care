@@ -10,9 +10,14 @@ import {
 } from "@/components/icons";
 import { siteConfig } from "@/lib/site";
 import { FooterCertificates } from "@/components/layout/FooterCertificates";
+import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
+import { getLocale } from "@/i18n/getLocale";
+import { uiContent } from "@/content/ui";
 
-export function Footer() {
+export async function Footer() {
   const year = new Date().getFullYear();
+  const locale = await getLocale();
+  const { nav, footer } = uiContent[locale];
 
   return (
     <footer className="border-t border-navy-line bg-navy text-paper">
@@ -32,17 +37,17 @@ export function Footer() {
               Top Surgery Care
             </span>
           </Link>
-          <p className="mt-5 text-sm italic text-navy-soft">{siteConfig.tagline}</p>
+          <p className="mt-5 text-sm italic text-navy-soft">{footer.tagline}</p>
           <FooterCertificates />
         </div>
 
-        <FooterColumn title="Explore" links={siteConfig.primaryNav} />
+        <FooterColumn title={footer.exploreHeading} links={nav.primary} />
 
-        <FooterColumn title="Legal" links={siteConfig.legalNav} />
+        <FooterColumn title={footer.legalHeading} links={nav.legal} />
 
         <div>
           <h3 className="text-xs font-medium uppercase tracking-[0.14em] text-navy-soft">
-            Contact
+            {footer.contactHeading}
           </h3>
           <ul className="mt-5 space-y-3">
             <li>
@@ -50,7 +55,7 @@ export function Footer() {
                 href={siteConfig.contact.pageHref}
                 className="flex items-center gap-2.5 text-sm text-paper/90 transition-colors hover:text-paper"
               >
-                <MailIcon className="h-4 w-4" /> Contact page
+                <MailIcon className="h-4 w-4" /> {footer.contactPageLabel}
               </Link>
             </li>
             <li>
@@ -60,7 +65,7 @@ export function Footer() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-2.5 text-sm text-paper/90 transition-colors hover:text-paper"
               >
-                <WhatsAppIcon className="h-4 w-4" /> WhatsApp
+                <WhatsAppIcon className="h-4 w-4" /> {footer.whatsappLabel}
               </a>
             </li>
             <li>
@@ -70,7 +75,7 @@ export function Footer() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-2.5 text-sm text-paper/90 transition-colors hover:text-paper"
               >
-                <InstagramIcon className="h-4 w-4" /> Instagram
+                <InstagramIcon className="h-4 w-4" /> {footer.instagramLabel}
               </a>
             </li>
             <li>
@@ -80,7 +85,7 @@ export function Footer() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-2.5 text-sm text-paper/90 transition-colors hover:text-paper"
               >
-                <YouTubeIcon className="h-4 w-4" /> YouTube
+                <YouTubeIcon className="h-4 w-4" /> {footer.youtubeLabel}
               </a>
             </li>
             <li>
@@ -90,7 +95,7 @@ export function Footer() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-2.5 text-sm text-paper/90 transition-colors hover:text-paper"
               >
-                <RedditIcon className="h-4 w-4" /> Reddit Community
+                <RedditIcon className="h-4 w-4" /> {footer.redditLabel}
               </a>
             </li>
             {siteConfig.contact.email && (
@@ -105,24 +110,16 @@ export function Footer() {
             )}
           </ul>
 
-          <div className="mt-6 flex items-center gap-2 text-sm text-navy-soft">
-            <span className="text-paper" aria-current="true">
-              EN
-            </span>
-            <span aria-hidden="true">/</span>
-            <span className="cursor-not-allowed" title="German localization is coming soon">
-              DE
-            </span>
-          </div>
+          <LanguageSwitcher className="mt-6 text-navy-soft" />
         </div>
       </Container>
 
       <div className="border-t border-navy-line">
         <Container className="flex flex-col gap-2 py-6 text-xs text-navy-soft md:flex-row md:items-center md:justify-between">
           <p>
-            © {year} {siteConfig.name}. All rights reserved.
+            © {year} {siteConfig.name}. {footer.copyrightSuffix}
           </p>
-          <p>FTM top surgery for international patients.</p>
+          <p>{footer.strapline}</p>
         </Container>
       </div>
     </footer>

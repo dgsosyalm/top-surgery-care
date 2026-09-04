@@ -1,9 +1,11 @@
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { homeContent } from "@/content/home";
+import { getLocale } from "@/i18n/getLocale";
 
-export function AffordableCare() {
-  const { affordableCare } = homeContent;
+export async function AffordableCare() {
+  const locale = await getLocale();
+  const { affordableCare } = homeContent[locale];
 
   return (
     <section className="border-b border-line" aria-label={affordableCare.eyebrow}>

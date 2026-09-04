@@ -4,30 +4,38 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { homeContent } from "@/content/home";
-import { patientJourneyPageContent as copy } from "@/content/patientJourneyPage";
+import { patientJourneyPageContent } from "@/content/patientJourneyPage";
 import { patientJourneySteps } from "@/data/patientJourney";
 import { siteConfig } from "@/lib/site";
+import { getLocale } from "@/i18n/getLocale";
 
-const PAGE_TITLE = "Patient Journey";
-const PAGE_DESCRIPTION =
-  "What to expect as an international patient at Top Surgery Care, from your first consultation through arrival, surgery, and recovery.";
 const PAGE_PATH = "/patient-journey/";
 
-export const metadata: Metadata = {
-  title: PAGE_TITLE,
-  description: PAGE_DESCRIPTION,
-  alternates: {
-    canonical: PAGE_PATH,
-  },
-  openGraph: {
-    title: PAGE_TITLE,
-    description: PAGE_DESCRIPTION,
-    url: PAGE_PATH,
-    type: "website",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  const copy = patientJourneyPageContent[locale];
 
-export default function PatientJourneyPage() {
+  return {
+    title: copy.metaTitle,
+    description: copy.metaDescription,
+    alternates: {
+      canonical: PAGE_PATH,
+    },
+    openGraph: {
+      title: copy.metaTitle,
+      description: copy.metaDescription,
+      url: PAGE_PATH,
+      type: "website",
+    },
+  };
+}
+
+export default async function PatientJourneyPage() {
+  const locale = await getLocale();
+  const copy = patientJourneyPageContent[locale];
+  const { hero } = homeContent[locale];
+  const steps = patientJourneySteps[locale];
+
   return (
     <>
       <script
@@ -37,11 +45,11 @@ export default function PatientJourneyPage() {
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
             itemListElement: [
-              { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.url },
+              { "@type": "ListItem", position: 1, name: locale === "de" ? "Startseite" : "Home", item: siteConfig.url },
               {
                 "@type": "ListItem",
                 position: 2,
-                name: PAGE_TITLE,
+                name: copy.metaTitle,
                 item: `${siteConfig.url}${PAGE_PATH}`,
               },
             ],
@@ -61,7 +69,7 @@ export default function PatientJourneyPage() {
               {copy.intro.heading}
             </h1>
             <p className="mt-6 max-w-xl text-lead text-ink-soft text-pretty">
-              {homeContent.hero.subtext}
+              {hero.subtext}
             </p>
           </Reveal>
         </Container>
@@ -75,7 +83,7 @@ export default function PatientJourneyPage() {
           </Reveal>
 
           <ol className="mt-14 divide-y divide-line border-t border-line">
-            {patientJourneySteps.map((step, index) => (
+            {steps.map((step, index) => (
               <li key={step.id}>
                 <Reveal delay={index * 80}>
                   <div className="grid gap-4 py-10 md:grid-cols-[minmax(0,0.25fr)_minmax(0,1fr)] md:gap-10 md:py-12">

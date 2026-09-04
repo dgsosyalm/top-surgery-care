@@ -6,6 +6,9 @@ import { ExpandableReviewText } from "@/components/ui/ExpandableReviewText";
 import { StarIcon, ArrowRightIcon, ExternalLinkIcon } from "@/components/icons";
 import { homeContent } from "@/content/home";
 import { getPlaceReviews, type GoogleReview } from "@/lib/googlePlaces";
+import { getLocale } from "@/i18n/getLocale";
+import { uiContent } from "@/content/ui";
+import type { Locale } from "@/i18n/config";
 
 type PatientStoriesData = {
   reviews: readonly GoogleReview[];
@@ -14,9 +17,17 @@ type PatientStoriesData = {
   userRatingCount?: number;
 };
 
-function StarRow({ rating, size = "h-3.5 w-3.5" }: { rating: number; size?: string }) {
+function StarRow({
+  rating,
+  size = "h-3.5 w-3.5",
+  starsAriaSuffix,
+}: {
+  rating: number;
+  size?: string;
+  starsAriaSuffix: string;
+}) {
   return (
-    <div className="flex items-center gap-0.5" aria-label={`${rating} out of 5 stars`}>
+    <div className="flex items-center gap-0.5" aria-label={`${rating} ${starsAriaSuffix}`}>
       {Array.from({ length: 5 }).map((_, i) => (
         <StarIcon
           key={i}
@@ -53,11 +64,11 @@ function GoogleGMark({ className = "h-3.5 w-3.5" }: { className?: string }) {
   );
 }
 
-function GoogleReviewBadge() {
+function GoogleReviewBadge({ label }: { label: string }) {
   return (
     <span className="inline-flex items-center gap-1 rounded-full border border-line/70 bg-paper-alt px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.06em] text-ink-soft">
       <GoogleGMark className="h-2.5 w-2.5" />
-      Google Review
+      {label}
     </span>
   );
 }
@@ -92,11 +103,15 @@ function ReviewCard({
   placeGoogleMapsUri,
   sourceLinkLabel,
   translatedNote,
+  googleReviewBadge,
+  starsAriaSuffix,
 }: {
   review: GoogleReview;
   placeGoogleMapsUri: string;
   sourceLinkLabel: string;
   translatedNote: string;
+  googleReviewBadge: string;
+  starsAriaSuffix: string;
 }) {
   return (
     <div className="relative flex flex-col overflow-hidden rounded-[3px] border border-line bg-paper p-7 shadow-[0_1px_2px_rgba(20,23,31,0.04),0_8px_24px_-16px_rgba(20,23,31,0.18)] transition-[transform,box-shadow,border-color] duration-300 ease-[var(--ease-premium)] hover:-translate-y-1 hover:border-ink-faint hover:shadow-[0_2px_4px_rgba(20,23,31,0.05),0_16px_32px_-18px_rgba(20,23,31,0.24),0_0_28px_-8px_rgba(169,221,245,0.4),0_0_28px_-8px_rgba(243,194,212,0.35)]">
@@ -117,8 +132,10 @@ function ReviewCard({
       </div>
 
       <div className="mt-4 flex flex-wrap items-center gap-2">
-        {typeof review.rating === "number" && <StarRow rating={review.rating} />}
-        <GoogleReviewBadge />
+        {typeof review.rating === "number" && (
+          <StarRow rating={review.rating} starsAriaSuffix={starsAriaSuffix} />
+        )}
+        <GoogleReviewBadge label={googleReviewBadge} />
       </div>
 
       <div className="mt-4">
@@ -143,7 +160,9 @@ function ReviewCard({
 }
 
 export async function PatientStories() {
-  const { patientStories } = homeContent;
+  const locale: Locale = await getLocale();
+  const { patientStories } = homeContent[locale];
+  const uiT = uiContent[locale].patientStories;
   const result = await getPlaceReviews();
 
   if (result.status === "error") {
@@ -195,9 +214,9 @@ export async function PatientStories() {
           />
           {typeof data.rating === "number" && data.userRatingCount && (
             <div className="mt-4 flex items-center justify-center gap-2 text-sm text-ink-soft">
-              <StarRow rating={data.rating} />
+              <StarRow rating={data.rating} starsAriaSuffix={uiT.starsAriaSuffix} />
               <span>
-                {data.rating.toFixed(1)} · {data.userRatingCount} Google reviews
+                {data.rating.toFixed(1)} · {data.userRatingCount} {uiT.googleReviewsSuffix}
               </span>
             </div>
           )}
@@ -211,6 +230,8 @@ export async function PatientStories() {
                 placeGoogleMapsUri={data.placeGoogleMapsUri}
                 sourceLinkLabel={patientStories.sourceLinkLabel}
                 translatedNote={patientStories.translatedNote}
+                googleReviewBadge={uiT.googleReviewBadge}
+                starsAriaSuffix={uiT.starsAriaSuffix}
               />
             </Reveal>
           ))}

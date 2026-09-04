@@ -6,9 +6,13 @@ import { WhatsAppIcon, ArrowRightIcon } from "@/components/icons";
 import { ConsultationForm } from "@/components/forms/ConsultationForm";
 import { homeContent } from "@/content/home";
 import { siteConfig } from "@/lib/site";
+import { getLocale } from "@/i18n/getLocale";
+import { uiContent } from "@/content/ui";
 
-export function FinalCta() {
-  const { finalCta } = homeContent;
+export async function FinalCta() {
+  const locale = await getLocale();
+  const { finalCta } = homeContent[locale];
+  const { finalCta: finalCtaUi } = uiContent[locale];
 
   return (
     <section className="bg-navy text-paper" aria-label={finalCta.eyebrow}>
@@ -32,14 +36,14 @@ export function FinalCta() {
               size="lg"
             >
               <WhatsAppIcon className="h-4 w-4" />
-              Message on WhatsApp
+              {finalCtaUi.whatsappLabel}
             </Button>
 
             <Link
               href={siteConfig.contact.pageHref}
               className="group inline-flex items-center gap-2 text-sm font-medium text-paper transition-colors hover:text-navy-soft"
             >
-              See every way to reach us
+              {finalCtaUi.reachUsLabel}
               <ArrowRightIcon className="h-4 w-4 transition-transform duration-300 ease-[var(--ease-premium)] group-hover:translate-x-1" />
             </Link>
           </div>

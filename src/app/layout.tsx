@@ -4,7 +4,10 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 import { BgradientAnim } from "@/components/ui/soft-gradient-background-animation";
+import { LocaleProvider } from "@/i18n/LocaleProvider";
+import { getLocale } from "@/i18n/getLocale";
 import { siteConfig } from "@/lib/site";
+import { uiContent } from "@/content/ui";
 import "./globals.css";
 
 const inter = Inter({
@@ -20,57 +23,67 @@ const fraunces = Fraunces({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.url),
-  title: {
-    default: `${siteConfig.name} | FTM Top Surgery with ${siteConfig.doctor.name}`,
-    template: `%s | ${siteConfig.name}`,
-  },
-  description: siteConfig.description,
-  alternates: {
-    canonical: "/",
-  },
-  openGraph: {
-    title: `${siteConfig.name} | FTM Top Surgery with ${siteConfig.doctor.name}`,
-    description: siteConfig.description,
-    url: siteConfig.url,
-    siteName: siteConfig.name,
-    locale: "en_US",
-    type: "website",
-    images: [
-      {
-        url: "/images/logo/top-surgery-care-logo.jpeg",
-        width: 1250,
-        height: 1250,
-        alt: `${siteConfig.name} logo`,
-      },
-    ],
-  },
-  twitter: {
-    card: "summary",
-    title: `${siteConfig.name} | FTM Top Surgery with ${siteConfig.doctor.name}`,
-    description: siteConfig.description,
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  const { rootMetadata } = uiContent[locale];
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+  return {
+    metadataBase: new URL(siteConfig.url),
+    title: {
+      default: rootMetadata.defaultTitle,
+      template: `%s | ${rootMetadata.titleSuffix}`,
+    },
+    description: rootMetadata.description,
+    alternates: {
+      canonical: "/",
+    },
+    openGraph: {
+      title: rootMetadata.defaultTitle,
+      description: rootMetadata.description,
+      url: siteConfig.url,
+      siteName: siteConfig.name,
+      locale: rootMetadata.ogLocale,
+      type: "website",
+      images: [
+        {
+          url: "/images/logo/top-surgery-care-logo.jpeg",
+          width: 1250,
+          height: 1250,
+          alt: rootMetadata.ogImageAlt,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary",
+      title: rootMetadata.defaultTitle,
+      description: rootMetadata.description,
+    },
+  };
+}
+
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const locale = await getLocale();
+  const { skipToContent } = uiContent[locale];
+
   return (
     <html
-      lang="en"
+      lang={locale}
       data-scroll-behavior="smooth"
       className={`${inter.variable} ${fraunces.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-paper text-ink">
-        <BgradientAnim className="fixed inset-0 -z-10 pointer-events-none" />
-        <a href="#main-content" className="skip-link">
-          Skip to content
-        </a>
-        <Header />
-        <main id="main-content" className="flex-1">
-          {children}
-        </main>
-        <Footer />
-        <WhatsAppButton />
+        <LocaleProvider initialLocale={locale}>
+          <BgradientAnim className="fixed inset-0 -z-10 pointer-events-none" />
+          <a href="#main-content" className="skip-link">
+            {skipToContent}
+          </a>
+          <Header />
+          <main id="main-content" className="flex-1">
+            {children}
+          </main>
+          <Footer />
+          <WhatsAppButton />
+        </LocaleProvider>
       </body>
     </html>
   );

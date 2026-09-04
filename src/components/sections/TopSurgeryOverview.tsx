@@ -3,9 +3,11 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { homeContent } from "@/content/home";
+import { getLocale } from "@/i18n/getLocale";
 
-export function TopSurgeryOverview() {
-  const { topSurgeryOverview } = homeContent;
+export async function TopSurgeryOverview() {
+  const locale = await getLocale();
+  const { topSurgeryOverview } = homeContent[locale];
 
   return (
     <section className="bg-paper-alt/45" aria-label={topSurgeryOverview.eyebrow}>

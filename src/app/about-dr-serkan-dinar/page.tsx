@@ -5,32 +5,35 @@ import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { siteConfig } from "@/lib/site";
-import { doctorProfileContent as p } from "@/content/doctorProfile";
+import { doctorProfileContent } from "@/content/doctorProfile";
+import { getLocale } from "@/i18n/getLocale";
 
-const PAGE_TITLE = `${p.name} — ${p.title}`;
-const PAGE_DESCRIPTION =
-  "Dr. Serkan Dinar is a plastic, reconstructive, and aesthetic surgeon with more than 20 years of surgical experience, education, and clinical publications.";
 const PAGE_PATH = "/about-dr-serkan-dinar/";
 
-export const metadata: Metadata = {
-  title: PAGE_TITLE,
-  description: PAGE_DESCRIPTION,
-  alternates: {
-    canonical: PAGE_PATH,
-  },
-  openGraph: {
-    title: PAGE_TITLE,
-    description: PAGE_DESCRIPTION,
-    url: PAGE_PATH,
-    type: "profile",
-    images: [
-      {
-        url: "/images/doctor/serkandinar.jpg",
-        alt: p.photoAlt,
-      },
-    ],
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  const p = doctorProfileContent[locale];
+
+  return {
+    title: `${p.name} — ${p.title}`,
+    description: p.metaDescription,
+    alternates: {
+      canonical: PAGE_PATH,
+    },
+    openGraph: {
+      title: `${p.name} — ${p.title}`,
+      description: p.metaDescription,
+      url: PAGE_PATH,
+      type: "profile",
+      images: [
+        {
+          url: "/images/doctor/serkandinar.jpg",
+          alt: p.photoAlt,
+        },
+      ],
+    },
+  };
+}
 
 function SubSection({
   title,
@@ -63,7 +66,11 @@ function PlainList({ items }: { items: readonly string[] }) {
   );
 }
 
-export default function AboutDrSerkanDinarPage() {
+export default async function AboutDrSerkanDinarPage() {
+  const locale = await getLocale();
+  const p = doctorProfileContent[locale];
+  const s = p.sections;
+
   return (
     <>
       <script
@@ -75,7 +82,7 @@ export default function AboutDrSerkanDinarPage() {
             "@type": "Person",
             name: p.name,
             jobTitle: p.title,
-            description: PAGE_DESCRIPTION,
+            description: p.metaDescription,
             image: `${siteConfig.url}/images/doctor/serkandinar.jpg`,
             url: `${siteConfig.url}${PAGE_PATH}`,
             alumniOf: p.education
@@ -112,7 +119,7 @@ export default function AboutDrSerkanDinarPage() {
       </section>
 
       {/* Biography */}
-      <SubSection title="Biography">
+      <SubSection title={s.biography}>
         <div className="max-w-2xl space-y-5">
           {p.biography.map((paragraph) => (
             <p key={paragraph} className="text-lead text-ink-soft text-pretty">
@@ -123,7 +130,7 @@ export default function AboutDrSerkanDinarPage() {
       </SubSection>
 
       {/* Education */}
-      <SubSection title="Education">
+      <SubSection title={s.education}>
         <ul className="divide-y divide-line">
           {p.education.map((item) => (
             <li key={item.degree} className="py-4 first:pt-0">
@@ -135,7 +142,7 @@ export default function AboutDrSerkanDinarPage() {
       </SubSection>
 
       {/* Professional Experience */}
-      <SubSection title="Professional Experience">
+      <SubSection title={s.experience}>
         <ul className="divide-y divide-line">
           {p.experience.map((item) => (
             <li
@@ -153,16 +160,16 @@ export default function AboutDrSerkanDinarPage() {
       </SubSection>
 
       {/* Areas of Expertise */}
-      <SubSection title="Areas of Expertise">
+      <SubSection title={s.expertise}>
         <PlainList items={p.expertise} />
       </SubSection>
 
       {/* Scientific Publications */}
-      <SubSection title="Scientific Publications">
+      <SubSection title={s.publications}>
         <div className="space-y-10">
           <div>
             <h3 className="text-xs font-medium uppercase tracking-[0.12em] text-ink-faint">
-              International Peer-Reviewed Journal Articles
+              {s.publicationsInternational}
             </h3>
             <ul className="mt-4 divide-y divide-line">
               {p.publications.international.map((item) => (
@@ -176,7 +183,7 @@ export default function AboutDrSerkanDinarPage() {
 
           <div>
             <h3 className="text-xs font-medium uppercase tracking-[0.12em] text-ink-faint">
-              National Peer-Reviewed Journal Articles
+              {s.publicationsNational}
             </h3>
             <ul className="mt-4 divide-y divide-line">
               {p.publications.national.map((item) => (
@@ -190,11 +197,11 @@ export default function AboutDrSerkanDinarPage() {
       </SubSection>
 
       {/* Scientific Presentations */}
-      <SubSection title="Scientific Presentations">
+      <SubSection title={s.presentations}>
         <div className="space-y-10">
           <div>
             <h3 className="text-xs font-medium uppercase tracking-[0.12em] text-ink-faint">
-              International Scientific Presentations
+              {s.presentationsInternational}
             </h3>
             <div className="mt-4">
               <PlainList items={p.presentations.international} />
@@ -203,7 +210,7 @@ export default function AboutDrSerkanDinarPage() {
 
           <div>
             <h3 className="text-xs font-medium uppercase tracking-[0.12em] text-ink-faint">
-              National Scientific Presentations
+              {s.presentationsNational}
             </h3>
             <div className="mt-4">
               <PlainList items={p.presentations.national} />
@@ -213,22 +220,22 @@ export default function AboutDrSerkanDinarPage() {
       </SubSection>
 
       {/* Specialization Thesis */}
-      <SubSection title="Specialization Thesis">
+      <SubSection title={s.thesis}>
         <p className="max-w-2xl text-base leading-relaxed text-ink-soft">{p.thesis}</p>
       </SubSection>
 
       {/* Congresses and Scientific Meetings */}
-      <SubSection title="Congresses and Scientific Meetings">
+      <SubSection title={s.congresses}>
         <PlainList items={p.congresses} />
       </SubSection>
 
       {/* International Courses and Training */}
-      <SubSection title="International Courses and Training">
+      <SubSection title={s.courses}>
         <PlainList items={p.courses} />
       </SubSection>
 
       {/* International Social Responsibility */}
-      <SubSection title="International Social Responsibility and Volunteer Surgical Activities">
+      <SubSection title={s.volunteer}>
         <p className="text-base font-medium text-ink">{p.volunteer.heading}</p>
         <p className="mt-3 max-w-2xl text-base leading-relaxed text-ink-soft">{p.volunteer.body}</p>
       </SubSection>

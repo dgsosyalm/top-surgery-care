@@ -4,9 +4,11 @@ import { Reveal } from "@/components/ui/Reveal";
 import { VideoStoryRow } from "@/components/ui/video-stories";
 import { homeContent } from "@/content/home";
 import { videoStories } from "@/data/videos";
+import { getLocale } from "@/i18n/getLocale";
 
-export function VideoStories() {
-  const { videoStories: content } = homeContent;
+export async function VideoStories() {
+  const locale = await getLocale();
+  const { videoStories: content } = homeContent[locale];
 
   return (
     <section className="border-b border-line" aria-label={content.heading}>

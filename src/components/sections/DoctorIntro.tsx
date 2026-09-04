@@ -3,9 +3,12 @@ import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { homeContent } from "@/content/home";
+import { doctorProfileContent } from "@/content/doctorProfile";
+import { getLocale } from "@/i18n/getLocale";
 
-export function DoctorIntro() {
-  const { doctorIntro } = homeContent;
+export async function DoctorIntro() {
+  const locale = await getLocale();
+  const { doctorIntro } = homeContent[locale];
 
   return (
     <section className="border-b border-line" aria-label={doctorIntro.eyebrow}>
@@ -14,7 +17,7 @@ export function DoctorIntro() {
           <div className="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-[2px] bg-paper-deep">
             <Image
               src="/images/doctor/serkandinar.jpg"
-              alt="Dr. Serkan Dinar, plastic, reconstructive and aesthetic surgeon at Top Surgery Care"
+              alt={doctorProfileContent[locale].photoAlt}
               fill
               sizes="(min-width: 1024px) 30vw, (min-width: 768px) 40vw, 90vw"
               className="object-cover"

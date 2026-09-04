@@ -4,7 +4,8 @@
 //
 // Each file already contains a paired before/after composition in one
 // image. Never split, crop apart, or recreate these — every consumer must
-// render the file whole.
+// render the file whole. Image order and file paths are identical across
+// locales — only the alt text is translated.
 
 export type ResultImage = {
   id: string;
@@ -12,8 +13,15 @@ export type ResultImage = {
   alt: string;
 };
 
-export const results: ResultImage[] = [
-  { id: "case-01", src: "/images/results/1.jpg", alt: "Top surgery before and after result — case 01" },
-  { id: "case-02", src: "/images/results/2.jpg", alt: "Top surgery before and after result — case 02" },
-  { id: "case-03", src: "/images/results/3.jpg", alt: "Top surgery before and after result — case 03" },
-];
+export const results: { en: ResultImage[]; de: ResultImage[] } = {
+  en: [
+    { id: "case-01", src: "/images/results/1.jpg", alt: "Top surgery before and after result — case 01" },
+    { id: "case-02", src: "/images/results/2.jpg", alt: "Top surgery before and after result — case 02" },
+    { id: "case-03", src: "/images/results/3.jpg", alt: "Top surgery before and after result — case 03" },
+  ],
+  de: [
+    { id: "case-01", src: "/images/results/1.jpg", alt: "Top Surgery Vorher-Nachher-Ergebnis — Fall 01" },
+    { id: "case-02", src: "/images/results/2.jpg", alt: "Top Surgery Vorher-Nachher-Ergebnis — Fall 02" },
+    { id: "case-03", src: "/images/results/3.jpg", alt: "Top Surgery Vorher-Nachher-Ergebnis — Fall 03" },
+  ],
+};

@@ -6,12 +6,16 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { MenuIcon, CloseIcon } from "@/components/icons";
-import { siteConfig } from "@/lib/site";
+import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
+import { useLocale } from "@/i18n/LocaleProvider";
+import { uiContent } from "@/content/ui";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
+  const locale = useLocale();
+  const { nav } = uiContent[locale];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -51,19 +55,19 @@ export function Header() {
         </Link>
 
         <nav aria-label="Primary" className="hidden items-center gap-8 lg:flex">
-          {siteConfig.primaryNav.map((item) => (
+          {nav.primary.map((item) => (
             <NavLink key={item.href} href={item.href} label={item.label} className="py-1 text-sm text-paper" />
           ))}
         </nav>
 
         <div className="hidden items-center gap-5 lg:flex">
-          <LanguageToggle />
+          <LanguageSwitcher />
         </div>
 
         <button
           type="button"
           className="flex h-10 w-10 items-center justify-center text-paper lg:hidden"
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-label={menuOpen ? nav.closeMenuLabel : nav.openMenuLabel}
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((v) => !v)}
         >
@@ -75,7 +79,7 @@ export function Header() {
         <div className="border-t border-white/10 bg-[#050505] lg:hidden">
           <Container className="flex flex-col gap-1 py-6">
             <nav aria-label="Mobile" className="flex flex-col gap-1">
-              {siteConfig.primaryNav.map((item, index) => (
+              {nav.primary.map((item, index) => (
                 <MobileNavLink
                   key={item.href}
                   href={item.href}
@@ -88,7 +92,7 @@ export function Header() {
               ))}
             </nav>
             <div className="flex items-center justify-between pt-6">
-              <LanguageToggle />
+              <LanguageSwitcher />
             </div>
           </Container>
         </div>
@@ -169,22 +173,5 @@ function MobileNavLink({
     >
       {label}
     </Link>
-  );
-}
-
-function LanguageToggle() {
-  return (
-    <div className="flex items-center gap-1 text-sm font-medium text-paper/60">
-      <span className="text-paper" aria-current="true">
-        EN
-      </span>
-      <span aria-hidden="true">/</span>
-      <span
-        className="cursor-not-allowed text-paper/40"
-        title="German localization is coming soon"
-      >
-        DE
-      </span>
-    </div>
   );
 }

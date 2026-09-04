@@ -4,6 +4,8 @@ import { useEffect, useId, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { EyeOffIcon } from "@/components/icons";
+import { useLocale } from "@/i18n/LocaleProvider";
+import { uiContent } from "@/content/ui";
 
 // Content warning for the real surgical before/after photos in the Results
 // section. Not an age-verification system — a per-view confirmation held
@@ -18,6 +20,8 @@ export function ResultsAgeGate({ children }: { children: ReactNode }) {
   const descId = useId();
   const confirmButtonRef = useRef<HTMLButtonElement>(null);
   const router = useRouter();
+  const locale = useLocale();
+  const { resultsGate: t } = uiContent[locale];
 
   useEffect(() => {
     if (!confirmed) {
@@ -69,11 +73,10 @@ export function ResultsAgeGate({ children }: { children: ReactNode }) {
             </span>
 
             <h2 id={headingId} className="mt-4 font-display text-xl font-medium text-white sm:mt-5 sm:text-2xl">
-              18+ Content Warning
+              {t.heading}
             </h2>
             <p id={descId} className="mt-3 text-sm leading-relaxed text-white/70 sm:mt-4">
-              This section contains real surgical before-and-after images. These images
-              are provided for medical and informational purposes.
+              {t.body}
             </p>
 
             <div className="mt-6 flex flex-col gap-3 sm:mt-8">
@@ -83,14 +86,14 @@ export function ResultsAgeGate({ children }: { children: ReactNode }) {
                 onClick={handleConfirm}
                 className="w-full bg-[#A9DDF5] px-6 py-3 text-sm font-medium text-[#071A2B] transition-colors duration-200 ease-[var(--ease-premium)] hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#A9DDF5]"
               >
-                I am 18+ — View Results
+                {t.confirmLabel}
               </button>
               <button
                 type="button"
                 onClick={handleGoBack}
                 className="w-full border border-white/20 px-6 py-3 text-sm font-medium text-white/75 transition-colors duration-200 ease-[var(--ease-premium)] hover:border-white/40 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#A9DDF5]"
               >
-                Go Back
+                {t.goBackLabel}
               </button>
             </div>
           </div>

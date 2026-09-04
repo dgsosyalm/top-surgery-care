@@ -7,15 +7,19 @@ import { ResultsAgeGate } from "@/components/ui/ResultsAgeGate";
 import { ArrowRightIcon } from "@/components/icons";
 import { results } from "@/data/results";
 import { homeContent } from "@/content/home";
+import { getLocale } from "@/i18n/getLocale";
+import { uiContent } from "@/content/ui";
 
 const IMAGE_CLASS =
   "group relative block aspect-square w-full overflow-hidden rounded-[2px]";
 const PHOTO_CLASS =
   "object-cover transition-[transform,filter] duration-500 ease-[var(--ease-premium)] group-hover:scale-[1.03] group-hover:brightness-105";
 
-export function ResultsPreview() {
-  const { resultsPreview } = homeContent;
-  const [featured, ...rest] = results.slice(0, 3);
+export async function ResultsPreview() {
+  const locale = await getLocale();
+  const { resultsPreview } = homeContent[locale];
+  const { viewAllLabel } = uiContent[locale].resultsPage;
+  const [featured, ...rest] = results[locale].slice(0, 3);
 
   return (
     <section aria-label={resultsPreview.heading}>
@@ -59,7 +63,7 @@ export function ResultsPreview() {
             href="/results"
             className="group mt-8 inline-flex items-center gap-2 text-sm font-medium text-ink transition-colors hover:text-ink-soft"
           >
-            View all results
+            {viewAllLabel}
             <ArrowRightIcon className="h-4 w-4 transition-transform duration-300 ease-[var(--ease-premium)] group-hover:translate-x-1" />
           </Link>
         </Reveal>
