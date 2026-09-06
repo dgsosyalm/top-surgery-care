@@ -17,16 +17,11 @@ export function ConsultationForm() {
 
     const data = new FormData(event.currentTarget);
     const name = String(data.get("name") ?? "").trim();
-    const email = String(data.get("email") ?? "").trim();
     const country = String(data.get("country") ?? "").trim();
     const contactMethod = String(data.get("contact-method") ?? "").trim();
     const message = String(data.get("message") ?? "").trim();
 
-    const lines: string[] = [
-      t.whatsappIntro,
-      `${t.whatsappNameLabel}: ${name}`,
-      `${t.whatsappEmailLabel}: ${email}`,
-    ];
+    const lines: string[] = [t.whatsappIntro, `${t.whatsappNameLabel}: ${name}`];
     if (country) lines.push(`${t.whatsappCountryLabel}: ${country}`);
     if (contactMethod) lines.push(`${t.whatsappContactMethodLabel}: ${contactMethod}`);
     lines.push("", t.whatsappMessageLabel, message);
@@ -41,13 +36,10 @@ export function ConsultationForm() {
         <Field label={t.fullName} htmlFor="name">
           <input id="name" name="name" type="text" autoComplete="name" required className={inputClasses} />
         </Field>
-        <Field label={t.email} htmlFor="email">
-          <input id="email" name="email" type="email" autoComplete="email" required className={inputClasses} />
-        </Field>
         <Field label={t.country} htmlFor="country">
           <input id="country" name="country" type="text" autoComplete="country-name" className={inputClasses} />
         </Field>
-        <Field label={t.preferredContactMethod} htmlFor="contact-method">
+        <Field label={t.preferredContactMethod} htmlFor="contact-method" className="sm:col-span-2">
           <select id="contact-method" name="contact-method" className={inputClasses} defaultValue="whatsapp">
             <option value="whatsapp">{t.contactOptionWhatsapp}</option>
             <option value="email">{t.contactOptionEmail}</option>

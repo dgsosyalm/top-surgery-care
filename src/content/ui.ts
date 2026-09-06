@@ -41,7 +41,6 @@ type UiContent = {
   };
   consultationForm: {
     fullName: string;
-    email: string;
     country: string;
     preferredContactMethod: string;
     message: string;
@@ -55,7 +54,6 @@ type UiContent = {
     submitNote: string;
     whatsappIntro: string;
     whatsappNameLabel: string;
-    whatsappEmailLabel: string;
     whatsappCountryLabel: string;
     whatsappContactMethodLabel: string;
     whatsappMessageLabel: string;
@@ -149,7 +147,6 @@ export const uiContent: { en: UiContent; de: UiContent } = {
     },
     consultationForm: {
       fullName: "Full name",
-      email: "Email",
       country: "Country",
       preferredContactMethod: "Preferred contact method",
       message: "Message",
@@ -163,7 +160,6 @@ export const uiContent: { en: UiContent; de: UiContent } = {
       submitNote: "Submitting opens WhatsApp with your details pre-filled, ready to send.",
       whatsappIntro: "New consultation request from topsurgerycare.com",
       whatsappNameLabel: "Name",
-      whatsappEmailLabel: "Email",
       whatsappCountryLabel: "Country",
       whatsappContactMethodLabel: "Preferred contact method",
       whatsappMessageLabel: "Message:",
@@ -261,7 +257,6 @@ export const uiContent: { en: UiContent; de: UiContent } = {
     },
     consultationForm: {
       fullName: "Vollständiger Name",
-      email: "E-Mail",
       country: "Land",
       preferredContactMethod: "Bevorzugte Kontaktart",
       message: "Nachricht",
@@ -275,7 +270,6 @@ export const uiContent: { en: UiContent; de: UiContent } = {
       submitNote: "Beim Absenden öffnet sich WhatsApp mit Ihren Angaben, bereit zum Versenden.",
       whatsappIntro: "Neue Anfrage für ein Beratungsgespräch von topsurgerycare.com",
       whatsappNameLabel: "Name",
-      whatsappEmailLabel: "E-Mail",
       whatsappCountryLabel: "Land",
       whatsappContactMethodLabel: "Bevorzugte Kontaktart",
       whatsappMessageLabel: "Nachricht:",
