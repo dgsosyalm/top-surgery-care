@@ -18,12 +18,10 @@ export function ConsultationForm() {
     const data = new FormData(event.currentTarget);
     const name = String(data.get("name") ?? "").trim();
     const country = String(data.get("country") ?? "").trim();
-    const contactMethod = String(data.get("contact-method") ?? "").trim();
     const message = String(data.get("message") ?? "").trim();
 
     const lines: string[] = [t.whatsappIntro, `${t.whatsappNameLabel}: ${name}`];
     if (country) lines.push(`${t.whatsappCountryLabel}: ${country}`);
-    if (contactMethod) lines.push(`${t.whatsappContactMethodLabel}: ${contactMethod}`);
     lines.push("", t.whatsappMessageLabel, message);
 
     const whatsappUrl = `${siteConfig.contact.whatsappHref}?text=${encodeURIComponent(lines.join("\n"))}`;
@@ -38,12 +36,6 @@ export function ConsultationForm() {
         </Field>
         <Field label={t.country} htmlFor="country">
           <input id="country" name="country" type="text" autoComplete="country-name" className={inputClasses} />
-        </Field>
-        <Field label={t.preferredContactMethod} htmlFor="contact-method" className="sm:col-span-2">
-          <select id="contact-method" name="contact-method" className={inputClasses} defaultValue="whatsapp">
-            <option value="whatsapp">{t.contactOptionWhatsapp}</option>
-            <option value="email">{t.contactOptionEmail}</option>
-          </select>
         </Field>
       </div>
 

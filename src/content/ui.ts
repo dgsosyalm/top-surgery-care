@@ -42,11 +42,8 @@ type UiContent = {
   consultationForm: {
     fullName: string;
     country: string;
-    preferredContactMethod: string;
     message: string;
     messagePlaceholder: string;
-    contactOptionWhatsapp: string;
-    contactOptionEmail: string;
     consentPrefix: string;
     consentLinkLabel: string;
     consentSuffix: string;
@@ -55,7 +52,6 @@ type UiContent = {
     whatsappIntro: string;
     whatsappNameLabel: string;
     whatsappCountryLabel: string;
-    whatsappContactMethodLabel: string;
     whatsappMessageLabel: string;
   };
   finalCta: {
@@ -148,20 +144,16 @@ export const uiContent: { en: UiContent; de: UiContent } = {
     consultationForm: {
       fullName: "Full name",
       country: "Country",
-      preferredContactMethod: "Preferred contact method",
       message: "Message",
       messagePlaceholder: "Tell us a little about what you're looking for.",
-      contactOptionWhatsapp: "WhatsApp",
-      contactOptionEmail: "Email",
       consentPrefix: "I consent to Top Surgery Care contacting me about my inquiry. See our ",
       consentLinkLabel: "Privacy Policy",
       consentSuffix: " for how your information is handled.",
-      submitLabel: "Request a Consultation",
+      submitLabel: "Request via WhatsApp",
       submitNote: "Submitting opens WhatsApp with your details pre-filled, ready to send.",
       whatsappIntro: "New consultation request from topsurgerycare.com",
       whatsappNameLabel: "Name",
       whatsappCountryLabel: "Country",
-      whatsappContactMethodLabel: "Preferred contact method",
       whatsappMessageLabel: "Message:",
     },
     finalCta: {
@@ -258,20 +250,16 @@ export const uiContent: { en: UiContent; de: UiContent } = {
     consultationForm: {
       fullName: "Vollständiger Name",
       country: "Land",
-      preferredContactMethod: "Bevorzugte Kontaktart",
       message: "Nachricht",
       messagePlaceholder: "Erzählen Sie uns kurz, wonach Sie suchen.",
-      contactOptionWhatsapp: "WhatsApp",
-      contactOptionEmail: "E-Mail",
       consentPrefix: "Ich bin damit einverstanden, dass Top Surgery Care mich bezüglich meiner Anfrage kontaktiert. Informationen zum Umgang mit Ihren Daten finden Sie in unserer ",
       consentLinkLabel: "Datenschutzerklärung",
       consentSuffix: ".",
-      submitLabel: "Beratungsgespräch anfragen",
+      submitLabel: "Per WhatsApp anfragen",
       submitNote: "Beim Absenden öffnet sich WhatsApp mit Ihren Angaben, bereit zum Versenden.",
       whatsappIntro: "Neue Anfrage für ein Beratungsgespräch von topsurgerycare.com",
       whatsappNameLabel: "Name",
       whatsappCountryLabel: "Land",
-      whatsappContactMethodLabel: "Bevorzugte Kontaktart",
       whatsappMessageLabel: "Nachricht:",
     },
     finalCta: {
