@@ -158,7 +158,7 @@ function VideoStoryCard({ item, index }: { item: VideoStoryItem; index: number }
 export function VideoStoryRow({ items }: { items: readonly VideoStoryItem[] }) {
   return (
     <div
-      className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-2 [scrollbar-width:none] md:-mx-10 md:px-10 lg:mx-0 lg:snap-none lg:justify-center lg:gap-6 lg:overflow-visible lg:px-0 lg:pb-0 [&::-webkit-scrollbar]:hidden"
+      className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-2 [scrollbar-width:none] md:-mx-10 md:px-10 lg:mx-0 lg:gap-6 lg:px-0 lg:pb-0 [&::-webkit-scrollbar]:hidden"
     >
       {items.map((item, index) => (
         <VideoStoryCard key={item.id} item={item} index={index} />
