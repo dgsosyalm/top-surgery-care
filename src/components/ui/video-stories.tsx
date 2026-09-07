@@ -1,12 +1,18 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { ImagePendingIcon } from "@/components/icons";
+import { useCallback, useEffect, useRef, useState, type RefObject, type WheelEvent } from "react";
+import { ArrowRightIcon, ImagePendingIcon } from "@/components/icons";
 import type { VideoStoryItem } from "@/data/videos";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { uiContent } from "@/content/ui";
 
 const CARD_WIDTH = "clamp(220px, 22vw, 280px)";
+
+// Mobile browsers cap how many <video> elements can hold decoded/loading data
+// at once. Mounting all ten sources up front starves whichever cards come
+// later in the row, so each card's <source> is only attached once it scrolls
+// within this distance of the row's visible edge.
+const ACTIVATE_ROOT_MARGIN = "0px 600px 0px 600px";
 
 function PlayGlyph({ playing }: { playing: boolean }) {
   return playing ? (
@@ -43,20 +49,51 @@ function MuteGlyph({ muted }: { muted: boolean }) {
   );
 }
 
-function VideoStoryCard({ item, index }: { item: VideoStoryItem; index: number }) {
+function VideoStoryCard({
+  item,
+  index,
+  rowRef,
+}: {
+  item: VideoStoryItem;
+  index: number;
+  rowRef: RefObject<HTMLDivElement | null>;
+}) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [hasError, setHasError] = useState(false);
+  const [isActive, setIsActive] = useState(false);
   const userPausedRef = useRef(false);
   const locale = useLocale();
   const t = uiContent[locale].videoStories;
 
   useEffect(() => {
+    const wrapper = wrapperRef.current;
+    if (!wrapper || isActive) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsActive(true);
+          observer.disconnect();
+        }
+      },
+      { root: rowRef.current, rootMargin: ACTIVATE_ROOT_MARGIN }
+    );
+
+    observer.observe(wrapper);
+    return () => observer.disconnect();
+  }, [isActive, rowRef]);
+
+  useEffect(() => {
+    if (isActive) videoRef.current?.load();
+  }, [isActive]);
+
+  useEffect(() => {
     const video = videoRef.current;
     const wrapper = wrapperRef.current;
-    if (!video || !wrapper || hasError) return;
+    if (!video || !wrapper || hasError || !isActive) return;
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
@@ -74,11 +111,16 @@ function VideoStoryCard({ item, index }: { item: VideoStoryItem; index: number }
 
     observer.observe(wrapper);
     return () => observer.disconnect();
-  }, [hasError]);
+  }, [hasError, isActive]);
 
   const togglePlay = () => {
+    if (hasError) return;
+    if (!isActive) {
+      setIsActive(true);
+      return;
+    }
     const video = videoRef.current;
-    if (!video || hasError) return;
+    if (!video) return;
     if (video.paused) {
       userPausedRef.current = false;
       video.play().catch(() => {});
@@ -118,7 +160,7 @@ function VideoStoryCard({ item, index }: { item: VideoStoryItem; index: number }
           onPlay={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
         >
-          <source src={item.src} type={item.type} />
+          {isActive && <source src={item.src} type={item.type} />}
         </video>
       )}
 
@@ -156,13 +198,81 @@ function VideoStoryCard({ item, index }: { item: VideoStoryItem; index: number }
 }
 
 export function VideoStoryRow({ items }: { items: readonly VideoStoryItem[] }) {
+  const rowRef = useRef<HTMLDivElement>(null);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+  const locale = useLocale();
+  const t = uiContent[locale].videoStories;
+
+  const updateScrollState = useCallback(() => {
+    const row = rowRef.current;
+    if (!row) return;
+    setCanScrollRight(row.scrollWidth - row.scrollLeft - row.clientWidth > 8);
+  }, []);
+
+  useEffect(() => {
+    const row = rowRef.current;
+    if (!row) return;
+
+    updateScrollState();
+
+    const resizeObserver = new ResizeObserver(updateScrollState);
+    resizeObserver.observe(row);
+    row.addEventListener("scroll", updateScrollState, { passive: true });
+
+    return () => {
+      resizeObserver.disconnect();
+      row.removeEventListener("scroll", updateScrollState);
+    };
+  }, [updateScrollState]);
+
+  const scrollNext = () => {
+    const row = rowRef.current;
+    if (!row) return;
+    row.scrollBy({ left: Math.min(row.clientWidth * 0.8, 560), behavior: "smooth" });
+  };
+
+  const handleWheel = (event: WheelEvent<HTMLDivElement>) => {
+    const row = rowRef.current;
+    if (!row || Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+
+    const atStart = row.scrollLeft <= 0;
+    const atEnd = row.scrollLeft + row.clientWidth >= row.scrollWidth - 1;
+    if ((event.deltaY < 0 && atStart) || (event.deltaY > 0 && atEnd)) return;
+
+    event.preventDefault();
+    row.scrollLeft += event.deltaY;
+  };
+
   return (
-    <div
-      className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-2 [scrollbar-width:none] md:-mx-10 md:px-10 lg:mx-0 lg:gap-6 lg:px-0 lg:pb-0 [&::-webkit-scrollbar]:hidden"
-    >
-      {items.map((item, index) => (
-        <VideoStoryCard key={item.id} item={item} index={index} />
-      ))}
+    <div className="relative">
+      <div
+        ref={rowRef}
+        onWheel={handleWheel}
+        className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-6 pb-2 [scrollbar-width:none] md:-mx-10 md:px-10 lg:mx-0 lg:gap-6 lg:px-0 lg:pb-0 [&::-webkit-scrollbar]:hidden"
+      >
+        {items.map((item, index) => (
+          <VideoStoryCard key={item.id} item={item} index={index} rowRef={rowRef} />
+        ))}
+      </div>
+
+      <div
+        aria-hidden="true"
+        className={`pointer-events-none absolute inset-y-0 right-0 w-14 bg-gradient-to-r from-transparent to-paper transition-opacity duration-500 ease-[var(--ease-premium)] md:w-24 lg:w-28 ${
+          canScrollRight ? "opacity-100" : "opacity-0"
+        }`}
+      />
+
+      <button
+        type="button"
+        onClick={scrollNext}
+        aria-label={t.scrollNext}
+        tabIndex={canScrollRight ? 0 : -1}
+        className={`absolute right-2 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-paper text-ink shadow-[0_4px_20px_rgba(20,23,31,0.16)] ring-1 ring-line transition-all duration-300 ease-[var(--ease-premium)] hover:bg-ink hover:text-paper focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink sm:h-11 sm:w-11 md:right-4 ${
+          canScrollRight ? "opacity-100" : "pointer-events-none opacity-0"
+        }`}
+      >
+        <ArrowRightIcon className="h-5 w-5" />
+      </button>
     </div>
   );
 }

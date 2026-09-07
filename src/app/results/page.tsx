@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { ResultsGallery } from "@/components/sections/ResultsGallery";
+import { VideoStories } from "@/components/sections/VideoStories";
 import { ArrowRightIcon } from "@/components/icons";
 import { getLocale } from "@/i18n/getLocale";
 import { uiContent } from "@/content/ui";
@@ -59,6 +60,8 @@ export default async function ResultsPage() {
           <ResultsGallery />
         </Container>
       </section>
+
+      <VideoStories />
 
       <section className="border-t border-line">
         <Container className="flex flex-col gap-3 py-14 sm:flex-row sm:items-center sm:justify-between md:py-16">

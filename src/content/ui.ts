@@ -66,6 +66,7 @@ type UiContent = {
     playPrefix: string;
     unmutePrefix: string;
     mutePrefix: string;
+    scrollNext: string;
   };
   patientStories: {
     googleReviewBadge: string;
@@ -168,6 +169,7 @@ export const uiContent: { en: UiContent; de: UiContent } = {
       playPrefix: "Play video",
       unmutePrefix: "Unmute video",
       mutePrefix: "Mute video",
+      scrollNext: "Show more videos",
     },
     patientStories: {
       googleReviewBadge: "Google Review",
@@ -274,6 +276,7 @@ export const uiContent: { en: UiContent; de: UiContent } = {
       playPrefix: "Video abspielen",
       unmutePrefix: "Ton einschalten für Video",
       mutePrefix: "Ton ausschalten für Video",
+      scrollNext: "Weitere Videos anzeigen",
     },
     patientStories: {
       googleReviewBadge: "Google-Bewertung",
