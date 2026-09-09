@@ -30,7 +30,7 @@ export const techniques: { en: Technique[]; de: Technique[] } = {
     {
       id: "double-incision",
       name: "Double Incision",
-      image: "/images/techniques/double-incision.png",
+      image: "/images/techniques/double-incision-diagram.png",
       imageAlt: "Double incision top surgery incision pattern marked on the chest",
       shortDescription:
         "The most common approach for larger chests, using two horizontal incisions to remove tissue and reposition the nipple-areola complex.",
@@ -41,7 +41,7 @@ export const techniques: { en: Technique[]; de: Technique[] } = {
     {
       id: "periareolar",
       name: "Periareolar",
-      image: "/images/techniques/periareolar.png",
+      image: "/images/techniques/periareolar-diagram.png",
       imageAlt: "Periareolar top surgery incision marked around the areola",
       shortDescription:
         "A technique for smaller chests with good skin elasticity, working through an incision around the areola while the skin naturally retracts to a flatter contour.",
@@ -52,7 +52,7 @@ export const techniques: { en: Technique[]; de: Technique[] } = {
     {
       id: "keyhole",
       name: "Keyhole",
-      image: "/images/techniques/keyhole.png",
+      image: "/images/techniques/keyhole-diagram.png",
       imageAlt: "Keyhole top surgery incision marked at the base of the areola",
       shortDescription:
         "A minimally invasive option for smaller chests, using a small incision at the base of the areola and liposuction to remove tissue while leaving the nipple largely intact.",
@@ -65,7 +65,7 @@ export const techniques: { en: Technique[]; de: Technique[] } = {
     {
       id: "double-incision",
       name: "Doppelinzision",
-      image: "/images/techniques/double-incision.png",
+      image: "/images/techniques/double-incision-diagram.png",
       imageAlt: "Markierung des Schnittverlaufs der Doppelinzisionstechnik auf dem Brustkorb",
       shortDescription:
         "Die häufigste Methode für größere Brüste: Über zwei horizontale Schnitte wird Gewebe entfernt und der Brustwarzen-Warzenhof-Komplex neu positioniert.",
@@ -76,7 +76,7 @@ export const techniques: { en: Technique[]; de: Technique[] } = {
     {
       id: "periareolar",
       name: "Periareolär",
-      image: "/images/techniques/periareolar.png",
+      image: "/images/techniques/periareolar-diagram.png",
       imageAlt: "Markierung des periareolären Schnittverlaufs um den Warzenhof",
       shortDescription:
         "Eine Technik für kleinere Brüste mit guter Hautelastizität: Über einen Schnitt um den Warzenhof zieht sich die Haut natürlich zu einer flacheren Kontur zurück.",
@@ -87,7 +87,7 @@ export const techniques: { en: Technique[]; de: Technique[] } = {
     {
       id: "keyhole",
       name: "Keyhole",
-      image: "/images/techniques/keyhole.png",
+      image: "/images/techniques/keyhole-diagram.png",
       imageAlt: "Markierung des Keyhole-Schnittverlaufs an der Basis des Warzenhofs",
       shortDescription:
         "Eine minimalinvasive Option für kleinere Brüste: Über einen kleinen Schnitt an der Basis des Warzenhofs und Liposuktion wird Gewebe entfernt, die Brustwarze bleibt weitgehend intakt.",
