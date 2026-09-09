@@ -112,8 +112,9 @@ export const uiContent: { en: UiContent; de: UiContent } = {
       ],
       legal: [
         { label: "Privacy Policy", href: "/privacy-policy" },
-        { label: "Terms", href: "/terms" },
+        { label: "Terms & Conditions", href: "/terms" },
         { label: "Medical Disclaimer", href: "/medical-disclaimer" },
+        { label: "KVKK Consent Form", href: "/kvkk-consent-form" },
       ],
       openMenuLabel: "Open menu",
       closeMenuLabel: "Close menu",
@@ -222,6 +223,7 @@ export const uiContent: { en: UiContent; de: UiContent } = {
         { label: "Datenschutz", href: "/privacy-policy" },
         { label: "AGB", href: "/terms" },
         { label: "Medizinischer Hinweis", href: "/medical-disclaimer" },
+        { label: "KVKK Consent Form", href: "/kvkk-consent-form" },
       ],
       openMenuLabel: "Menü öffnen",
       closeMenuLabel: "Menü schließen",
