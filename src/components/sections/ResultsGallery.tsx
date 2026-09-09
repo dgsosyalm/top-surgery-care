@@ -16,7 +16,7 @@ export function ResultsGallery() {
   const { openLargerViewPrefix } = uiContent[locale].resultsPage;
 
   return (
-    <ResultsAgeGate>
+    <ResultsAgeGate compact>
       <div className="grid grid-cols-1 items-start gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
         {images.map((image, index) => (
           <Reveal key={image.id} delay={index * 70}>
