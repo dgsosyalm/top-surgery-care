@@ -199,6 +199,7 @@ function VideoStoryCard({
 
 export function VideoStoryRow({ items }: { items: readonly VideoStoryItem[] }) {
   const rowRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
   const locale = useLocale();
   const t = uiContent[locale].videoStories;
@@ -206,6 +207,7 @@ export function VideoStoryRow({ items }: { items: readonly VideoStoryItem[] }) {
   const updateScrollState = useCallback(() => {
     const row = rowRef.current;
     if (!row) return;
+    setCanScrollLeft(row.scrollLeft > 8);
     setCanScrollRight(row.scrollWidth - row.scrollLeft - row.clientWidth > 8);
   }, []);
 
@@ -229,6 +231,12 @@ export function VideoStoryRow({ items }: { items: readonly VideoStoryItem[] }) {
     const row = rowRef.current;
     if (!row) return;
     row.scrollBy({ left: Math.min(row.clientWidth * 0.8, 560), behavior: "smooth" });
+  };
+
+  const scrollPrev = () => {
+    const row = rowRef.current;
+    if (!row) return;
+    row.scrollBy({ left: -Math.min(row.clientWidth * 0.8, 560), behavior: "smooth" });
   };
 
   const handleWheel = (event: WheelEvent<HTMLDivElement>) => {
@@ -261,6 +269,18 @@ export function VideoStoryRow({ items }: { items: readonly VideoStoryItem[] }) {
           canScrollRight ? "opacity-100" : "opacity-0"
         }`}
       />
+
+      <button
+        type="button"
+        onClick={scrollPrev}
+        aria-label={t.scrollPrev}
+        tabIndex={canScrollLeft ? 0 : -1}
+        className={`absolute left-2 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-paper text-ink shadow-[0_4px_20px_rgba(20,23,31,0.16)] ring-1 ring-line transition-all duration-300 ease-[var(--ease-premium)] hover:bg-ink hover:text-paper focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink sm:h-11 sm:w-11 md:left-4 ${
+          canScrollLeft ? "opacity-100" : "pointer-events-none opacity-0"
+        }`}
+      >
+        <ArrowRightIcon className="h-5 w-5 rotate-180" />
+      </button>
 
       <button
         type="button"
