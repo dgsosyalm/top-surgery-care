@@ -16,7 +16,7 @@ export async function DoctorIntro() {
         <Reveal>
           <div className="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-[2px] bg-paper-deep">
             <Image
-              src="/images/doctor/serkandinar.jpg"
+              src="/images/doctor/d22.jpeg"
               alt={doctorProfileContent[locale].photoAlt}
               fill
               sizes="(min-width: 1024px) 30vw, (min-width: 768px) 40vw, 90vw"
