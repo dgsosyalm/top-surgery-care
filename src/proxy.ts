@@ -44,12 +44,26 @@ const BLOCKED_HTML = `<!doctype html>
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
       }
       main { max-width: 30rem; text-align: center; }
+      .flag { display: block; margin: 0 auto 20px; }
       h1 { font-size: 1.375rem; font-weight: 600; margin: 0 0 12px; }
       p { margin: 0; font-size: 0.95rem; line-height: 1.6; color: #4b4f5a; }
     </style>
   </head>
   <body>
     <main>
+      <svg class="flag" width="56" height="36" viewBox="0 0 56 36" role="img" aria-label="Transgender Pride flag">
+        <defs>
+          <clipPath id="flagClip"><rect x="0.5" y="0.5" width="55" height="35" rx="4" /></clipPath>
+        </defs>
+        <g clip-path="url(#flagClip)">
+          <rect x="0" y="0" width="56" height="7.2" fill="#5BCEFA" />
+          <rect x="0" y="7.2" width="56" height="7.2" fill="#F5A9B8" />
+          <rect x="0" y="14.4" width="56" height="7.2" fill="#FFFFFF" />
+          <rect x="0" y="21.6" width="56" height="7.2" fill="#F5A9B8" />
+          <rect x="0" y="28.8" width="56" height="7.2" fill="#5BCEFA" />
+        </g>
+        <rect x="0.5" y="0.5" width="55" height="35" rx="4" fill="none" stroke="#e2ded4" stroke-width="1" />
+      </svg>
       <h1>This site isn't available in your region</h1>
       <p>We're sorry — this website is currently not accessible from your location.</p>
     </main>
