@@ -9,7 +9,7 @@ import { patientJourneySteps } from "@/data/patientJourney";
 import { siteConfig } from "@/lib/site";
 import { getLocale } from "@/i18n/getLocale";
 
-const PAGE_PATH = "/patient-journey/";
+const PAGE_PATH = "/patient-journey";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();

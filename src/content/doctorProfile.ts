@@ -17,6 +17,10 @@ type ExperienceItem = { place: string; role: string; period: string };
 type PublicationItem = { title: string; venue?: string };
 
 type DoctorProfileContent = {
+  /** SEO-only title tag — kept separate from `name`/`title` below, which
+   *  are the visible on-page heading/eyebrow and must stay exactly as the
+   *  approved CV states them. */
+  metaTitle: string;
   metaDescription: string;
   name: string;
   title: string;
@@ -125,8 +129,9 @@ const courses: string[] = [
 
 export const doctorProfileContent: { en: DoctorProfileContent; de: DoctorProfileContent } = {
   en: {
+    metaTitle: "Dr. Serkan Dinar — Surgeon for FTM Top Surgery",
     metaDescription:
-      "Dr. Serkan Dinar is a plastic, reconstructive, and aesthetic surgeon with more than 20 years of surgical experience, education, and clinical publications.",
+      "Dr. Serkan Dinar is a plastic, reconstructive, and aesthetic surgeon with 20+ years of experience, leading FTM top surgery care at Top Surgery Care.",
     name: "Dr. Serkan Dinar",
     title: "Plastic, Reconstructive and Aesthetic Surgery Specialist",
     photoAlt: "Dr. Serkan Dinar, plastic, reconstructive and aesthetic surgery specialist",
@@ -166,7 +171,7 @@ export const doctorProfileContent: { en: DoctorProfileContent; de: DoctorProfile
       heading: "Questions about your care team?",
       body: "Get in touch and we'll help you find the answers you need.",
       label: "Contact us",
-      href: "/contact/",
+      href: "/contact",
     },
     sections: {
       biography: "Biography",
@@ -186,8 +191,9 @@ export const doctorProfileContent: { en: DoctorProfileContent; de: DoctorProfile
     },
   },
   de: {
+    metaTitle: "Dr. Serkan Dinar — Chirurg für FTM Top Surgery",
     metaDescription:
-      "Dr. Serkan Dinar ist Facharzt für Plastische, Rekonstruktive und Ästhetische Chirurgie mit mehr als 20 Jahren chirurgischer Erfahrung, Ausbildung und wissenschaftlichen Publikationen.",
+      "Dr. Serkan Dinar ist Facharzt für Plastische, Rekonstruktive und Ästhetische Chirurgie mit mehr als 20 Jahren Erfahrung und leitet die FTM-Top-Surgery bei Top Surgery Care.",
     name: "Dr. Serkan Dinar",
     title: "Facharzt für Plastische, Rekonstruktive und Ästhetische Chirurgie",
     photoAlt: "Dr. Serkan Dinar, Facharzt für Plastische, Rekonstruktive und Ästhetische Chirurgie",
@@ -227,7 +233,7 @@ export const doctorProfileContent: { en: DoctorProfileContent; de: DoctorProfile
       heading: "Fragen zu Ihrem Behandlungsteam?",
       body: "Nehmen Sie Kontakt auf — wir helfen Ihnen, die Antworten zu finden, die Sie brauchen.",
       label: "Kontaktieren Sie uns",
-      href: "/contact/",
+      href: "/contact",
     },
     sections: {
       biography: "Werdegang",

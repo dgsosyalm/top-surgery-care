@@ -134,7 +134,7 @@ export const homeContent: { en: HomeContent; de: HomeContent } = {
       headlineTail: "personal.",
       subtext: "A focused FTM top surgery experience for international patients.",
       ctaPrimary: { label: "Explore Top Surgery", href: "/top-surgery" },
-      ctaSecondary: { label: "Start Your Journey", href: "/patient-journey/" },
+      ctaSecondary: { label: "Start Your Journey", href: "/patient-journey" },
       rotatingText: "TOP SURGERY CARE · TOP SURGERY CARE · TOP SURGERY CARE · ",
     },
     patientCoordination: {
@@ -155,7 +155,7 @@ export const homeContent: { en: HomeContent; de: HomeContent } = {
       eyebrow: "Your Surgeon",
       heading: "Dr. Serkan Dinar",
       body: "Dr. Serkan Dinar is a plastic, reconstructive, and aesthetic surgeon with more than 20 years of surgical experience. He completed his medical degree at Dokuz Eylül University Faculty of Medicine before specializing in Plastic, Reconstructive and Aesthetic Surgery at Kocaeli University Faculty of Medicine, and has contributed to international peer-reviewed research throughout his career.",
-      cta: { label: "Meet Dr. Dinar", href: "/about-dr-serkan-dinar/" },
+      cta: { label: "Meet Dr. Dinar", href: "/about-dr-serkan-dinar" },
       portraitPendingLabel: "Doctor portrait — pending",
     },
     topSurgeryOverview: {
@@ -174,7 +174,7 @@ export const homeContent: { en: HomeContent; de: HomeContent } = {
     patientJourney: {
       eyebrow: "Patient Journey",
       heading: "A clear path for patients travelling from abroad",
-      cta: { label: "Explore the Journey", href: "/patient-journey/" },
+      cta: { label: "Explore the Journey", href: "/patient-journey" },
     },
     affordableCare: {
       eyebrow: "Top Surgery Abroad",
@@ -221,7 +221,7 @@ export const homeContent: { en: HomeContent; de: HomeContent } = {
       headlineTail: "persönlich.",
       subtext: "Eine auf Sie zugeschnittene FTM-Top-Surgery für internationale Patienten.",
       ctaPrimary: { label: "Top Surgery entdecken", href: "/top-surgery" },
-      ctaSecondary: { label: "Ihre Reise beginnen", href: "/patient-journey/" },
+      ctaSecondary: { label: "Ihre Reise beginnen", href: "/patient-journey" },
       rotatingText: "TOP SURGERY CARE · TOP SURGERY CARE · TOP SURGERY CARE · ",
     },
     patientCoordination: {
@@ -242,7 +242,7 @@ export const homeContent: { en: HomeContent; de: HomeContent } = {
       eyebrow: "Ihr Chirurg",
       heading: "Dr. Serkan Dinar",
       body: "Dr. Serkan Dinar ist Facharzt für Plastische, Rekonstruktive und Ästhetische Chirurgie mit mehr als 20 Jahren chirurgischer Erfahrung. Er schloss sein Medizinstudium an der Medizinischen Fakultät der Dokuz-Eylül-Universität ab, bevor er sich an der Medizinischen Fakultät der Kocaeli-Universität auf Plastische, Rekonstruktive und Ästhetische Chirurgie spezialisierte, und hat im Laufe seiner Karriere zu international begutachteter Forschung beigetragen.",
-      cta: { label: "Dr. Dinar kennenlernen", href: "/about-dr-serkan-dinar/" },
+      cta: { label: "Dr. Dinar kennenlernen", href: "/about-dr-serkan-dinar" },
       portraitPendingLabel: "Porträt des Arztes — folgt in Kürze",
     },
     topSurgeryOverview: {
@@ -261,7 +261,7 @@ export const homeContent: { en: HomeContent; de: HomeContent } = {
     patientJourney: {
       eyebrow: "Patientenreise",
       heading: "Ein klarer Weg für Patienten aus dem Ausland",
-      cta: { label: "Die Reise entdecken", href: "/patient-journey/" },
+      cta: { label: "Die Reise entdecken", href: "/patient-journey" },
     },
     affordableCare: {
       eyebrow: "Top Surgery im Ausland",

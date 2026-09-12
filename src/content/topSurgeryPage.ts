@@ -49,7 +49,7 @@ export const topSurgeryPageContent: { en: TopSurgeryPageContent; de: TopSurgeryP
       eyebrow: "Recovery",
       heading: "Recovery and aftercare",
       body: "Aftercare guidance and follow-up support continue as you heal, whether you're recovering locally or preparing to travel back. Recovery is planned individually as part of your Patient Journey, not a fixed timeline applied to everyone.",
-      cta: { label: "See the full Patient Journey", href: "/patient-journey/" },
+      cta: { label: "See the full Patient Journey", href: "/patient-journey" },
     },
     faq: {
       eyebrow: "Questions",
@@ -86,7 +86,7 @@ export const topSurgeryPageContent: { en: TopSurgeryPageContent; de: TopSurgeryP
       eyebrow: "Genesung",
       heading: "Genesung und Nachsorge",
       body: "Die Nachsorge und Begleitung setzen sich fort, während Sie heilen — ob vor Ort oder bei der Vorbereitung Ihrer Rückreise. Die Genesung wird individuell als Teil Ihrer Patientenreise geplant, nicht nach einem starren Zeitplan für alle.",
-      cta: { label: "Die vollständige Patientenreise ansehen", href: "/patient-journey/" },
+      cta: { label: "Die vollständige Patientenreise ansehen", href: "/patient-journey" },
     },
     faq: {
       eyebrow: "Fragen",

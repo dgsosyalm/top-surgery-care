@@ -8,20 +8,20 @@ import { siteConfig } from "@/lib/site";
 import { doctorProfileContent } from "@/content/doctorProfile";
 import { getLocale } from "@/i18n/getLocale";
 
-const PAGE_PATH = "/about-dr-serkan-dinar/";
+const PAGE_PATH = "/about-dr-serkan-dinar";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
   const p = doctorProfileContent[locale];
 
   return {
-    title: `${p.name} — ${p.title}`,
+    title: p.metaTitle,
     description: p.metaDescription,
     alternates: {
       canonical: PAGE_PATH,
     },
     openGraph: {
-      title: `${p.name} — ${p.title}`,
+      title: p.metaTitle,
       description: p.metaDescription,
       url: PAGE_PATH,
       type: "profile",

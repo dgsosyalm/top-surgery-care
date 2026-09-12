@@ -104,11 +104,11 @@ export const uiContent: { en: UiContent; de: UiContent } = {
     nav: {
       primary: [
         { label: "Top Surgery", href: "/top-surgery" },
-        { label: "The Journey", href: "/patient-journey/" },
+        { label: "The Journey", href: "/patient-journey" },
         { label: "Results", href: "/results" },
-        { label: "Dr. Serkan Dinar", href: "/about-dr-serkan-dinar/" },
+        { label: "Dr. Serkan Dinar", href: "/about-dr-serkan-dinar" },
         { label: "FAQ", href: "/faq" },
-        { label: "Contact", href: "/contact/" },
+        { label: "Contact", href: "/contact" },
       ],
       legal: [
         { label: "Privacy Policy", href: "/privacy-policy" },
@@ -213,11 +213,11 @@ export const uiContent: { en: UiContent; de: UiContent } = {
     nav: {
       primary: [
         { label: "Top Surgery", href: "/top-surgery" },
-        { label: "Die Reise", href: "/patient-journey/" },
+        { label: "Die Reise", href: "/patient-journey" },
         { label: "Ergebnisse", href: "/results" },
-        { label: "Dr. Serkan Dinar", href: "/about-dr-serkan-dinar/" },
+        { label: "Dr. Serkan Dinar", href: "/about-dr-serkan-dinar" },
         { label: "FAQ", href: "/faq" },
-        { label: "Kontakt", href: "/contact/" },
+        { label: "Kontakt", href: "/contact" },
       ],
       legal: [
         { label: "Datenschutz", href: "/privacy-policy" },

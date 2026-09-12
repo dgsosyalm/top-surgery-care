@@ -17,7 +17,7 @@ export const siteConfig = {
     // one. Once approved, add it here and it will appear on the Contact
     // page and in the footer automatically.
     email: null as string | null,
-    pageHref: "/contact/",
+    pageHref: "/contact",
   },
   // Nav labels (primary + legal) are translated — see src/content/ui.ts
   // → uiContent[locale].nav. Only hrefs live here.

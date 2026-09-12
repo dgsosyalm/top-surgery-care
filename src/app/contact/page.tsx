@@ -14,7 +14,7 @@ import { contactPageContent } from "@/content/contactPage";
 import { siteConfig } from "@/lib/site";
 import { getLocale } from "@/i18n/getLocale";
 
-const PAGE_PATH = "/contact/";
+const PAGE_PATH = "/contact";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();

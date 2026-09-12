@@ -70,14 +70,14 @@ export default async function ResultsPage() {
           </p>
           <div className="flex flex-wrap gap-x-8 gap-y-3">
             <Link
-              href="/patient-journey/"
+              href="/patient-journey"
               className="group inline-flex items-center gap-2 text-sm font-medium text-ink transition-colors hover:text-ink-soft"
             >
               {resultsPage.closing.patientJourneyLabel}
               <ArrowRightIcon className="h-4 w-4 transition-transform duration-300 ease-[var(--ease-premium)] group-hover:translate-x-1" />
             </Link>
             <Link
-              href="/contact/"
+              href="/contact"
               className="group inline-flex items-center gap-2 text-sm font-medium text-ink transition-colors hover:text-ink-soft"
             >
               {resultsPage.closing.contactLabel}

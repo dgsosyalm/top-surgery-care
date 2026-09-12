@@ -3,14 +3,14 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { FaqAccordion } from "@/components/ui/FaqAccordion";
-import { faqItems } from "@/data/faq";
+import { getFaqPreviewItems } from "@/data/faq";
 import { homeContent } from "@/content/home";
 import { getLocale } from "@/i18n/getLocale";
 
 export async function FaqPreview() {
   const locale = await getLocale();
   const { faqPreview } = homeContent[locale];
-  const items = faqItems[locale];
+  const items = getFaqPreviewItems(locale);
 
   return (
     <section aria-label={faqPreview.eyebrow}>
