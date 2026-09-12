@@ -22,7 +22,7 @@ export const topSurgeryPageContent: { en: TopSurgeryPageContent; de: TopSurgeryP
   en: {
     metaTitle: "FTM Top Surgery",
     metaDescription:
-      "Learn what FTM top surgery involves, the surgical techniques available, and what to expect as an international patient at Top Surgery Care.",
+      "Learn what FTM top surgery involves, the surgical techniques available, and what to expect as a patient travelling abroad to Top Surgery Care in Istanbul, Turkey.",
     intro: {
       eyebrow: "Top Surgery",
       heading: "FTM Top Surgery",
@@ -48,7 +48,7 @@ export const topSurgeryPageContent: { en: TopSurgeryPageContent; de: TopSurgeryP
     recovery: {
       eyebrow: "Recovery",
       heading: "Recovery and aftercare",
-      body: "Aftercare guidance and follow-up support continue as you heal, whether you're recovering locally or preparing to travel back. Recovery is planned individually as part of your Patient Journey, not a fixed timeline applied to everyone.",
+      body: "Aftercare guidance and follow-up support continue as you heal, whether you're recovering locally or preparing to travel back after your surgery abroad. Recovery is planned individually as part of your Patient Journey, not a fixed timeline applied to everyone.",
       cta: { label: "See the full Patient Journey", href: "/patient-journey" },
     },
     faq: {
@@ -59,7 +59,7 @@ export const topSurgeryPageContent: { en: TopSurgeryPageContent; de: TopSurgeryP
   de: {
     metaTitle: "FTM Top Surgery",
     metaDescription:
-      "Erfahren Sie, was eine FTM-Top-Surgery beinhaltet, welche OP-Techniken zur Verfügung stehen und was Sie als internationaler Patient bei Top Surgery Care erwartet.",
+      "Erfahren Sie, was eine FTM-Top-Surgery beinhaltet, welche OP-Techniken zur Verfügung stehen und was Sie als international anreisender Patient bei Top Surgery Care in Istanbul, Türkei, erwartet.",
     intro: {
       eyebrow: "Top Surgery",
       heading: "FTM Top Surgery",
@@ -85,7 +85,7 @@ export const topSurgeryPageContent: { en: TopSurgeryPageContent; de: TopSurgeryP
     recovery: {
       eyebrow: "Genesung",
       heading: "Genesung und Nachsorge",
-      body: "Die Nachsorge und Begleitung setzen sich fort, während Sie heilen — ob vor Ort oder bei der Vorbereitung Ihrer Rückreise. Die Genesung wird individuell als Teil Ihrer Patientenreise geplant, nicht nach einem starren Zeitplan für alle.",
+      body: "Die Nachsorge und Begleitung setzen sich fort, während Sie heilen — ob vor Ort oder bei der Vorbereitung Ihrer Rückreise nach Ihrer Operation im Ausland. Die Genesung wird individuell als Teil Ihrer Patientenreise geplant, nicht nach einem starren Zeitplan für alle.",
       cta: { label: "Die vollständige Patientenreise ansehen", href: "/patient-journey" },
     },
     faq: {
