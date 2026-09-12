@@ -183,7 +183,7 @@ export const uiContent: { en: UiContent; de: UiContent } = {
       titleSuffix: "Top Surgery Care",
       defaultTitle: "Top Surgery Care | FTM Top Surgery with Dr. Serkan Dinar",
       description:
-        "Top Surgery Care provides FTM top surgery for international patients, led by Dr. Serkan Dinar. Explore techniques, the patient journey, and how to arrange a consultation.",
+        "Top Surgery Care provides FTM top surgery in Istanbul, Turkey for international patients, led by Dr. Serkan Dinar. Explore techniques, the patient journey, and consultations.",
       ogLocale: "en_US",
       ogImageAlt: "Top Surgery Care logo",
     },
@@ -292,7 +292,7 @@ export const uiContent: { en: UiContent; de: UiContent } = {
       titleSuffix: "Top Surgery Care",
       defaultTitle: "Top Surgery Care | FTM-Top-Surgery mit Dr. Serkan Dinar",
       description:
-        "Top Surgery Care bietet FTM-Top-Surgery für internationale Patienten, unter der Leitung von Dr. Serkan Dinar. Entdecken Sie die Techniken, die Patientenreise und wie Sie ein Beratungsgespräch vereinbaren.",
+        "Top Surgery Care bietet FTM-Top-Surgery in Istanbul, Türkei, für internationale Patienten, unter der Leitung von Dr. Serkan Dinar. Entdecken Sie Techniken, die Patientenreise und Beratungsgespräche.",
       ogLocale: "de_DE",
       ogImageAlt: "Top Surgery Care Logo",
     },
