@@ -19,6 +19,7 @@ export async function DoctorIntro() {
               src="/images/doctor/d22.jpeg"
               alt={doctorProfileContent[locale].photoAlt}
               fill
+              priority
               sizes="(min-width: 1024px) 30vw, (min-width: 768px) 40vw, 90vw"
               className="object-cover"
             />

@@ -91,6 +91,7 @@ export function Hero() {
             src="/images/manken/manken.jpeg"
             alt=""
             fill
+            priority
             sizes="(min-width: 1024px) 40vw, 46vw"
             className={`object-cover object-[38%_38%] saturate-[0.9] transition-opacity duration-700 ${
               isActive ? "opacity-[0.38]" : "opacity-[0.32]"
@@ -115,6 +116,7 @@ export function Hero() {
           src="/images/manken/manken.jpeg"
           alt=""
           fill
+          priority
           sizes="100vw"
           className={`object-cover object-[28%_28%] saturate-[0.9] transition-opacity duration-700 ${
             isActive ? "opacity-[0.36]" : "opacity-[0.5]"

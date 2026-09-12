@@ -8,11 +8,15 @@ import { uiContent } from "@/content/ui";
 
 const CARD_WIDTH = "clamp(220px, 22vw, 280px)";
 
-// Mobile browsers cap how many <video> elements can hold decoded/loading data
-// at once. Mounting all ten sources up front starves whichever cards come
-// later in the row, so each card's <source> is only attached once it scrolls
-// within this distance of the row's visible edge.
-const ACTIVATE_ROOT_MARGIN = "0px 600px 0px 600px";
+// Browsers cap how many <video> elements can hold decoded/loading data at
+// once, and also cap concurrent connections per origin — mounting every
+// source up front starves whichever cards come later in the row, and on a
+// wide viewport a large margin lets most/all ten qualify simultaneously,
+// each opening its own connection that competes with the rest of the
+// page's images. Kept small enough to still preload just ahead of scroll
+// (avoiding pop-in) without letting more than a couple of cards activate
+// at once.
+const ACTIVATE_ROOT_MARGIN = "0px 150px 0px 150px";
 
 function PlayGlyph({ playing }: { playing: boolean }) {
   return playing ? (
