@@ -11,6 +11,13 @@ import { useLocale } from "@/i18n/LocaleProvider";
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isActive, setIsActive] = useState(false);
+  // The shader layers below are the most expensive thing on this page
+  // (continuous WebGL rendering, measured to cost real main-thread time
+  // every frame). Only run them while Hero is actually on screen and the
+  // tab is in the foreground — assume visible on mount (Hero is always the
+  // first thing in view on load) and correct immediately from the real
+  // state via the observer/visibilitychange handler below.
+  const [shouldAnimate, setShouldAnimate] = useState(true);
   const locale = useLocale();
   const { hero } = homeContent[locale];
 
@@ -29,6 +36,31 @@ export function Hero() {
         container.removeEventListener("mouseenter", handleMouseEnter);
         container.removeEventListener("mouseleave", handleMouseLeave);
       }
+    };
+  }, []);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    let isIntersecting = true;
+    const updateShouldAnimate = () => {
+      setShouldAnimate(isIntersecting && document.visibilityState === "visible");
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isIntersecting = entry.isIntersecting;
+        updateShouldAnimate();
+      },
+      { threshold: 0 }
+    );
+    observer.observe(container);
+    document.addEventListener("visibilitychange", updateShouldAnimate);
+
+    return () => {
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", updateShouldAnimate);
     };
   }, []);
 
@@ -58,17 +90,25 @@ export function Hero() {
         </defs>
       </svg>
 
-      <MeshGradient
-        className="absolute inset-0 w-full h-full"
-        colors={["#000000", "#8fbbe3", "#5f7fa3", "#12172a", "#e7a6bc"]}
-        speed={0.3}
-      />
-      <MeshGradient
-        className={`absolute inset-0 w-full h-full transition-opacity duration-700 ${
-          isActive ? "opacity-80" : "opacity-60"
+      {/*
+        A single live shader layer instead of two — the second layer used to
+        be its own always-running MeshGradient purely to add a white/sky/rose
+        tint that brightened slightly on hover. That tint is reproduced here
+        as a plain CSS gradient overlay (no WebGL, effectively free) so the
+        hover reaction still exists but only one shader is ever computing.
+      */}
+      {shouldAnimate && (
+        <MeshGradient
+          className="absolute inset-0 w-full h-full"
+          colors={["#000000", "#8fbbe3", "#5f7fa3", "#12172a", "#e7a6bc", "#ffffff"]}
+          speed={0.25}
+        />
+      )}
+      <div
+        aria-hidden="true"
+        className={`absolute inset-0 w-full h-full bg-gradient-to-br from-white/10 via-[#8fbbe3]/10 to-[#e7a6bc]/15 transition-opacity duration-700 ${
+          isActive ? "opacity-90" : "opacity-60"
         }`}
-        colors={["#000000", "#ffffff", "#8fbbe3", "#e7a6bc"]}
-        speed={0.2}
       />
 
       {/*
@@ -248,28 +288,30 @@ export function Hero() {
 
         <div className="z-30 flex justify-end sm:absolute sm:bottom-8 sm:right-8">
           <div className="relative w-20 h-20 flex items-center justify-center">
-            <PulsingBorder
-              colors={["#8fbbe3", "#5f7fa3", "#e7a6bc", "#b79ad6", "#f2efe9", "#ffffff", "#12172a"]}
-              colorBack="#00000000"
-              speed={1.5}
-              roundness={1}
-              thickness={0.1}
-              softness={0.2}
-              intensity={5}
-              spots={5}
-              spotSize={0.1}
-              pulse={0.1}
-              smoke={0.5}
-              smokeSize={4}
-              scale={0.65}
-              rotation={0}
-              frame={9161408.251009725}
-              style={{
-                width: "60px",
-                height: "60px",
-                borderRadius: "50%",
-              }}
-            />
+            {shouldAnimate && (
+              <PulsingBorder
+                colors={["#8fbbe3", "#5f7fa3", "#e7a6bc", "#b79ad6", "#f2efe9", "#ffffff", "#12172a"]}
+                colorBack="#00000000"
+                speed={1.5}
+                roundness={1}
+                thickness={0.1}
+                softness={0.2}
+                intensity={5}
+                spots={5}
+                spotSize={0.1}
+                pulse={0.1}
+                smoke={0.5}
+                smokeSize={4}
+                scale={0.65}
+                rotation={0}
+                frame={9161408.251009725}
+                style={{
+                  width: "60px",
+                  height: "60px",
+                  borderRadius: "50%",
+                }}
+              />
+            )}
 
             <span className="absolute h-7 w-7 overflow-hidden rounded-full ring-1 ring-white/40 z-10">
               <Image
