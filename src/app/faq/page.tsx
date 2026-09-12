@@ -56,6 +56,24 @@ export default async function FaqPage() {
           }),
         }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: locale === "de" ? "Startseite" : "Home", item: siteConfig.url },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: faqPage.metaTitle,
+                item: `${siteConfig.url}${PAGE_PATH}`,
+              },
+            ],
+          }),
+        }}
+      />
 
       <section className="border-b border-line">
         <Container className="py-20 md:py-28">

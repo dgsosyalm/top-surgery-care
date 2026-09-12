@@ -32,6 +32,19 @@ export default function Home() {
           }),
         }}
       />
+      <script
+        type="application/ld+json"
+        // name/url only, from the same approved siteConfig — no SearchAction
+        // since this site has no search feature.
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: siteConfig.name,
+            url: siteConfig.url,
+          }),
+        }}
+      />
       <Hero />
       <PatientCoordination />
       <DoctorIntro />

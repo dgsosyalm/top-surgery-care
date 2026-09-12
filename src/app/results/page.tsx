@@ -5,6 +5,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { ResultsGallery } from "@/components/sections/ResultsGallery";
 import { VideoStories } from "@/components/sections/VideoStories";
 import { ArrowRightIcon } from "@/components/icons";
+import { siteConfig } from "@/lib/site";
 import { getLocale } from "@/i18n/getLocale";
 import { uiContent } from "@/content/ui";
 
@@ -41,6 +42,25 @@ export default async function ResultsPage() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: locale === "de" ? "Startseite" : "Home", item: siteConfig.url },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: resultsPage.metaTitle,
+                item: `${siteConfig.url}${PAGE_PATH}`,
+              },
+            ],
+          }),
+        }}
+      />
+
       <section className="border-b border-line">
         <Container className="pt-14 pb-20 md:py-28">
           <Reveal>

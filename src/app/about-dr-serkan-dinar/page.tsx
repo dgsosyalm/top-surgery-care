@@ -80,15 +80,37 @@ export default async function AboutDrSerkanDinarPage() {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "Person",
+            "@type": "Physician",
             name: p.name,
             jobTitle: p.title,
+            // Same already-approved specialty text as jobTitle above — not
+            // a new credential claim, just a more specific schema.org field
+            // for the identical fact.
+            medicalSpecialty: p.title,
             description: p.metaDescription,
             image: `${siteConfig.url}/images/doctor/serkandinar.jpg`,
             url: `${siteConfig.url}${PAGE_PATH}`,
             alumniOf: p.education
               .filter((item) => item.institution.toLowerCase().includes("university"))
               .map((item) => item.institution),
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: locale === "de" ? "Startseite" : "Home", item: siteConfig.url },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: p.name,
+                item: `${siteConfig.url}${PAGE_PATH}`,
+              },
+            ],
           }),
         }}
       />
