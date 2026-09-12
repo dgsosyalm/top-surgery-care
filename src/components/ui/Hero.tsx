@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { MeshGradient, PulsingBorder } from "@paper-design/shaders-react";
 import { motion } from "framer-motion";
 import { homeContent } from "@/content/home";
 import { useLocale } from "@/i18n/LocaleProvider";
@@ -11,13 +10,6 @@ import { useLocale } from "@/i18n/LocaleProvider";
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isActive, setIsActive] = useState(false);
-  // The shader layers below are the most expensive thing on this page
-  // (continuous WebGL rendering, measured to cost real main-thread time
-  // every frame). Only run them while Hero is actually on screen and the
-  // tab is in the foreground — assume visible on mount (Hero is always the
-  // first thing in view on load) and correct immediately from the real
-  // state via the observer/visibilitychange handler below.
-  const [shouldAnimate, setShouldAnimate] = useState(true);
   const locale = useLocale();
   const { hero } = homeContent[locale];
 
@@ -36,31 +28,6 @@ export function Hero() {
         container.removeEventListener("mouseenter", handleMouseEnter);
         container.removeEventListener("mouseleave", handleMouseLeave);
       }
-    };
-  }, []);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    let isIntersecting = true;
-    const updateShouldAnimate = () => {
-      setShouldAnimate(isIntersecting && document.visibilityState === "visible");
-    };
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        isIntersecting = entry.isIntersecting;
-        updateShouldAnimate();
-      },
-      { threshold: 0 }
-    );
-    observer.observe(container);
-    document.addEventListener("visibilitychange", updateShouldAnimate);
-
-    return () => {
-      observer.disconnect();
-      document.removeEventListener("visibilitychange", updateShouldAnimate);
     };
   }, []);
 
@@ -91,19 +58,17 @@ export function Hero() {
       </svg>
 
       {/*
-        A single live shader layer instead of two — the second layer used to
-        be its own always-running MeshGradient purely to add a white/sky/rose
-        tint that brightened slightly on hover. That tint is reproduced here
-        as a plain CSS gradient overlay (no WebGL, effectively free) so the
-        hover reaction still exists but only one shader is ever computing.
+        Pure-CSS replacement for what used to be two live MeshGradient WebGL
+        shaders: three large, heavily blurred, slowly drifting radial-gradient
+        "blobs" (transform-only animation — GPU-composited, no per-frame
+        shader recompute) blend the same navy/sky/rose/white palette. A
+        fourth, subtler layer reproduces the old hover-brighten reaction.
       */}
-      {shouldAnimate && (
-        <MeshGradient
-          className="absolute inset-0 w-full h-full"
-          colors={["#000000", "#8fbbe3", "#5f7fa3", "#12172a", "#e7a6bc", "#ffffff"]}
-          speed={0.25}
-        />
-      )}
+      <div aria-hidden="true" className="absolute inset-0 h-full w-full overflow-hidden">
+        <div className="hero-blob-1 absolute -top-1/4 -left-1/4 h-[85%] w-[85%] rounded-full bg-[#8fbbe3] opacity-40 blur-[110px]" />
+        <div className="hero-blob-2 absolute -right-1/4 -bottom-1/4 h-[85%] w-[85%] rounded-full bg-[#e7a6bc] opacity-35 blur-[110px]" />
+        <div className="hero-blob-3 absolute top-1/3 left-1/3 h-[65%] w-[65%] rounded-full bg-[#5f7fa3] opacity-30 blur-[120px]" />
+      </div>
       <div
         aria-hidden="true"
         className={`absolute inset-0 w-full h-full bg-gradient-to-br from-white/10 via-[#8fbbe3]/10 to-[#e7a6bc]/15 transition-opacity duration-700 ${
@@ -288,30 +253,21 @@ export function Hero() {
 
         <div className="z-30 flex justify-end sm:absolute sm:bottom-8 sm:right-8">
           <div className="relative w-20 h-20 flex items-center justify-center">
-            {shouldAnimate && (
-              <PulsingBorder
-                colors={["#8fbbe3", "#5f7fa3", "#e7a6bc", "#b79ad6", "#f2efe9", "#ffffff", "#12172a"]}
-                colorBack="#00000000"
-                speed={1.5}
-                roundness={1}
-                thickness={0.1}
-                softness={0.2}
-                intensity={5}
-                spots={5}
-                spotSize={0.1}
-                pulse={0.1}
-                smoke={0.5}
-                smokeSize={4}
-                scale={0.65}
-                rotation={0}
-                frame={9161408.251009725}
-                style={{
-                  width: "60px",
-                  height: "60px",
-                  borderRadius: "50%",
-                }}
-              />
-            )}
+            {/*
+              CSS replacement for the old PulsingBorder WebGL shader: a
+              conic-gradient ring in the same palette, masked to a thin
+              band and spun via CSS animation — pure compositor work.
+            */}
+            <div
+              aria-hidden="true"
+              className="hero-badge-ring absolute h-[60px] w-[60px] rounded-full"
+              style={{
+                background:
+                  "conic-gradient(from 0deg, #8fbbe3, #5f7fa3, #e7a6bc, #b79ad6, #f2efe9, #ffffff, #12172a, #8fbbe3)",
+                WebkitMask: "radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px))",
+                mask: "radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px))",
+              }}
+            />
 
             <span className="absolute h-7 w-7 overflow-hidden rounded-full ring-1 ring-white/40 z-10">
               <Image
