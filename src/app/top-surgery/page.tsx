@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
@@ -218,6 +219,16 @@ export default async function TopSurgeryPage() {
               title={copy.techniqueSelection.heading}
               description={surgicalApproach.note}
             />
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-ink-soft">
+              {copy.techniqueSelection.doctorNotePrefix}{" "}
+              <Link
+                href="/about-dr-serkan-dinar"
+                className="text-ink underline underline-offset-2 hover:text-ink-soft"
+              >
+                Dr. Serkan Dinar
+              </Link>{" "}
+              {copy.techniqueSelection.doctorNoteSuffix}
+            </p>
           </Reveal>
         </Container>
       </section>

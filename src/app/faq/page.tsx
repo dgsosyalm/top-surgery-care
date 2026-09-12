@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
 import { FaqAccordion } from "@/components/ui/FaqAccordion";
+import { Button } from "@/components/ui/Button";
+import { Reveal } from "@/components/ui/Reveal";
 import { faqItems } from "@/data/faq";
 import { siteConfig } from "@/lib/site";
 import { getLocale } from "@/i18n/getLocale";
@@ -66,6 +68,11 @@ export default async function FaqPage() {
       <section>
         <Container className="py-16 md:py-20">
           <FaqAccordion items={items} className="max-w-3xl" />
+          <Reveal delay={items.length * 60}>
+            <Button href="/contact" variant="secondary" size="md" showArrow className="mt-10">
+              {faqPage.contactCtaLabel}
+            </Button>
+          </Reveal>
         </Container>
       </section>
     </>

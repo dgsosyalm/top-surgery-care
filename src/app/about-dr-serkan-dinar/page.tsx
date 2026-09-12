@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
@@ -244,7 +245,17 @@ export default async function AboutDrSerkanDinarPage() {
       <section className="bg-paper-alt/45">
         <Container className="py-20 text-center md:py-24">
           <Reveal className="mx-auto max-w-lg">
-            <p className="font-display text-h3 font-medium text-ink">{p.cta.heading}</p>
+            <p className="text-base text-ink-soft">
+              {p.topSurgeryNote.prefix}{" "}
+              <Link
+                href="/top-surgery"
+                className="text-ink underline underline-offset-2 hover:text-ink-soft"
+              >
+                {p.topSurgeryNote.linkLabel}
+              </Link>
+              {p.topSurgeryNote.suffix}
+            </p>
+            <p className="mt-6 font-display text-h3 font-medium text-ink">{p.cta.heading}</p>
             <p className="mt-3 text-base text-ink-soft">{p.cta.body}</p>
             <Button href={p.cta.href} variant="secondary" size="md" showArrow className="mt-8">
               {p.cta.label}

@@ -36,6 +36,8 @@ type DoctorProfileContent = {
   courses: string[];
   volunteer: { heading: string; body: string };
   cta: { heading: string; body: string; label: string; href: string };
+  /** Short sentence, rendered above the CTA, linking to /top-surgery. */
+  topSurgeryNote: { prefix: string; linkLabel: string; suffix: string };
   sections: {
     biography: string;
     education: string;
@@ -173,6 +175,11 @@ export const doctorProfileContent: { en: DoctorProfileContent; de: DoctorProfile
       label: "Contact us",
       href: "/contact",
     },
+    topSurgeryNote: {
+      prefix: "Learn more about the",
+      linkLabel: "FTM top surgery",
+      suffix: " we provide.",
+    },
     sections: {
       biography: "Biography",
       education: "Education",
@@ -234,6 +241,11 @@ export const doctorProfileContent: { en: DoctorProfileContent; de: DoctorProfile
       body: "Nehmen Sie Kontakt auf — wir helfen Ihnen, die Antworten zu finden, die Sie brauchen.",
       label: "Kontaktieren Sie uns",
       href: "/contact",
+    },
+    topSurgeryNote: {
+      prefix: "Erfahren Sie mehr über die von uns angebotene",
+      linkLabel: "FTM Top Surgery",
+      suffix: ".",
     },
     sections: {
       biography: "Werdegang",

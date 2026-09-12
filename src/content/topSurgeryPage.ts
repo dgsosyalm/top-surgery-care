@@ -12,7 +12,15 @@ type TopSurgeryPageContent = {
   intro: { eyebrow: string; heading: string };
   whoMayConsider: { eyebrow: string; heading: string; body: string };
   techniques: { eyebrow: string; heading: string; considerationsLabel: string };
-  techniqueSelection: { eyebrow: string; heading: string };
+  techniqueSelection: {
+    eyebrow: string;
+    heading: string;
+    /** Rendered as a short sentence around a link to /about-dr-serkan-dinar,
+     *  right after the shared technique-selection note — kept local to this
+     *  page rather than touching the shared note itself. */
+    doctorNotePrefix: string;
+    doctorNoteSuffix: string;
+  };
   journey: { eyebrow: string; heading: string };
   recovery: { eyebrow: string; heading: string; body: string; cta: { label: string; href: string } };
   faq: { eyebrow: string; heading: string };
@@ -40,6 +48,8 @@ export const topSurgeryPageContent: { en: TopSurgeryPageContent; de: TopSurgeryP
     techniqueSelection: {
       eyebrow: "Choosing a Technique",
       heading: "How technique selection is determined",
+      doctorNotePrefix: "This decision is made together with",
+      doctorNoteSuffix: "during your consultation.",
     },
     journey: {
       eyebrow: "Patient Journey",
@@ -77,6 +87,8 @@ export const topSurgeryPageContent: { en: TopSurgeryPageContent; de: TopSurgeryP
     techniqueSelection: {
       eyebrow: "Wahl der Technik",
       heading: "Wie die Technik ausgewählt wird",
+      doctorNotePrefix: "Diese Entscheidung wird gemeinsam mit",
+      doctorNoteSuffix: "in Ihrem Beratungsgespräch getroffen.",
     },
     journey: {
       eyebrow: "Patientenreise",

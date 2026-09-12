@@ -81,7 +81,7 @@ type UiContent = {
     ogLocale: string;
     ogImageAlt: string;
   };
-  faqPage: { metaTitle: string; metaDescription: string };
+  faqPage: { metaTitle: string; metaDescription: string; contactCtaLabel: string };
   resultsPage: {
     metaTitle: string;
     metaDescription: string;
@@ -94,6 +94,7 @@ type UiContent = {
       body: string;
       patientJourneyLabel: string;
       contactLabel: string;
+      techniquesLabel: string;
     };
   };
 };
@@ -191,6 +192,7 @@ export const uiContent: { en: UiContent; de: UiContent } = {
       metaTitle: "Frequently Asked Questions",
       metaDescription:
         "Answers to common questions about FTM top surgery, technique options, and what to expect as an international patient at Top Surgery Care.",
+      contactCtaLabel: "Still have questions? Contact us",
     },
     resultsPage: {
       metaTitle: "Results",
@@ -205,6 +207,7 @@ export const uiContent: { en: UiContent; de: UiContent } = {
         body: "Curious what happens next, or have a question of your own?",
         patientJourneyLabel: "See the Patient Journey",
         contactLabel: "Contact us",
+        techniquesLabel: "See the techniques",
       },
     },
   },
@@ -300,6 +303,7 @@ export const uiContent: { en: UiContent; de: UiContent } = {
       metaTitle: "Häufig gestellte Fragen",
       metaDescription:
         "Antworten auf häufige Fragen zur FTM-Top-Surgery, den verfügbaren Techniken und dazu, was Sie als internationaler Patient bei Top Surgery Care erwartet.",
+      contactCtaLabel: "Noch Fragen? Kontaktieren Sie uns",
     },
     resultsPage: {
       metaTitle: "Ergebnisse",
@@ -314,6 +318,7 @@ export const uiContent: { en: UiContent; de: UiContent } = {
         body: "Neugierig, wie es weitergeht, oder haben Sie eine eigene Frage?",
         patientJourneyLabel: "Die Patientenreise ansehen",
         contactLabel: "Kontaktieren Sie uns",
+        techniquesLabel: "Techniken ansehen",
       },
     },
   },

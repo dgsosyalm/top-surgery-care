@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
@@ -101,6 +102,20 @@ export default async function PatientJourneyPage() {
               </li>
             ))}
           </ol>
+
+          <Reveal delay={steps.length * 80}>
+            <p className="mt-10 max-w-2xl text-base leading-relaxed text-ink-soft">
+              {copy.stages.nextPrefix}{" "}
+              <Link href="/results" className="text-ink underline underline-offset-2 hover:text-ink-soft">
+                {copy.stages.resultsLabel}
+              </Link>
+              {copy.stages.nextMiddle}{" "}
+              <Link href="/contact" className="text-ink underline underline-offset-2 hover:text-ink-soft">
+                {copy.stages.consultationLabel}
+              </Link>
+              {copy.stages.nextSuffix}
+            </p>
+          </Reveal>
         </Container>
       </section>
 
@@ -110,11 +125,14 @@ export default async function PatientJourneyPage() {
       <section className="border-b border-line">
         <Container className="py-16 md:py-20">
           <Reveal>
-            <SectionHeading
-              eyebrow={copy.ukNote.eyebrow}
-              title={copy.ukNote.heading}
-              description={copy.ukNote.body}
-            />
+            <SectionHeading eyebrow={copy.ukNote.eyebrow} title={copy.ukNote.heading} />
+            <p className="mt-4 max-w-2xl text-lead text-ink-soft text-pretty">
+              {copy.ukNote.bodyPrefix}{" "}
+              <Link href="/top-surgery" className="text-ink underline underline-offset-2 hover:text-ink-soft">
+                {copy.ukNote.topSurgeryLabel}
+              </Link>
+              {copy.ukNote.bodySuffix}
+            </p>
           </Reveal>
         </Container>
       </section>
