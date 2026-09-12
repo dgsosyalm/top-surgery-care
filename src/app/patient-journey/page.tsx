@@ -104,6 +104,21 @@ export default async function PatientJourneyPage() {
         </Container>
       </section>
 
+      {/* Short, factual note for UK-based patients — natural continuation of
+          the journey above, not a separate claim about pricing, waiting
+          times, or any comparison with UK healthcare. */}
+      <section className="border-b border-line">
+        <Container className="py-16 md:py-20">
+          <Reveal>
+            <SectionHeading
+              eyebrow={copy.ukNote.eyebrow}
+              title={copy.ukNote.heading}
+              description={copy.ukNote.body}
+            />
+          </Reveal>
+        </Container>
+      </section>
+
       <FinalCta />
     </>
   );
