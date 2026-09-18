@@ -14,6 +14,7 @@ const ROUTES: Array<{
 }> = [
   { path: "/", priority: 1, changeFrequency: "monthly" },
   { path: "/top-surgery", priority: 0.8, changeFrequency: "monthly" },
+  { path: "/top-surgery-turkey", priority: 0.8, changeFrequency: "monthly" },
   { path: "/results", priority: 0.8, changeFrequency: "monthly" },
   { path: "/contact", priority: 0.8, changeFrequency: "yearly" },
   { path: "/patient-journey", priority: 0.6, changeFrequency: "monthly" },

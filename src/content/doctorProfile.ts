@@ -38,6 +38,8 @@ type DoctorProfileContent = {
   cta: { heading: string; body: string; label: string; href: string };
   /** Short sentence, rendered above the CTA, linking to /top-surgery. */
   topSurgeryNote: { prefix: string; linkLabel: string; suffix: string };
+  /** Short sentence rendered under topSurgeryNote, linking to /top-surgery-turkey. */
+  turkeyNote: { prefix: string; linkLabel: string; suffix: string };
   sections: {
     biography: string;
     education: string;
@@ -180,6 +182,11 @@ export const doctorProfileContent: { en: DoctorProfileContent; de: DoctorProfile
       linkLabel: "FTM top surgery",
       suffix: " we provide.",
     },
+    turkeyNote: {
+      prefix: "International patients can also read about",
+      linkLabel: "top surgery in Turkey",
+      suffix: ".",
+    },
     sections: {
       biography: "Biography",
       education: "Education",
@@ -245,6 +252,11 @@ export const doctorProfileContent: { en: DoctorProfileContent; de: DoctorProfile
     topSurgeryNote: {
       prefix: "Erfahren Sie mehr über die von uns angebotene",
       linkLabel: "FTM Top Surgery",
+      suffix: ".",
+    },
+    turkeyNote: {
+      prefix: "Internationale Patienten finden weitere Informationen zur",
+      linkLabel: "Top Surgery in der Türkei",
       suffix: ".",
     },
     sections: {

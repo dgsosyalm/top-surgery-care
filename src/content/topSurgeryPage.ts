@@ -21,7 +21,12 @@ type TopSurgeryPageContent = {
     doctorNotePrefix: string;
     doctorNoteSuffix: string;
   };
-  journey: { eyebrow: string; heading: string };
+  journey: {
+    eyebrow: string;
+    heading: string;
+    /** Short sentence linking to /top-surgery-turkey, shown under the heading. */
+    turkeyNote: { prefix: string; linkLabel: string; suffix: string };
+  };
   recovery: { eyebrow: string; heading: string; body: string; cta: { label: string; href: string } };
   faq: { eyebrow: string; heading: string };
 };
@@ -54,6 +59,11 @@ export const topSurgeryPageContent: { en: TopSurgeryPageContent; de: TopSurgeryP
     journey: {
       eyebrow: "Patient Journey",
       heading: "What the process looks like",
+      turkeyNote: {
+        prefix: "Travelling to Istanbul for your surgery? Read our guide to",
+        linkLabel: "top surgery in Turkey",
+        suffix: " for international patients.",
+      },
     },
     recovery: {
       eyebrow: "Recovery",
@@ -93,6 +103,11 @@ export const topSurgeryPageContent: { en: TopSurgeryPageContent; de: TopSurgeryP
     journey: {
       eyebrow: "Patientenreise",
       heading: "So läuft der Ablauf",
+      turkeyNote: {
+        prefix: "Reisen Sie für Ihre Operation nach Istanbul? Lesen Sie unseren Leitfaden zur",
+        linkLabel: "Top Surgery in der Türkei",
+        suffix: " für internationale Patienten.",
+      },
     },
     recovery: {
       eyebrow: "Genesung",

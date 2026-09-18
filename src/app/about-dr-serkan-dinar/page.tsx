@@ -277,6 +277,16 @@ export default async function AboutDrSerkanDinarPage() {
               </Link>
               {p.topSurgeryNote.suffix}
             </p>
+            <p className="mt-2 text-base text-ink-soft">
+              {p.turkeyNote.prefix}{" "}
+              <Link
+                href="/top-surgery-turkey"
+                className="text-ink underline underline-offset-2 hover:text-ink-soft"
+              >
+                {p.turkeyNote.linkLabel}
+              </Link>
+              {p.turkeyNote.suffix}
+            </p>
             <p className="mt-6 font-display text-h3 font-medium text-ink">{p.cta.heading}</p>
             <p className="mt-3 text-base text-ink-soft">{p.cta.body}</p>
             <Button href={p.cta.href} variant="secondary" size="md" showArrow className="mt-8">

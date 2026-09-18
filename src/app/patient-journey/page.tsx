@@ -115,6 +115,16 @@ export default async function PatientJourneyPage() {
               </Link>
               {copy.stages.nextSuffix}
             </p>
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-ink-soft">
+              {copy.stages.turkeyNote.prefix}{" "}
+              <Link
+                href="/top-surgery-turkey"
+                className="text-ink underline underline-offset-2 hover:text-ink-soft"
+              >
+                {copy.stages.turkeyNote.linkLabel}
+              </Link>
+              {copy.stages.turkeyNote.suffix}
+            </p>
           </Reveal>
         </Container>
       </section>

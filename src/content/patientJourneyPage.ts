@@ -16,6 +16,8 @@ type PatientJourneyPageContent = {
     nextMiddle: string;
     consultationLabel: string;
     nextSuffix: string;
+    /** Short sentence after that, linking to /top-surgery-turkey. */
+    turkeyNote: { prefix: string; linkLabel: string; suffix: string };
   };
   ukNote: {
     eyebrow: string;
@@ -44,6 +46,11 @@ export const patientJourneyPageContent: { en: PatientJourneyPageContent; de: Pat
       nextMiddle: ", or get in touch to arrange a",
       consultationLabel: "consultation",
       nextSuffix: ".",
+      turkeyNote: {
+        prefix: "Planning to travel to Istanbul? Read more about",
+        linkLabel: "top surgery in Turkey",
+        suffix: ", including the surgical techniques and how recovery is followed up.",
+      },
     },
     ukNote: {
       eyebrow: "For Patients in the UK",
@@ -70,6 +77,11 @@ export const patientJourneyPageContent: { en: PatientJourneyPageContent; de: Pat
       nextMiddle: ", oder nehmen Sie Kontakt auf, um ein",
       consultationLabel: "Beratungsgespräch",
       nextSuffix: " zu vereinbaren.",
+      turkeyNote: {
+        prefix: "Sie planen die Reise nach Istanbul? Lesen Sie mehr zur",
+        linkLabel: "Top Surgery in der Türkei",
+        suffix: " — mit den OP-Techniken und der Nachsorge nach dem Eingriff.",
+      },
     },
     ukNote: {
       eyebrow: "Für Patienten aus dem UK",

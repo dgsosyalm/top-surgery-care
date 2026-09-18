@@ -256,6 +256,16 @@ export default async function TopSurgeryPage() {
         <Container className="py-16 md:py-20">
           <Reveal>
             <SectionHeading eyebrow={copy.journey.eyebrow} title={copy.journey.heading} />
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-ink-soft">
+              {copy.journey.turkeyNote.prefix}{" "}
+              <Link
+                href="/top-surgery-turkey"
+                className="text-ink underline underline-offset-2 hover:text-ink-soft"
+              >
+                {copy.journey.turkeyNote.linkLabel}
+              </Link>
+              {copy.journey.turkeyNote.suffix}
+            </p>
           </Reveal>
 
           <ol className="mt-12 grid gap-10 md:grid-cols-3 md:gap-8">
