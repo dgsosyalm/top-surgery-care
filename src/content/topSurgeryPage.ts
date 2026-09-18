@@ -11,7 +11,13 @@ type TopSurgeryPageContent = {
   metaDescription: string;
   intro: { eyebrow: string; heading: string };
   whoMayConsider: { eyebrow: string; heading: string; body: string };
-  techniques: { eyebrow: string; heading: string; considerationsLabel: string };
+  techniques: {
+    eyebrow: string;
+    heading: string;
+    considerationsLabel: string;
+    /** Short sentence linking to /top-surgery/techniques, shown under the heading. */
+    compareNote: { prefix: string; linkLabel: string; suffix: string };
+  };
   techniqueSelection: {
     eyebrow: string;
     heading: string;
@@ -49,6 +55,11 @@ export const topSurgeryPageContent: { en: TopSurgeryPageContent; de: TopSurgeryP
       eyebrow: "Surgical Techniques",
       heading: "The techniques we work with",
       considerationsLabel: "Key considerations",
+      compareNote: {
+        prefix: "Want to see them side by side? Read our guide to",
+        linkLabel: "top surgery techniques",
+        suffix: ", including double incision vs keyhole.",
+      },
     },
     techniqueSelection: {
       eyebrow: "Choosing a Technique",
@@ -93,6 +104,11 @@ export const topSurgeryPageContent: { en: TopSurgeryPageContent; de: TopSurgeryP
       eyebrow: "OP-Techniken",
       heading: "Die Techniken, mit denen wir arbeiten",
       considerationsLabel: "Wichtige Faktoren",
+      compareNote: {
+        prefix: "Sie möchten die Techniken direkt vergleichen? Lesen Sie unseren Leitfaden zu den",
+        linkLabel: "Top Surgery Techniken",
+        suffix: " — auch zu Doppelinzision vs. Keyhole.",
+      },
     },
     techniqueSelection: {
       eyebrow: "Wahl der Technik",

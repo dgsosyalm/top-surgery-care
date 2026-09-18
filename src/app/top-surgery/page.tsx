@@ -145,6 +145,16 @@ export default async function TopSurgeryPage() {
         <Container className="py-16 md:py-20 md:pb-28">
           <Reveal>
             <SectionHeading eyebrow={copy.techniques.eyebrow} title={copy.techniques.heading} />
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-ink-soft">
+              {copy.techniques.compareNote.prefix}{" "}
+              <Link
+                href="/top-surgery/techniques"
+                className="text-ink underline underline-offset-2 hover:text-ink-soft"
+              >
+                {copy.techniques.compareNote.linkLabel}
+              </Link>
+              {copy.techniques.compareNote.suffix}
+            </p>
           </Reveal>
 
           <div className="mt-12 grid gap-6 sm:grid-cols-3">

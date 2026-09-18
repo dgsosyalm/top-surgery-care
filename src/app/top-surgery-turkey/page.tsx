@@ -194,7 +194,7 @@ export default async function TopSurgeryTurkeyPage() {
           </div>
 
           <Reveal delay={techniqueList.length * 100}>
-            <Button href="/top-surgery" variant="secondary" size="md" showArrow className="mt-12">
+            <Button href="/top-surgery/techniques" variant="secondary" size="md" showArrow className="mt-12">
               {copy.techniques.allTechniquesLabel}
             </Button>
           </Reveal>
