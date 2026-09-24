@@ -21,4 +21,9 @@ export const siteConfig = {
   },
   // Nav labels (primary + legal) are translated — see src/content/ui.ts
   // → uiContent[locale].nav. Only hrefs live here.
+  analytics: {
+    // GA4 measurement ID — not a secret, safe to ship to the client.
+    // See src/components/layout/GoogleAnalytics.tsx for where it's used.
+    gaMeasurementId: "G-2EG146FGT9",
+  },
 } as const;

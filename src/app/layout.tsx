@@ -3,6 +3,7 @@ import { Fraunces, Inter } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
+import { GoogleAnalytics } from "@/components/layout/GoogleAnalytics";
 import { BgradientAnim } from "@/components/ui/soft-gradient-background-animation";
 import { LocaleProvider } from "@/i18n/LocaleProvider";
 import { getLocale } from "@/i18n/getLocale";
@@ -84,6 +85,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
           <Footer />
           <WhatsAppButton />
         </LocaleProvider>
+        <GoogleAnalytics />
       </body>
     </html>
   );
