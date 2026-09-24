@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, useTransition } from "react";
+import { createContext, useContext, useEffect, useState, useTransition } from "react";
 import type { ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { setLocaleCookie } from "@/i18n/actions";
@@ -30,6 +30,23 @@ export function LocaleProvider({
   const [locale, setLocaleState] = useState(initialLocale);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
+
+  // TEMPORARY DEBUG — remove once the GA4 custom-event issue is resolved.
+  // Fires a single, parameter-free manual custom event ~3s after load, in
+  // production only, purely to check in GA4 DebugView whether gtag-sent
+  // custom events are accepted at all (isolated from any WhatsApp-specific
+  // logic). Mounted here because LocaleProvider is already an existing
+  // client component wrapping every page, so nothing new needs adding to
+  // the tree. Not tied to locale — runs once per LocaleProvider mount.
+  useEffect(() => {
+    if (process.env.NODE_ENV !== "production") return;
+
+    const timer = setTimeout(() => {
+      window.gtag?.("event", "ga_test", { debug_mode: true });
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const setLocale = (next: Locale) => {
     if (next === locale) return;
