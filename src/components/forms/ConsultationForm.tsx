@@ -26,7 +26,9 @@ export function ConsultationForm() {
     lines.push("", t.whatsappMessageLabel, message);
 
     const whatsappUrl = `${siteConfig.contact.whatsappHref}?text=${encodeURIComponent(lines.join("\n"))}`;
-    trackWhatsAppClick({ link_url: whatsappUrl, source: "consultation_form" });
+    // No event params here — whatsappUrl embeds whatever the visitor typed
+    // (name, country, message), and that must never be sent to GA4.
+    trackWhatsAppClick();
     window.open(whatsappUrl, "_blank", "noopener,noreferrer");
   }
 

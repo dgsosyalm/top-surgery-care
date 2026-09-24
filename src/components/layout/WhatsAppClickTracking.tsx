@@ -22,7 +22,7 @@ export function WhatsAppClickTracking() {
       if (!(link instanceof HTMLAnchorElement)) return;
       if (!link.href.startsWith(siteConfig.contact.whatsappHref)) return;
 
-      trackWhatsAppClick({ link_url: link.href });
+      trackWhatsAppClick();
     }
 
     document.addEventListener("click", handleClick);

@@ -1,29 +1,14 @@
-import Script from "next/script";
+import { GoogleAnalytics as NextGoogleAnalytics } from "@next/third-parties/google";
 import { siteConfig } from "@/lib/site";
 
-// GA4 site measurement only — no other tracking/marketing pixels.
-// Loaded after the page is interactive so it never blocks or delays
-// rendering, and skipped outside production so local/dev traffic never
-// pollutes the analytics data.
+// GA4 site measurement only — no other tracking/marketing pixels. Uses the
+// official @next/third-parties helper (version-pinned to this exact Next.js
+// release) instead of a hand-rolled <Script> pair, so the window.gtag /
+// window.dataLayer wiring is the same one Vercel/Next ship and test against
+// this App Router version. Skipped outside production so local/dev traffic
+// never pollutes the analytics data.
 export function GoogleAnalytics() {
   if (process.env.NODE_ENV !== "production") return null;
 
-  const { gaMeasurementId } = siteConfig.analytics;
-
-  return (
-    <>
-      <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}
-        strategy="afterInteractive"
-      />
-      <Script id="ga4-init" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', '${gaMeasurementId}');
-        `}
-      </Script>
-    </>
-  );
+  return <NextGoogleAnalytics gaId={siteConfig.analytics.gaMeasurementId} />;
 }
