@@ -4,7 +4,6 @@ import type { FormEvent, ReactNode } from "react";
 import { siteConfig } from "@/lib/site";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { uiContent } from "@/content/ui";
-import { trackWhatsAppClick } from "@/lib/analytics";
 
 const inputClasses =
   "w-full border border-line bg-paper px-4 py-3 text-sm text-ink placeholder:text-ink-faint transition-colors focus-visible:outline-focus";
@@ -26,9 +25,13 @@ export function ConsultationForm() {
     lines.push("", t.whatsappMessageLabel, message);
 
     const whatsappUrl = `${siteConfig.contact.whatsappHref}?text=${encodeURIComponent(lines.join("\n"))}`;
-    // No event params here — whatsappUrl embeds whatever the visitor typed
-    // (name, country, message), and that must never be sent to GA4.
-    trackWhatsAppClick();
+
+    // Google's own documented pattern, called directly — no dataLayer, no
+    // gtag wrapper, no custom parameters (whatsappUrl embeds whatever the
+    // visitor typed, and that must never reach GA4).
+    if (typeof window.gtag === "function") {
+      window.gtag("event", "whatsapp_click");
+    }
     window.open(whatsappUrl, "_blank", "noopener,noreferrer");
   }
 

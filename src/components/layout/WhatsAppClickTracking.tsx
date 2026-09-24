@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import { siteConfig } from "@/lib/site";
-import { trackWhatsAppClick } from "@/lib/analytics";
 
 // Fires the GA4 `whatsapp_click` event for every click on a link that goes
 // to our WhatsApp number, wherever it appears (header, footer, final CTA,
@@ -22,7 +21,13 @@ export function WhatsAppClickTracking() {
       if (!(link instanceof HTMLAnchorElement)) return;
       if (!link.href.startsWith(siteConfig.contact.whatsappHref)) return;
 
-      trackWhatsAppClick();
+      // Google's own documented pattern, called directly — no dataLayer,
+      // no gtag wrapper, no custom parameters. Safe no-op if gtag hasn't
+      // loaded yet (e.g. an ad blocker, or the very first instant after
+      // hydration) rather than throwing.
+      if (typeof window.gtag === "function") {
+        window.gtag("event", "whatsapp_click");
+      }
     }
 
     document.addEventListener("click", handleClick);
