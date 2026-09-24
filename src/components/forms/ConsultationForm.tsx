@@ -4,6 +4,7 @@ import type { FormEvent, ReactNode } from "react";
 import { siteConfig } from "@/lib/site";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { uiContent } from "@/content/ui";
+import { trackWhatsAppClick } from "@/lib/analytics";
 
 const inputClasses =
   "w-full border border-line bg-paper px-4 py-3 text-sm text-ink placeholder:text-ink-faint transition-colors focus-visible:outline-focus";
@@ -25,6 +26,7 @@ export function ConsultationForm() {
     lines.push("", t.whatsappMessageLabel, message);
 
     const whatsappUrl = `${siteConfig.contact.whatsappHref}?text=${encodeURIComponent(lines.join("\n"))}`;
+    trackWhatsAppClick({ link_url: whatsappUrl, source: "consultation_form" });
     window.open(whatsappUrl, "_blank", "noopener,noreferrer");
   }
 
