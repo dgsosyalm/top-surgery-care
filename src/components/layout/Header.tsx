@@ -101,13 +101,12 @@ export function Header() {
   );
 }
 
-// Desktop-only. FTM-inspired hover/focus micro-interaction: the label
-// crossfades into a soft blue → white → soft pink gradient with a slow
-// internal drift, and a thin gradient underline reveals from the center
-// outward. Uses a second, aria-hidden gradient copy of the label stacked
-// via absolute positioning — deliberately not reused on mobile (see
-// MobileNavLink below), since that stacked-copy technique is what caused
-// visible duplicate/misaligned text at mobile's larger tap-target size.
+// Desktop-only. A single real text node — no stacked aria-hidden overlay
+// span. An earlier version layered a second, absolutely-positioned gradient
+// copy of the label on top for a hover crossfade effect; that overlay could
+// sit above the real link text and swallow clicks, which broke desktop nav.
+// Keeps the simple color transition and center-out underline on
+// hover/focus/active.
 function NavLink({
   href,
   label,
@@ -120,17 +119,9 @@ function NavLink({
   return (
     <Link
       href={href}
-      className={`group relative transition-colors duration-300 hover:text-white focus-visible:text-white active:text-white motion-reduce:transition-none after:absolute after:bottom-0 after:left-1/2 after:h-px after:w-0 after:-translate-x-1/2 after:bg-linear-to-r after:from-accent-sky after:via-white after:to-accent-rose after:opacity-0 after:transition-all after:duration-[380ms] after:ease-[var(--ease-premium)] motion-reduce:after:transition-none hover:after:w-[70%] hover:after:opacity-80 focus-visible:after:w-[70%] focus-visible:after:opacity-80 active:after:w-[70%] active:after:opacity-80 ${className}`}
+      className={`relative transition-colors duration-300 hover:text-white focus-visible:text-white active:text-white motion-reduce:transition-none after:absolute after:bottom-0 after:left-1/2 after:h-px after:w-0 after:-translate-x-1/2 after:bg-linear-to-r after:from-accent-sky after:via-white after:to-accent-rose after:opacity-0 after:transition-all after:duration-[380ms] after:ease-[var(--ease-premium)] motion-reduce:after:transition-none hover:after:w-[70%] hover:after:opacity-80 focus-visible:after:w-[70%] focus-visible:after:opacity-80 active:after:w-[70%] active:after:opacity-80 ${className}`}
     >
-      <span className="transition-opacity duration-300 motion-reduce:transition-none group-hover:opacity-0 group-focus-visible:opacity-0 group-active:opacity-0">
-        {label}
-      </span>
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 animate-[ftm-flow_7s_linear_infinite] bg-linear-to-r from-accent-sky via-white to-accent-rose bg-[length:200%_100%] bg-clip-text text-transparent opacity-0 transition-opacity duration-300 motion-reduce:animate-none motion-reduce:transition-none group-hover:opacity-100 group-focus-visible:opacity-100 group-active:opacity-100"
-      >
-        {label}
-      </span>
+      {label}
     </Link>
   );
 }
