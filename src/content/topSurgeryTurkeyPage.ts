@@ -32,6 +32,8 @@ type TopSurgeryTurkeyPageContent = {
     heading: string;
     body: string;
     cta: { label: string; href: string };
+    /** Short sentence linking to /top-surgery/recovery. */
+    guideNote: LinkSentence;
     /** Short sentence linking to /faq. */
     faqNote: LinkSentence;
   };
@@ -96,6 +98,11 @@ export const topSurgeryTurkeyPageContent: {
       heading: "Recovery and follow-up care",
       body: "Aftercare guidance and follow-up support continue as you heal, at home or before you travel back. Once the initial coordination is complete, your care continues with your surgeon. Recovery is planned individually as part of your Patient Journey, not a fixed timeline applied to everyone.",
       cta: { label: "See the full Patient Journey", href: "/patient-journey" },
+      guideNote: {
+        prefix: "Read more in our guide to",
+        linkLabel: "top surgery recovery and aftercare",
+        suffix: ".",
+      },
       faqNote: {
         prefix: "Have more questions? Our",
         linkLabel: "FAQ",
@@ -161,6 +168,11 @@ export const topSurgeryTurkeyPageContent: {
       heading: "Genesung und Nachsorge",
       body: "Nachsorge und Begleitung setzen sich fort, während Sie heilen — zu Hause oder vor Ihrer Rückreise. Sobald die anfängliche Koordination abgeschlossen ist, wird Ihre Betreuung bei Ihrem Chirurgen fortgesetzt. Die Genesung wird individuell als Teil Ihrer Patientenreise geplant, nicht nach einem starren Zeitplan für alle.",
       cta: { label: "Die vollständige Patientenreise ansehen", href: "/patient-journey" },
+      guideNote: {
+        prefix: "Mehr dazu in unserem Leitfaden zu",
+        linkLabel: "Genesung und Nachsorge nach der Top Surgery",
+        suffix: ".",
+      },
       faqNote: {
         prefix: "Noch Fragen? Unsere",
         linkLabel: "FAQ",

@@ -324,6 +324,16 @@ export default async function TopSurgeryPage() {
             >
               {copy.recovery.cta.label}
             </Button>
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-ink-soft">
+              {copy.recovery.guideNote.prefix}{" "}
+              <Link
+                href="/top-surgery/recovery"
+                className="text-ink underline underline-offset-2 hover:text-ink-soft"
+              >
+                {copy.recovery.guideNote.linkLabel}
+              </Link>
+              {copy.recovery.guideNote.suffix}
+            </p>
           </Reveal>
         </Container>
       </section>

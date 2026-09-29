@@ -286,6 +286,13 @@ export default async function TopSurgeryTurkeyPage() {
               {copy.recovery.cta.label}
             </Button>
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-ink-soft">
+              {copy.recovery.guideNote.prefix}{" "}
+              <Link href="/top-surgery/recovery" className={inlineLinkClass}>
+                {copy.recovery.guideNote.linkLabel}
+              </Link>
+              {copy.recovery.guideNote.suffix}
+            </p>
+            <p className="mt-2 max-w-2xl text-base leading-relaxed text-ink-soft">
               {copy.recovery.faqNote.prefix}{" "}
               <Link href="/faq" className={inlineLinkClass}>
                 {copy.recovery.faqNote.linkLabel}
