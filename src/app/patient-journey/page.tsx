@@ -50,7 +50,7 @@ export default async function PatientJourneyPage() {
               {
                 "@type": "ListItem",
                 position: 2,
-                name: copy.metaTitle,
+                name: copy.breadcrumbName,
                 item: `${siteConfig.url}${PAGE_PATH}`,
               },
             ],
@@ -141,7 +141,28 @@ export default async function PatientJourneyPage() {
               <Link href="/top-surgery" className="text-ink underline underline-offset-2 hover:text-ink-soft">
                 {copy.ukNote.topSurgeryLabel}
               </Link>
+              {copy.ukNote.doctorPrefix}{" "}
+              <Link
+                href="/about-dr-serkan-dinar"
+                className="text-ink underline underline-offset-2 hover:text-ink-soft"
+              >
+                {copy.ukNote.doctorLabel}
+              </Link>
+              {copy.ukNote.techniquesPrefix}{" "}
+              <Link
+                href="/top-surgery/techniques"
+                className="text-ink underline underline-offset-2 hover:text-ink-soft"
+              >
+                {copy.ukNote.techniquesLabel}
+              </Link>
               {copy.ukNote.bodySuffix}
+            </p>
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-ink-soft">
+              {copy.ukNote.contactPrefix}{" "}
+              <Link href="/contact" className="text-ink underline underline-offset-2 hover:text-ink-soft">
+                {copy.ukNote.contactLabel}
+              </Link>
+              {copy.ukNote.contactSuffix}
             </p>
           </Reveal>
         </Container>

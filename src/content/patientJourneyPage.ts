@@ -6,6 +6,8 @@
 type PatientJourneyPageContent = {
   metaTitle: string;
   metaDescription: string;
+  /** BreadcrumbList name — kept stable independently of the SEO title. */
+  breadcrumbName: string;
   intro: { eyebrow: string; heading: string };
   stages: {
     eyebrow: string;
@@ -22,25 +24,37 @@ type PatientJourneyPageContent = {
   ukNote: {
     eyebrow: string;
     heading: string;
-    /** Split around a link to /top-surgery (anchor: "top surgery"/"Top Surgery"). */
+    /**
+     * Split around links to /top-surgery, /about-dr-serkan-dinar and
+     * /top-surgery/techniques, in that order.
+     */
     bodyPrefix: string;
     topSurgeryLabel: string;
+    doctorPrefix: string;
+    doctorLabel: string;
+    techniquesPrefix: string;
+    techniquesLabel: string;
     bodySuffix: string;
+    /** Closing sentence split around a link to /contact. */
+    contactPrefix: string;
+    contactLabel: string;
+    contactSuffix: string;
   };
 };
 
 export const patientJourneyPageContent: { en: PatientJourneyPageContent; de: PatientJourneyPageContent } = {
   en: {
-    metaTitle: "Patient Journey",
+    metaTitle: "Top Surgery Abroad from the UK: Patient Journey",
     metaDescription:
-      "What to expect as an international patient, including those travelling from the UK, from your first consultation through arrival, surgery, and recovery.",
+      "Private FTM top surgery abroad for UK patients: from WhatsApp consultation and travel to Istanbul to surgery with Dr. Serkan Dinar and recovery.",
+    breadcrumbName: "Patient Journey",
     intro: {
       eyebrow: "Patient Journey",
-      heading: "A clear path for patients travelling from abroad",
+      heading: "Top surgery abroad: a clear path for patients from the UK and beyond",
     },
     stages: {
       eyebrow: "The Journey, Step by Step",
-      heading: "What to expect, from first contact to recovery",
+      heading: "Your top surgery journey to Istanbul, from first contact to recovery",
       nextPrefix: "Curious what's possible? Take a look at our",
       resultsLabel: "results",
       nextMiddle: ", or get in touch to arrange a",
@@ -54,24 +68,33 @@ export const patientJourneyPageContent: { en: PatientJourneyPageContent; de: Pat
     },
     ukNote: {
       eyebrow: "For Patients in the UK",
-      heading: "Travelling from the UK",
-      bodyPrefix: "A number of our patients are based in the UK and choose to arrange their",
-      topSurgeryLabel: "top surgery",
+      heading: "Private top surgery abroad, travelling from the UK",
+      bodyPrefix: "A number of our patients are based in the UK and choose to arrange private",
+      topSurgeryLabel: "FTM top surgery",
+      doctorPrefix: " abroad — travelling to Istanbul, Turkey for their procedure with",
+      doctorLabel: "Dr. Serkan Dinar",
+      techniquesPrefix:
+        ", a plastic, reconstructive, and aesthetic surgeon with more than 20 years of surgical experience. Wherever you're travelling from, the process works the same way: an initial consultation over WhatsApp, and a surgical plan agreed before you travel — including the choice between",
+      techniquesLabel: "top surgery techniques",
       bodySuffix:
-        " privately, abroad — travelling to Istanbul, Turkey for their procedure with Dr. Serkan Dinar. Wherever you're travelling from, the process works the same way: an initial consultation over WhatsApp, a surgical plan agreed before you travel, and coordination support from arrival through recovery, as set out step by step above.",
+        ", decided individually based on chest size, skin elasticity, and your desired result — then coordination support from arrival through recovery, as set out step by step above.",
+      contactPrefix: "If you're in the UK and considering top surgery abroad,",
+      contactLabel: "get in touch",
+      contactSuffix: " to start with a consultation.",
     },
   },
   de: {
-    metaTitle: "Patientenreise",
+    metaTitle: "Top Surgery im Ausland aus dem UK: Patientenreise",
     metaDescription:
-      "Was Sie als internationaler Patient erwartet — auch aus dem Vereinigten Königreich (UK) — von Ihrem ersten Beratungsgespräch bis zur Genesung.",
+      "Private FTM-Top-Surgery im Ausland für Patienten aus dem UK: von der WhatsApp-Beratung über die Anreise nach Istanbul bis zur OP bei Dr. Serkan Dinar.",
+    breadcrumbName: "Patientenreise",
     intro: {
       eyebrow: "Patientenreise",
-      heading: "Ein klarer Weg für Patienten aus dem Ausland",
+      heading: "Top Surgery im Ausland: ein klarer Weg für Patienten aus dem UK und anderen Ländern",
     },
     stages: {
       eyebrow: "Die Reise, Schritt für Schritt",
-      heading: "Was Sie erwartet — vom ersten Kontakt bis zur Genesung",
+      heading: "Ihre Top-Surgery-Reise nach Istanbul — vom ersten Kontakt bis zur Genesung",
       nextPrefix: "Neugierig, was möglich ist? Werfen Sie einen Blick auf unsere",
       resultsLabel: "Ergebnisse",
       nextMiddle: ", oder nehmen Sie Kontakt auf, um ein",
@@ -85,12 +108,21 @@ export const patientJourneyPageContent: { en: PatientJourneyPageContent; de: Pat
     },
     ukNote: {
       eyebrow: "Für Patienten aus dem UK",
-      heading: "Anreise aus dem Vereinigten Königreich (UK)",
+      heading: "Private Top Surgery im Ausland — Anreise aus dem UK",
       bodyPrefix:
         "Ein Teil unserer Patienten kommt aus dem Vereinigten Königreich (UK) und entscheidet sich dafür, die",
-      topSurgeryLabel: "Top-Surgery",
+      topSurgeryLabel: "FTM-Top-Surgery",
+      doctorPrefix:
+        " privat im Ausland durchführen zu lassen — mit der Anreise nach Istanbul, Türkei, für den Eingriff bei",
+      doctorLabel: "Dr. Serkan Dinar",
+      techniquesPrefix:
+        ", Facharzt für Plastische, Rekonstruktive und Ästhetische Chirurgie mit mehr als 20 Jahren chirurgischer Erfahrung. Unabhängig davon, von wo aus Sie anreisen, läuft der Ablauf gleich: ein erstes Beratungsgespräch über WhatsApp und ein OP-Plan, der vor Ihrer Anreise gemeinsam festgelegt wird — einschließlich der Wahl zwischen den",
+      techniquesLabel: "Top-Surgery-Techniken",
       bodySuffix:
-        " privat im Ausland durchführen zu lassen — mit der Anreise nach Istanbul, Türkei, für den Eingriff bei Dr. Serkan Dinar. Unabhängig davon, von wo aus Sie anreisen, läuft der Ablauf gleich: ein erstes Beratungsgespräch über WhatsApp, ein OP-Plan, der vor Ihrer Anreise gemeinsam festgelegt wird, und Begleitung von der Ankunft bis zur Genesung — wie oben Schritt für Schritt beschrieben.",
+        ", individuell anhand von Brustgröße, Hautelastizität und Ihrem gewünschten Ergebnis — und danach Begleitung von der Ankunft bis zur Genesung, wie oben Schritt für Schritt beschrieben.",
+      contactPrefix: "Sie leben im UK und denken über eine Top Surgery im Ausland nach?",
+      contactLabel: "Nehmen Sie Kontakt auf",
+      contactSuffix: ", um mit einem Beratungsgespräch zu beginnen.",
     },
   },
 };
