@@ -13,6 +13,7 @@ import { faqItems } from "@/data/faq";
 import { getPatientJourneyPreviewSteps } from "@/data/patientJourney";
 import { homeContent } from "@/content/home";
 import { topSurgeryPageContent } from "@/content/topSurgeryPage";
+import { doctorProfileContent } from "@/content/doctorProfile";
 import { siteConfig } from "@/lib/site";
 import { getLocale } from "@/i18n/getLocale";
 
@@ -40,7 +41,8 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function TopSurgeryPage() {
   const locale = await getLocale();
   const copy = topSurgeryPageContent[locale];
-  const { hero, topSurgeryOverview, surgicalApproach, patientJourney, faqPreview } = homeContent[locale];
+  const { hero, topSurgeryOverview, surgicalApproach, doctorIntro, patientJourney, faqPreview } =
+    homeContent[locale];
   const techniqueList = techniques[locale];
   const items = faqItems[locale];
   const patientJourneyPreviewSteps = getPatientJourneyPreviewSteps(locale);
@@ -261,8 +263,48 @@ export default async function TopSurgeryPage() {
         </Container>
       </section>
 
-      {/* Patient Journey */}
+      {/* Your Surgeon — approved bio from homeContent.doctorIntro, same portrait as the homepage */}
       <section className="border-b border-line bg-paper-alt/45">
+        <Container className="grid items-center gap-10 py-16 md:grid-cols-[minmax(0,0.6fr)_minmax(0,1fr)] md:gap-16 md:py-20">
+          <Reveal>
+            <div className="relative mx-auto aspect-[4/5] w-full max-w-xs overflow-hidden rounded-[2px] bg-paper-deep">
+              <Image
+                src="/images/doctor/d22.jpeg"
+                alt={doctorProfileContent[locale].photoAlt}
+                fill
+                sizes="(min-width: 768px) 30vw, 80vw"
+                className="object-cover"
+              />
+            </div>
+          </Reveal>
+          <Reveal delay={100}>
+            <SectionHeading
+              eyebrow={doctorIntro.eyebrow}
+              title={doctorIntro.heading}
+              description={doctorIntro.body}
+            />
+            <Button
+              href="/about-dr-serkan-dinar"
+              variant="secondary"
+              size="md"
+              showArrow
+              className="mt-8"
+            >
+              {copy.surgeon.profileLinkLabel}
+            </Button>
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-ink-soft">
+              {copy.surgeon.resultsNote.prefix}{" "}
+              <Link href="/results" className="text-ink underline underline-offset-2 hover:text-ink-soft">
+                {copy.surgeon.resultsNote.linkLabel}
+              </Link>
+              {copy.surgeon.resultsNote.suffix}
+            </p>
+          </Reveal>
+        </Container>
+      </section>
+
+      {/* Patient Journey */}
+      <section className="border-b border-line">
         <Container className="py-16 md:py-20">
           <Reveal>
             <SectionHeading eyebrow={copy.journey.eyebrow} title={copy.journey.heading} />
@@ -303,6 +345,39 @@ export default async function TopSurgeryPage() {
               {patientJourney.cta.label}
             </Button>
           </Reveal>
+        </Container>
+      </section>
+
+      {/* Before you decide — short answers, each linking to the page that covers it in full */}
+      <section className="border-b border-line bg-paper-alt/45">
+        <Container className="py-16 md:py-20">
+          <Reveal>
+            <SectionHeading eyebrow={copy.beforeYouDecide.eyebrow} title={copy.beforeYouDecide.heading} />
+          </Reveal>
+
+          <div className="mt-12 grid gap-10 md:grid-cols-2 md:gap-x-12 md:gap-y-12">
+            {copy.beforeYouDecide.items.map((item, index) => (
+              <Reveal key={item.id} delay={index * 100} className="border-t border-line pt-6">
+                <h3 className="font-display text-h3 font-medium text-ink">{item.question}</h3>
+                <p className="mt-3 text-base leading-relaxed text-ink-soft">{item.answer}</p>
+                <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2">
+                  {[item.link, item.secondaryLink].map(
+                    (link) =>
+                      link && (
+                        <Link
+                          key={link.href}
+                          href={link.href}
+                          className="group inline-flex items-center gap-2 text-sm font-medium text-ink transition-colors hover:text-ink-soft"
+                        >
+                          {link.label}
+                          <ArrowRightIcon className="h-4 w-4 transition-transform duration-300 ease-[var(--ease-premium)] group-hover:translate-x-1" />
+                        </Link>
+                      ),
+                  )}
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </Container>
       </section>
 

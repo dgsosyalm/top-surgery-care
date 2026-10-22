@@ -168,7 +168,7 @@ export const homeContent: { en: HomeContent; de: HomeContent } = {
       eyebrow: "Technique",
       heading: "Finding the right approach for your chest",
       note: "Your surgical plan is decided individually, based on chest size, skin elasticity, and your desired result — not a fixed formula.",
-      cta: { label: "View all techniques", href: "/top-surgery" },
+      cta: { label: "View all techniques", href: "/top-surgery/techniques" },
       learnMoreLabel: "Learn more",
     },
     patientJourney: {
@@ -255,7 +255,7 @@ export const homeContent: { en: HomeContent; de: HomeContent } = {
       eyebrow: "Technik",
       heading: "Die richtige Methode für Ihren Brustkorb finden",
       note: "Ihr OP-Plan wird individuell festgelegt — anhand von Brustgröße, Hautelastizität und Ihrem gewünschten Ergebnis, nicht nach einem starren Schema.",
-      cta: { label: "Alle Techniken ansehen", href: "/top-surgery" },
+      cta: { label: "Alle Techniken ansehen", href: "/top-surgery/techniques" },
       learnMoreLabel: "Mehr erfahren",
     },
     patientJourney: {
