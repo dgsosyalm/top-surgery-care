@@ -1,7 +1,7 @@
 // Copy specific to /top-surgery that isn't already shared elsewhere.
 // Content that already exists as verified, shared data (the "what is top
 // surgery" explanation, the technique-selection note, the Patient Journey
-// steps, the FAQ, the final CTA) is pulled directly from its existing
+// steps, the final CTA) is pulled directly from its existing
 // source at render time in src/app/top-surgery/page.tsx rather than
 // duplicated here — this file only holds the small amount of copy that's
 // genuinely new to this page, plus this page's metadata.
@@ -9,7 +9,18 @@
 type TopSurgeryPageContent = {
   metaTitle: string;
   metaDescription: string;
-  intro: { eyebrow: string; heading: string };
+  intro: {
+    eyebrow: string;
+    heading: string;
+    /** One-line alternative name — the same term the approved FAQ answer
+     *  uses ("chest masculinization surgery"), kept visible on this page
+     *  now that the shared FAQ accordion isn't repeated here. */
+    alsoCalled: string;
+  };
+  /** Jump links under the H1 — same pattern as /top-surgery/techniques and
+   *  /top-surgery/recovery. Every href must match a section id rendered in
+   *  src/app/top-surgery/page.tsx. */
+  onThisPage: { label: string; items: { href: string; label: string }[] };
   whoMayConsider: { eyebrow: string; heading: string; body: string };
   techniques: {
     eyebrow: string;
@@ -62,6 +73,17 @@ type TopSurgeryPageContent = {
       link: { label: string; href: string };
       secondaryLink?: { label: string; href: string };
     }[];
+    /** Questions to bring to the consultation. Deliberately left
+     *  unanswered: they cover details that depend on the individual patient
+     *  and on the surgeon's own clinical practice (anaesthesia, duration,
+     *  hospital stay, drains, compression, time in Istanbul, requirements,
+     *  individual risks). Do not add answers, durations, rates or typical
+     *  practice here until the surgeon has approved them. */
+    consultationQuestions: { heading: string; intro: string; items: string[] };
+    /** Short sentence linking to /faq. The shared FAQ is no longer repeated
+     *  on this page — every one of its questions is already answered by a
+     *  section here, and it stays in full on /faq. */
+    faqNote: { prefix: string; linkLabel: string; suffix: string };
   };
   recovery: {
     eyebrow: string;
@@ -71,7 +93,6 @@ type TopSurgeryPageContent = {
     /** Short sentence linking to /top-surgery/recovery. */
     guideNote: { prefix: string; linkLabel: string; suffix: string };
   };
-  faq: { eyebrow: string; heading: string };
 };
 
 export const topSurgeryPageContent: { en: TopSurgeryPageContent; de: TopSurgeryPageContent } = {
@@ -82,6 +103,17 @@ export const topSurgeryPageContent: { en: TopSurgeryPageContent; de: TopSurgeryP
     intro: {
       eyebrow: "Top Surgery",
       heading: "FTM Top Surgery",
+      alsoCalled: "FTM (female-to-male) top surgery is also called chest masculinization surgery.",
+    },
+    onThisPage: {
+      label: "On this page",
+      items: [
+        { href: "#techniques", label: "Techniques" },
+        { href: "#your-surgeon", label: "Your surgeon" },
+        { href: "#patient-journey", label: "Patient Journey" },
+        { href: "#before-you-decide", label: "Before you decide" },
+        { href: "#recovery", label: "Recovery" },
+      ],
     },
     whoMayConsider: {
       eyebrow: "Who It's For",
@@ -155,6 +187,26 @@ export const topSurgeryPageContent: { en: TopSurgeryPageContent; de: TopSurgeryP
           secondaryLink: { label: "Read the recovery guide", href: "/top-surgery/recovery" },
         },
       ],
+      consultationQuestions: {
+        heading: "Questions to ask your surgeon",
+        intro:
+          "Some details depend on your individual situation and on how your surgeon works, so they aren't answered on this page. They're worth raising during your consultation:",
+        items: [
+          "Which technique would you recommend for my chest, and why?",
+          "What type of anaesthesia will be used?",
+          "How long will the operation take, and will I stay in hospital overnight?",
+          "Will I have drains, or need to wear a compression garment?",
+          "How long should I plan to stay in Istanbul after surgery?",
+          "How will my follow-up work once I'm back home?",
+          "Are there any documents or requirements I need before surgery?",
+          "Which risks apply to my situation, and how are they managed?",
+        ],
+      },
+      faqNote: {
+        prefix: "Have another question? See our",
+        linkLabel: "frequently asked questions",
+        suffix: ".",
+      },
     },
     recovery: {
       eyebrow: "Recovery",
@@ -167,10 +219,6 @@ export const topSurgeryPageContent: { en: TopSurgeryPageContent; de: TopSurgeryP
         suffix: ".",
       },
     },
-    faq: {
-      eyebrow: "Questions",
-      heading: "Frequently asked questions",
-    },
   },
   de: {
     metaTitle: "FTM Top Surgery: Ablauf & OP-Techniken",
@@ -179,6 +227,17 @@ export const topSurgeryPageContent: { en: TopSurgeryPageContent; de: TopSurgeryP
     intro: {
       eyebrow: "Top Surgery",
       heading: "FTM Top Surgery",
+      alsoCalled: "Die FTM-Top-Surgery wird auch als brustmaskulinisierende Operation bezeichnet.",
+    },
+    onThisPage: {
+      label: "Auf dieser Seite",
+      items: [
+        { href: "#techniques", label: "Techniken" },
+        { href: "#your-surgeon", label: "Ihr Chirurg" },
+        { href: "#patient-journey", label: "Patientenreise" },
+        { href: "#before-you-decide", label: "Vor Ihrer Entscheidung" },
+        { href: "#recovery", label: "Genesung" },
+      ],
     },
     whoMayConsider: {
       eyebrow: "Für wen geeignet",
@@ -252,6 +311,26 @@ export const topSurgeryPageContent: { en: TopSurgeryPageContent; de: TopSurgeryP
           secondaryLink: { label: "Den Genesungsleitfaden lesen", href: "/top-surgery/recovery" },
         },
       ],
+      consultationQuestions: {
+        heading: "Fragen an Ihren Chirurgen",
+        intro:
+          "Manche Einzelheiten hängen von Ihrer individuellen Situation und der Arbeitsweise Ihres Chirurgen ab und werden daher auf dieser Seite nicht beantwortet. Es lohnt sich, sie im Beratungsgespräch anzusprechen:",
+        items: [
+          "Welche Technik empfehlen Sie für meinen Brustkorb, und warum?",
+          "Welche Art von Narkose wird eingesetzt?",
+          "Wie lange dauert die Operation, und bleibe ich über Nacht im Krankenhaus?",
+          "Bekomme ich Drainagen, oder muss ich ein Kompressionskleidungsstück tragen?",
+          "Wie lange sollte ich nach der Operation in Istanbul bleiben?",
+          "Wie läuft die Nachsorge, wenn ich wieder zu Hause bin?",
+          "Welche Unterlagen oder Voraussetzungen brauche ich vor der Operation?",
+          "Welche Risiken betreffen meine Situation, und wie wird mit ihnen umgegangen?",
+        ],
+      },
+      faqNote: {
+        prefix: "Sie haben eine weitere Frage? Lesen Sie unsere",
+        linkLabel: "häufig gestellten Fragen",
+        suffix: ".",
+      },
     },
     recovery: {
       eyebrow: "Genesung",
@@ -263,10 +342,6 @@ export const topSurgeryPageContent: { en: TopSurgeryPageContent; de: TopSurgeryP
         linkLabel: "Genesung und Nachsorge nach der Top Surgery",
         suffix: ".",
       },
-    },
-    faq: {
-      eyebrow: "Fragen",
-      heading: "Häufig gestellte Fragen",
     },
   },
 };

@@ -5,11 +5,9 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
-import { FaqAccordion } from "@/components/ui/FaqAccordion";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { ArrowRightIcon } from "@/components/icons";
 import { techniques } from "@/data/techniques";
-import { faqItems } from "@/data/faq";
 import { getPatientJourneyPreviewSteps } from "@/data/patientJourney";
 import { homeContent } from "@/content/home";
 import { topSurgeryPageContent } from "@/content/topSurgeryPage";
@@ -41,10 +39,8 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function TopSurgeryPage() {
   const locale = await getLocale();
   const copy = topSurgeryPageContent[locale];
-  const { hero, topSurgeryOverview, surgicalApproach, doctorIntro, patientJourney, faqPreview } =
-    homeContent[locale];
+  const { hero, topSurgeryOverview, surgicalApproach, doctorIntro, patientJourney } = homeContent[locale];
   const techniqueList = techniques[locale];
-  const items = faqItems[locale];
   const patientJourneyPreviewSteps = getPatientJourneyPreviewSteps(locale);
 
   return (
@@ -64,14 +60,15 @@ export default async function TopSurgeryPage() {
       />
       <script
         type="application/ld+json"
-        // Generated directly from faqItems, so it can never drift from what
-        // the page actually renders below.
+        // Generated directly from the "Before you decide" Q&A rendered below,
+        // so it can never drift from the page. The shared faqItems keep their
+        // own FAQPage schema on /faq only.
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "FAQPage",
             url: `${siteConfig.url}${PAGE_PATH}`,
-            mainEntity: items.map((item) => ({
+            mainEntity: copy.beforeYouDecide.items.map((item) => ({
               "@type": "Question",
               name: item.question,
               acceptedAnswer: { "@type": "Answer", text: item.answer },
@@ -110,8 +107,22 @@ export default async function TopSurgeryPage() {
               {copy.intro.heading}
             </h1>
             <p className="mt-6 max-w-xl text-lead text-ink-soft text-pretty">
-              {hero.subtext}
+              {hero.subtext} {copy.intro.alsoCalled}
             </p>
+            <nav aria-label={copy.onThisPage.label} className="mt-10">
+              <p className="text-xs font-medium uppercase tracking-[0.14em] text-ink-faint">
+                {copy.onThisPage.label}
+              </p>
+              <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm">
+                {copy.onThisPage.items.map((item) => (
+                  <li key={item.href}>
+                    <a href={item.href} className="text-ink underline underline-offset-2 hover:text-ink-soft">
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
           </Reveal>
         </Container>
       </section>
@@ -143,7 +154,7 @@ export default async function TopSurgeryPage() {
       </section>
 
       {/* Surgical Techniques — compact overview grid, then full detail per technique */}
-      <section className="border-b border-line bg-paper-alt/45">
+      <section id="techniques" className="scroll-mt-24 border-b border-line bg-paper-alt/45">
         <Container className="py-16 md:py-20 md:pb-28">
           <Reveal>
             <SectionHeading eyebrow={copy.techniques.eyebrow} title={copy.techniques.heading} />
@@ -264,7 +275,7 @@ export default async function TopSurgeryPage() {
       </section>
 
       {/* Your Surgeon — approved bio from homeContent.doctorIntro, same portrait as the homepage */}
-      <section className="border-b border-line bg-paper-alt/45">
+      <section id="your-surgeon" className="scroll-mt-24 border-b border-line bg-paper-alt/45">
         <Container className="grid items-center gap-10 py-16 md:grid-cols-[minmax(0,0.6fr)_minmax(0,1fr)] md:gap-16 md:py-20">
           <Reveal>
             <div className="relative mx-auto aspect-[4/5] w-full max-w-xs overflow-hidden rounded-[2px] bg-paper-deep">
@@ -304,7 +315,7 @@ export default async function TopSurgeryPage() {
       </section>
 
       {/* Patient Journey */}
-      <section className="border-b border-line">
+      <section id="patient-journey" className="scroll-mt-24 border-b border-line">
         <Container className="py-16 md:py-20">
           <Reveal>
             <SectionHeading eyebrow={copy.journey.eyebrow} title={copy.journey.heading} />
@@ -349,7 +360,7 @@ export default async function TopSurgeryPage() {
       </section>
 
       {/* Before you decide — short answers, each linking to the page that covers it in full */}
-      <section className="border-b border-line bg-paper-alt/45">
+      <section id="before-you-decide" className="scroll-mt-24 border-b border-line bg-paper-alt/45">
         <Container className="py-16 md:py-20">
           <Reveal>
             <SectionHeading eyebrow={copy.beforeYouDecide.eyebrow} title={copy.beforeYouDecide.heading} />
@@ -378,11 +389,36 @@ export default async function TopSurgeryPage() {
               </Reveal>
             ))}
           </div>
+
+          {/* Unanswered on purpose — see consultationQuestions in topSurgeryPage.ts */}
+          <Reveal className="mt-14 max-w-2xl border-t border-line pt-6">
+            <h3 className="font-display text-h3 font-medium text-ink">
+              {copy.beforeYouDecide.consultationQuestions.heading}
+            </h3>
+            <p className="mt-3 text-base leading-relaxed text-ink-soft">
+              {copy.beforeYouDecide.consultationQuestions.intro}
+            </p>
+            <ul className="mt-4 space-y-2">
+              {copy.beforeYouDecide.consultationQuestions.items.map((question) => (
+                <li key={question} className="flex items-center gap-2.5 text-sm text-ink-soft">
+                  <span className="h-1 w-1 shrink-0 rounded-full bg-ink-faint" />
+                  {question}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-8 text-base leading-relaxed text-ink-soft">
+              {copy.beforeYouDecide.faqNote.prefix}{" "}
+              <Link href="/faq" className="text-ink underline underline-offset-2 hover:text-ink-soft">
+                {copy.beforeYouDecide.faqNote.linkLabel}
+              </Link>
+              {copy.beforeYouDecide.faqNote.suffix}
+            </p>
+          </Reveal>
         </Container>
       </section>
 
       {/* Recovery */}
-      <section className="border-b border-line">
+      <section id="recovery" className="scroll-mt-24 border-b border-line">
         <Container className="py-16 md:py-20">
           <Reveal>
             <SectionHeading
@@ -409,21 +445,6 @@ export default async function TopSurgeryPage() {
               </Link>
               {copy.recovery.guideNote.suffix}
             </p>
-          </Reveal>
-        </Container>
-      </section>
-
-      {/* FAQ */}
-      <section className="bg-paper-alt/45">
-        <Container className="py-16 md:py-20">
-          <Reveal>
-            <SectionHeading eyebrow={copy.faq.eyebrow} title={copy.faq.heading} />
-          </Reveal>
-          <FaqAccordion items={items} className="mt-10 max-w-3xl" />
-          <Reveal delay={items.length * 60}>
-            <Button href="/faq" variant="secondary" size="md" showArrow className="mt-8">
-              {faqPreview.cta.label}
-            </Button>
           </Reveal>
         </Container>
       </section>
