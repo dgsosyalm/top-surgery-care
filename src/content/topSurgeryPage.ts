@@ -97,9 +97,9 @@ type TopSurgeryPageContent = {
 
 export const topSurgeryPageContent: { en: TopSurgeryPageContent; de: TopSurgeryPageContent } = {
   en: {
-    metaTitle: "FTM Top Surgery: Procedure & Techniques",
+    metaTitle: "FTM Top Surgery: Techniques, Risks & Recovery",
     metaDescription:
-      "Learn what FTM top surgery involves, the surgical techniques available, and what international patients can expect at Top Surgery Care in Istanbul, Turkey.",
+      "Compare double incision, keyhole and periareolar FTM top surgery, learn about risks, scars and recovery, and see how surgery in Istanbul is planned.",
     intro: {
       eyebrow: "Top Surgery",
       heading: "FTM Top Surgery",
@@ -221,9 +221,9 @@ export const topSurgeryPageContent: { en: TopSurgeryPageContent; de: TopSurgeryP
     },
   },
   de: {
-    metaTitle: "FTM Top Surgery: Ablauf & OP-Techniken",
+    metaTitle: "FTM Top Surgery: Techniken, Risiken & Genesung",
     metaDescription:
-      "Erfahren Sie, was FTM-Top-Surgery beinhaltet, welche OP-Techniken es gibt und was internationale Patienten bei Top Surgery Care in Istanbul, Türkei erwartet.",
+      "Doppelinzision, Keyhole oder periareolär: FTM-Top-Surgery-Techniken vergleichen, Risiken, Narben und Genesung verstehen und sehen, wie die OP in Istanbul abläuft.",
     intro: {
       eyebrow: "Top Surgery",
       heading: "FTM Top Surgery",
