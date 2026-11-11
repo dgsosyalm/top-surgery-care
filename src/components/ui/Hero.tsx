@@ -3,9 +3,15 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { homeContent } from "@/content/home";
 import { useLocale } from "@/i18n/LocaleProvider";
+
+// Both hero figure <Image>s (desktop crop, mobile crop) share the same src,
+// so they must also share the same `sizes`: the browser then resolves both
+// to one srcset candidate — one download, one preload — instead of fetching
+// two different widths of the same photo on every device. Each breakpoint
+// keeps the width it had before (mobile 100vw, sm 46vw, lg 40vw).
+const HERO_FIGURE_SIZES = "(min-width: 1024px) 40vw, (min-width: 640px) 46vw, 100vw";
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -87,17 +93,13 @@ export function Hero() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-y-0 right-0 z-10 hidden w-[46%] select-none overflow-hidden sm:block lg:w-[40%]"
       >
-        <motion.div
-          className="relative h-full w-full"
-          animate={{ scale: [1, 1.015, 1] }}
-          transition={{ duration: 14, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-        >
+        <div className="hero-breathe relative h-full w-full">
           <Image
             src="/images/manken/manken.jpeg"
             alt=""
             fill
             priority
-            sizes="(min-width: 1024px) 40vw, 46vw"
+            sizes={HERO_FIGURE_SIZES}
             className={`object-cover object-[38%_38%] saturate-[0.9] transition-opacity duration-700 ${
               isActive ? "opacity-[0.38]" : "opacity-[0.32]"
             }`}
@@ -110,7 +112,7 @@ export function Hero() {
               WebkitMaskRepeat: "no-repeat",
             }}
           />
-        </motion.div>
+        </div>
       </div>
 
       <div
@@ -122,7 +124,7 @@ export function Hero() {
           alt=""
           fill
           priority
-          sizes="100vw"
+          sizes={HERO_FIGURE_SIZES}
           className={`object-cover object-[28%_28%] saturate-[0.9] transition-opacity duration-700 ${
             isActive ? "opacity-[0.36]" : "opacity-[0.5]"
           }`}
@@ -147,27 +149,21 @@ export function Hero() {
         <main className="z-20 max-w-2xl sm:absolute sm:bottom-8 sm:left-8">
           <div className="text-left">
             <div className="mb-6 flex w-full justify-center sm:block sm:w-auto">
-              <motion.div
-                className="inline-flex w-fit max-w-[90vw] items-center justify-center px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm relative border border-white/10 mx-auto sm:mx-0 sm:max-w-none"
+              <div
+                className="hero-enter hero-enter-delay-1 inline-flex w-fit max-w-[90vw] items-center justify-center px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm relative border border-white/10 mx-auto sm:mx-0 sm:max-w-none"
                 style={{
                   filter: "url(#glass-effect)",
                 }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
               >
                 <div className="absolute top-0 left-1 right-1 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent rounded-full" />
                 <span className="text-white/90 text-xs sm:text-sm font-medium relative z-10 tracking-wide text-center sm:text-left">
                   {hero.badge}
                 </span>
-              </motion.div>
+              </div>
             </div>
 
-            <motion.h1
-              className="font-display text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-none tracking-tight"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
+            <h1
+              className="hero-enter hero-enter-h1 hero-enter-delay-2 font-display text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-none tracking-tight"
             >
               <span className="relative mb-2 block">
                 {/*
@@ -190,7 +186,7 @@ export function Hero() {
                       "radial-gradient(ellipse 55% 70% at 50% 50%, rgba(7,26,43,0.65) 0%, rgba(7,26,43,0.42) 35%, rgba(7,26,43,0.18) 60%, rgba(7,26,43,0) 82%)",
                   }}
                 />
-                <motion.span
+                <span
                   className="relative block font-light text-white/90 text-4xl md:text-5xl lg:text-6xl tracking-wider"
                   style={{
                     background:
@@ -200,54 +196,38 @@ export function Hero() {
                     backgroundClip: "text",
                     filter: "url(#text-glow)",
                   }}
-                  animate={{
-                    backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-                  }}
-                  transition={{
-                    duration: 8,
-                    repeat: Number.POSITIVE_INFINITY,
-                    ease: "linear",
-                  }}
                 >
                   {hero.headlineLead}
-                </motion.span>
+                </span>
               </span>
               <span className="block font-black text-white drop-shadow-2xl">{hero.headlineMain}</span>
               <span className="block font-light text-white/80 italic">{hero.headlineTail}</span>
-            </motion.h1>
+            </h1>
 
-            <motion.p
-              className="text-lg font-light text-white/70 mb-8 leading-relaxed max-w-xl"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
+            <p
+              className="hero-enter hero-enter-delay-3 text-lg font-light text-white/70 mb-8 leading-relaxed max-w-xl"
             >
               {hero.subtext}
-            </motion.p>
+            </p>
 
-            <motion.div
-              className="flex items-center gap-6 flex-wrap"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.0 }}
-            >
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <div className="hero-enter hero-enter-delay-4 flex items-center gap-6 flex-wrap">
+              <div className="hero-press">
                 <Link
                   href={hero.ctaPrimary.href}
                   className="inline-flex px-10 py-4 rounded-full bg-transparent border-2 border-white/30 text-white font-medium text-sm transition-all duration-300 hover:bg-white/10 hover:border-[var(--color-accent-sky)] hover:text-white cursor-pointer backdrop-blur-sm"
                 >
                   {hero.ctaPrimary.label}
                 </Link>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              </div>
+              <div className="hero-press">
                 <Link
                   href={hero.ctaSecondary.href}
                   className="inline-flex px-10 py-4 rounded-full bg-gradient-to-r from-[var(--color-accent-sky)] to-[var(--color-accent-rose)] text-black font-semibold text-sm transition-all duration-300 hover:opacity-90 cursor-pointer shadow-lg hover:shadow-xl"
                 >
                   {hero.ctaSecondary.label}
                 </Link>
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
           </div>
         </main>
 
@@ -280,17 +260,7 @@ export function Hero() {
             </span>
 
             {/* Rotating brand text around the pulsing border */}
-            <motion.svg
-              className="absolute inset-0 w-full h-full"
-              viewBox="0 0 100 100"
-              animate={{ rotate: 360 }}
-              transition={{
-                duration: 20,
-                repeat: Number.POSITIVE_INFINITY,
-                ease: "linear",
-              }}
-              style={{ transform: "scale(1.6)" }}
-            >
+            <svg className="hero-text-spin absolute inset-0 w-full h-full" viewBox="0 0 100 100">
               <defs>
                 <path id="hero-circle" d="M 50, 50 m -38, 0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0" />
               </defs>
@@ -299,7 +269,7 @@ export function Hero() {
                   {hero.rotatingText}
                 </textPath>
               </text>
-            </motion.svg>
+            </svg>
           </div>
         </div>
       </div>

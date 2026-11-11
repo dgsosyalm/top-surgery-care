@@ -18,6 +18,14 @@ const CARD_WIDTH = "clamp(220px, 22vw, 280px)";
 // at once.
 const ACTIVATE_ROOT_MARGIN = "0px 150px 0px 150px";
 
+// The per-card observer above uses the row itself as its root, so it only
+// knows about horizontal position: on page load the first cards already
+// "intersect" the row even when the whole section is several screens below
+// the fold, and would start pulling video data during the critical first
+// load. Cards therefore wait until the row is within this distance of the
+// viewport before they may activate.
+const ROW_NEAR_VIEWPORT_MARGIN = "600px 0px 600px 0px";
+
 function PlayGlyph({ playing }: { playing: boolean }) {
   return playing ? (
     <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden="true">
@@ -57,10 +65,12 @@ function VideoStoryCard({
   item,
   index,
   rowRef,
+  rowNearViewport,
 }: {
   item: VideoStoryItem;
   index: number;
   rowRef: RefObject<HTMLDivElement | null>;
+  rowNearViewport: boolean;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -74,7 +84,7 @@ function VideoStoryCard({
 
   useEffect(() => {
     const wrapper = wrapperRef.current;
-    if (!wrapper || isActive) return;
+    if (!wrapper || isActive || !rowNearViewport) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -88,7 +98,7 @@ function VideoStoryCard({
 
     observer.observe(wrapper);
     return () => observer.disconnect();
-  }, [isActive, rowRef]);
+  }, [isActive, rowRef, rowNearViewport]);
 
   useEffect(() => {
     if (isActive) videoRef.current?.load();
@@ -205,6 +215,7 @@ export function VideoStoryRow({ items }: { items: readonly VideoStoryItem[] }) {
   const rowRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
+  const [rowNearViewport, setRowNearViewport] = useState(false);
   const locale = useLocale();
   const t = uiContent[locale].videoStories;
 
@@ -214,6 +225,24 @@ export function VideoStoryRow({ items }: { items: readonly VideoStoryItem[] }) {
     setCanScrollLeft(row.scrollLeft > 8);
     setCanScrollRight(row.scrollWidth - row.scrollLeft - row.clientWidth > 8);
   }, []);
+
+  useEffect(() => {
+    const row = rowRef.current;
+    if (!row || rowNearViewport) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setRowNearViewport(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: ROW_NEAR_VIEWPORT_MARGIN }
+    );
+
+    observer.observe(row);
+    return () => observer.disconnect();
+  }, [rowNearViewport]);
 
   useEffect(() => {
     const row = rowRef.current;
@@ -263,7 +292,13 @@ export function VideoStoryRow({ items }: { items: readonly VideoStoryItem[] }) {
         className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-6 pb-2 [scrollbar-width:none] md:-mx-10 md:px-10 lg:mx-0 lg:gap-6 lg:px-0 lg:pb-0 [&::-webkit-scrollbar]:hidden"
       >
         {items.map((item, index) => (
-          <VideoStoryCard key={item.id} item={item} index={index} rowRef={rowRef} />
+          <VideoStoryCard
+            key={item.id}
+            item={item}
+            index={index}
+            rowRef={rowRef}
+            rowNearViewport={rowNearViewport}
+          />
         ))}
       </div>
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 export function Reveal({
   children,
@@ -37,7 +37,18 @@ export function Reveal({
     <div
       ref={ref}
       className={`reveal ${visible ? "is-visible" : ""} ${className}`}
-      style={{ transitionDelay: visible ? `${delay}ms` : "0ms" }}
+      // --reveal-delay feeds the CSS-only first-paint animation
+      // (`.reveal[data-reveal-now]` in globals.css) the same delay the
+      // scroll-triggered transition uses.
+      style={
+        {
+          transitionDelay: visible ? `${delay}ms` : "0ms",
+          "--reveal-delay": `${delay}ms`,
+        } as CSSProperties
+      }
+      // The root layout's pre-hydration script may add data-reveal-now to
+      // this element before React hydrates it; that attribute is expected.
+      suppressHydrationWarning
     >
       {children}
     </div>

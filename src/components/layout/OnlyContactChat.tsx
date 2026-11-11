@@ -7,8 +7,11 @@ import Script from "next/script";
 //  1. The config script uses `beforeInteractive`, so Next.js writes it into
 //     the server HTML <head>. It runs before any client code, which means
 //     window.OnlyContactChat is set before the widget script runs.
-//  2. The widget uses `afterInteractive`, so it loads after hydration and
-//     doesn't hold up first paint.
+//  2. The widget uses `lazyOnload`: it is fetched once the page has finished
+//     loading (browser idle time), so on a slow phone it never competes
+//     with the page's own CSS, fonts, images and JS. `afterInteractive`
+//     also emitted a high-priority <link rel="preload"> for it in the
+//     initial HTML.
 //
 // Loading only once:
 //  - Each <Script> has a fixed `id`. Next.js won't inject a script with the
@@ -37,7 +40,7 @@ export function OnlyContactChat() {
       <Script
         id="onlycontact-widget"
         src={`${ONLYCONTACT_BASE}assets/js/livechat-widget.js`}
-        strategy="afterInteractive"
+        strategy="lazyOnload"
         data-key={ONLYCONTACT_KEY}
         data-no-optimize="1"
         data-cfasync="false"

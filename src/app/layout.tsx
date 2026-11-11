@@ -13,6 +13,10 @@ import { siteConfig } from "@/lib/site";
 import { uiContent } from "@/content/ui";
 import "./globals.css";
 
+// Same visibility rule as Reveal.tsx's IntersectionObserver
+// (rootMargin "0px 0px -40px 0px").
+const REVEAL_NOW_SCRIPT = `(function(){var h=window.innerHeight-40;var els=document.querySelectorAll("#main-content .reveal");for(var i=0;i<els.length;i++){var r=els[i].getBoundingClientRect();if(r.top<h&&r.bottom>0&&r.width>0)els[i].setAttribute("data-reveal-now","")}})();`;
+
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
@@ -84,6 +88,15 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
           <main id="main-content" className="flex-1">
             {children}
           </main>
+          <script
+            // Runs while the HTML is still parsing (no bundle needed): tags
+            // the Reveal blocks already inside the first viewport so CSS can
+            // fade them in immediately. Without this, a page's <h1> sits at
+            // opacity:0 until the JS bundle downloads and hydrates, which on
+            // a slow phone connection is the main cause of the late first
+            // render. See `.reveal[data-reveal-now]` in globals.css.
+            dangerouslySetInnerHTML={{ __html: REVEAL_NOW_SCRIPT }}
+          />
           <Footer />
           <WhatsAppButton />
         </LocaleProvider>

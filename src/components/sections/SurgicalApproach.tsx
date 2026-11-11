@@ -26,10 +26,12 @@ export async function SurgicalApproach() {
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {/*
             No Reveal here (unlike most sections): these 3 technique photos
-            are small, near the top of the homepage, and are meant to be
-            ready immediately rather than gated behind a scroll-triggered
-            IntersectionObserver fade-in. `priority` below skips Next/Image's
-            default lazy loading for the same reason.
+            are meant to be ready immediately rather than gated behind a
+            scroll-triggered IntersectionObserver fade-in. They are not
+            `priority` though: the section sits several screens below the
+            full-height Hero, and preloading them made them compete with the
+            hero image and fonts on first load. Native lazy loading starts
+            fetching well before they scroll into view.
           */}
           {techniqueList.map((technique) => (
             <a
@@ -42,7 +44,6 @@ export async function SurgicalApproach() {
                   src={technique.image}
                   alt={technique.imageAlt}
                   fill
-                  priority
                   quality={100}
                   sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                   className="object-cover transition-transform duration-500 ease-[var(--ease-premium)] group-hover:scale-105"

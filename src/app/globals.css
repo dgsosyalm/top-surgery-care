@@ -229,15 +229,107 @@ summary::-webkit-details-marker {
   animation: hero-badge-spin 6s linear infinite;
 }
 
+/* Hero entrance + ambient motion — CSS ports of what used to be
+   framer-motion props in Hero.tsx (same durations, delays and easing).
+   Being plain CSS, they start as soon as the stylesheet applies instead of
+   waiting for the JS bundle to download and hydrate, so on a slow phone the
+   hero headline is never stuck invisible behind an `opacity:0` that only
+   JavaScript could lift. */
+@keyframes hero-enter {
+  from {
+    opacity: 0;
+    transform: translateY(var(--hero-enter-y, 20px));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.hero-enter {
+  animation: hero-enter 0.6s cubic-bezier(0, 0, 0.58, 1) both;
+}
+.hero-enter-h1 {
+  --hero-enter-y: 30px;
+  animation-duration: 0.8s;
+}
+.hero-enter-delay-1 {
+  animation-delay: 0.2s;
+}
+.hero-enter-delay-2 {
+  animation-delay: 0.4s;
+}
+.hero-enter-delay-3 {
+  animation-delay: 0.8s;
+}
+.hero-enter-delay-4 {
+  animation-delay: 1s;
+}
+
+@keyframes hero-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.015);
+  }
+}
+.hero-breathe {
+  animation: hero-breathe 14s ease-in-out infinite;
+}
+
+.hero-text-spin {
+  animation: hero-badge-spin 20s linear infinite;
+}
+
+/* Hero CTA hover/press scale (was framer whileHover / whileTap). */
+.hero-press {
+  transition: transform 0.2s cubic-bezier(0, 0, 0.58, 1);
+}
+.hero-press:hover {
+  transform: scale(1.05);
+}
+.hero-press:active {
+  transform: scale(0.95);
+}
+
+/* Reveal blocks already on screen at first paint (the page <h1> blocks):
+   the inline script in the root layout tags them with data-reveal-now while
+   the HTML is still parsing, so they play the same 0.7s fade-up as a CSS
+   animation right away, rather than staying at opacity:0 until hydration
+   and the IntersectionObserver in Reveal.tsx run. Blocks further down the
+   page are untouched and still reveal on scroll exactly as before. */
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.reveal[data-reveal-now] {
+  animation: reveal-in 0.7s var(--ease-premium) var(--reveal-delay, 0ms) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
 
-  .reveal {
+  .reveal,
+  .reveal[data-reveal-now] {
     opacity: 1;
     transform: none;
     transition: none;
+    animation: none;
+  }
+
+  .hero-enter,
+  .hero-breathe,
+  .hero-text-spin {
+    animation: none;
   }
 
   .ftm-text {
