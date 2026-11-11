@@ -10,7 +10,7 @@ export const siteConfig = {
   contact: {
     whatsappDisplay: "+90 530 295 09 63",
     whatsappHref: "https://wa.me/905302950963",
-    instagram: "https://www.instagram.com/topsurgerycare",
+    instagram: "https://www.instagram.com/transitionwithneda",
     youtube: "https://youtube.com/@topsurgeryturkey",
     reddit: "https://www.reddit.com/r/topsurgeryturkey/",
     // No official email has been provided/approved yet — do not invent

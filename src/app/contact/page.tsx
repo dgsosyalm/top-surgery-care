@@ -50,7 +50,7 @@ export default async function ContactPage() {
     },
     {
       label: methodLabels.instagram,
-      display: "@topsurgerycare",
+      display: "@transitionwithneda",
       href: siteConfig.contact.instagram,
       icon: InstagramIcon,
     },
