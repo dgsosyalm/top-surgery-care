@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
+import { ArrowRightIcon } from "@/components/icons";
 import { siteConfig } from "@/lib/site";
 import { doctorProfileContent } from "@/content/doctorProfile";
 import { getLocale } from "@/i18n/getLocale";
@@ -16,7 +17,11 @@ export async function generateMetadata(): Promise<Metadata> {
   const p = doctorProfileContent[locale];
 
   return {
-    title: p.metaTitle,
+    // `absolute` skips the root layout's "%s | Top Surgery Care" template on
+    // this page only, so the name-first title stays within what Google
+    // displays (~60 chars) instead of being truncated. The brand is still
+    // carried by og:site_name and the ProfilePage schema below.
+    title: { absolute: p.metaTitle },
     description: p.metaDescription,
     alternates: {
       canonical: PAGE_PATH,
@@ -29,7 +34,7 @@ export async function generateMetadata(): Promise<Metadata> {
       images: [
         {
           url: "/images/doctor/serkandinar.jpg",
-          alt: p.photoAlt,
+          alt: p.profilePhotoAlt,
         },
       ],
     },
@@ -77,22 +82,43 @@ export default async function AboutDrSerkanDinarPage() {
       <script
         type="application/ld+json"
         // Static, approved content only — safe to embed directly.
+        //
+        // ProfilePage + Person is Google's supported markup for a page about
+        // one individual. In schema.org, plain `Physician` is an
+        // organization/practice type; `IndividualPhysician` is its subtype
+        // for an individual practitioner, so the person carries both types.
+        // Every value restates something visible on this page: the CV
+        // specialty (PlasticSurgery), the two universities, the techniques
+        // listed in the top surgery section, and Istanbul. No hospital,
+        // street address or sameAs: none is approved/verified yet.
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "Physician",
-            name: p.name,
-            jobTitle: p.title,
-            // Same already-approved specialty text as jobTitle above — not
-            // a new credential claim, just a more specific schema.org field
-            // for the identical fact.
-            medicalSpecialty: p.title,
-            description: p.metaDescription,
-            image: `${siteConfig.url}/images/doctor/serkandinar.jpg`,
+            "@type": "ProfilePage",
             url: `${siteConfig.url}${PAGE_PATH}`,
-            alumniOf: p.education
-              .filter((item) => item.institution.toLowerCase().includes("university"))
-              .map((item) => item.institution),
+            name: p.metaTitle,
+            mainEntity: {
+              "@type": ["Person", "IndividualPhysician"],
+              "@id": `${siteConfig.url}${PAGE_PATH}#dr-serkan-dinar`,
+              name: p.name,
+              jobTitle: p.title,
+              medicalSpecialty: "https://schema.org/PlasticSurgery",
+              description: p.metaDescription,
+              image: `${siteConfig.url}/images/doctor/serkandinar.jpg`,
+              url: `${siteConfig.url}${PAGE_PATH}`,
+              knowsAbout: [
+                "FTM top surgery",
+                "Double incision top surgery",
+                "Periareolar top surgery",
+                "Keyhole top surgery",
+                "Plastic, reconstructive and aesthetic surgery",
+              ],
+              alumniOf: p.education
+                .filter((item) => item.institution.toLowerCase().includes("university"))
+                .map((item) => ({ "@type": "CollegeOrUniversity", name: item.institution })),
+              worksFor: { "@type": "Organization", name: siteConfig.name, url: siteConfig.url },
+              address: { "@type": "PostalAddress", addressLocality: "Istanbul", addressCountry: "TR" },
+            },
           }),
         }}
       />
@@ -122,7 +148,7 @@ export default async function AboutDrSerkanDinarPage() {
             <div className="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-[2px] bg-paper-deep">
               <Image
                 src="/images/doctor/serkandinar.jpg"
-                alt={p.photoAlt}
+                alt={p.profilePhotoAlt}
                 fill
                 sizes="(min-width: 1024px) 30vw, (min-width: 768px) 40vw, 90vw"
                 className="object-cover"
@@ -137,9 +163,34 @@ export default async function AboutDrSerkanDinarPage() {
               {p.title}
             </p>
             <h1 className="font-display text-display font-medium leading-[1.05] text-ink">{p.name}</h1>
+            <p className="mt-6 max-w-xl text-lead text-ink-soft text-pretty">{p.intro}</p>
           </Reveal>
         </Container>
       </section>
+
+      {/* FTM Top Surgery with Dr. Dinar */}
+      <SubSection title={p.topSurgery.heading}>
+        <div className="max-w-2xl space-y-5">
+          {p.topSurgery.paragraphs.map((paragraph) => (
+            <p key={paragraph} className="text-lead text-ink-soft text-pretty">
+              {paragraph}
+            </p>
+          ))}
+        </div>
+        <ul className="mt-8 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:gap-x-8">
+          {p.topSurgery.links.map((link) => (
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                className="group inline-flex items-center gap-2 text-sm font-medium text-ink transition-colors duration-300 hover:text-ink-soft"
+              >
+                {link.label}
+                <ArrowRightIcon className="h-4 w-4 transition-transform duration-300 ease-[var(--ease-premium)] group-hover:translate-x-1" />
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </SubSection>
 
       {/* Biography */}
       <SubSection title={s.biography}>

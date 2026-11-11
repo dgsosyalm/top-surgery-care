@@ -34,7 +34,7 @@ export async function DoctorIntro() {
             {doctorIntro.heading}
           </h2>
           <p className="mt-6 max-w-xl text-lead text-ink-soft text-pretty">
-            {doctorIntro.body}
+            {doctorIntro.homeBody}
           </p>
           <Button href={doctorIntro.cta.href} variant="secondary" size="md" showArrow className="mt-8">
             {doctorIntro.cta.label}

@@ -73,7 +73,7 @@ export const topSurgeryTurkeyPageContent: {
       eyebrow: "Your Surgeon",
       heading: "Dr. Serkan Dinar",
       body: "Your surgery is led by Dr. Serkan Dinar, a plastic, reconstructive, and aesthetic surgeon with more than 20 years of surgical experience. Which technique and surgical plan are considered for you is decided together with Dr. Dinar during your consultation.",
-      cta: { label: "Meet Dr. Dinar", href: "/about-dr-serkan-dinar" },
+      cta: { label: "Meet Dr. Serkan Dinar, your FTM top surgery surgeon", href: "/about-dr-serkan-dinar" },
     },
     techniques: {
       eyebrow: "Surgical Techniques",
@@ -143,7 +143,7 @@ export const topSurgeryTurkeyPageContent: {
       eyebrow: "Ihr Chirurg",
       heading: "Dr. Serkan Dinar",
       body: "Ihre Operation wird von Dr. Serkan Dinar geleitet, Facharzt für Plastische, Rekonstruktive und Ästhetische Chirurgie mit mehr als 20 Jahren chirurgischer Erfahrung. Welche Technik und welcher OP-Plan für Sie infrage kommen, wird in Ihrem Beratungsgespräch gemeinsam mit Dr. Dinar festgelegt.",
-      cta: { label: "Dr. Dinar kennenlernen", href: "/about-dr-serkan-dinar" },
+      cta: { label: "Lernen Sie Dr. Serkan Dinar kennen, Ihren Chirurgen für FTM Top Surgery", href: "/about-dr-serkan-dinar" },
     },
     techniques: {
       eyebrow: "OP-Techniken",

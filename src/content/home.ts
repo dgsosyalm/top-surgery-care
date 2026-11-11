@@ -34,7 +34,12 @@ type HomeContent = {
   doctorIntro: {
     eyebrow: string;
     heading: string;
+    /** Shared bio — also reused verbatim by /top-surgery's surgeon block. */
     body: string;
+    /** Homepage-only version of the bio (DoctorIntro.tsx): same approved
+     *  facts as `body`, opening with the fact that Dr. Dinar personally
+     *  performs the operations. Separate so /top-surgery stays unchanged. */
+    homeBody: string;
     cta: { label: string; href: string };
     portraitPendingLabel: string;
   };
@@ -155,7 +160,8 @@ export const homeContent: { en: HomeContent; de: HomeContent } = {
       eyebrow: "Your Surgeon",
       heading: "Dr. Serkan Dinar",
       body: "Dr. Serkan Dinar is a plastic, reconstructive, and aesthetic surgeon with more than 20 years of surgical experience. He completed his medical degree at Dokuz Eylül University Faculty of Medicine before specializing in Plastic, Reconstructive and Aesthetic Surgery at Kocaeli University Faculty of Medicine, and has contributed to international peer-reviewed research throughout his career.",
-      cta: { label: "Meet Dr. Dinar", href: "/about-dr-serkan-dinar" },
+      homeBody: "Dr. Serkan Dinar personally performs FTM top surgery for Top Surgery Care patients. A plastic, reconstructive, and aesthetic surgeon with more than 20 years of surgical experience, he completed his medical degree at Dokuz Eylül University Faculty of Medicine before specializing in Plastic, Reconstructive and Aesthetic Surgery at Kocaeli University Faculty of Medicine, and has contributed to international peer-reviewed research throughout his career.",
+      cta: { label: "Read Dr. Serkan Dinar's profile", href: "/about-dr-serkan-dinar" },
       portraitPendingLabel: "Doctor portrait — pending",
     },
     topSurgeryOverview: {
@@ -242,7 +248,8 @@ export const homeContent: { en: HomeContent; de: HomeContent } = {
       eyebrow: "Ihr Chirurg",
       heading: "Dr. Serkan Dinar",
       body: "Dr. Serkan Dinar ist Facharzt für Plastische, Rekonstruktive und Ästhetische Chirurgie mit mehr als 20 Jahren chirurgischer Erfahrung. Er schloss sein Medizinstudium an der Medizinischen Fakultät der Dokuz-Eylül-Universität ab, bevor er sich an der Medizinischen Fakultät der Kocaeli-Universität auf Plastische, Rekonstruktive und Ästhetische Chirurgie spezialisierte, und hat im Laufe seiner Karriere zu international begutachteter Forschung beigetragen.",
-      cta: { label: "Dr. Dinar kennenlernen", href: "/about-dr-serkan-dinar" },
+      homeBody: "Dr. Serkan Dinar führt die FTM-Top-Surgery für Patienten von Top Surgery Care persönlich durch. Er ist Facharzt für Plastische, Rekonstruktive und Ästhetische Chirurgie mit mehr als 20 Jahren chirurgischer Erfahrung, schloss sein Medizinstudium an der Medizinischen Fakultät der Dokuz-Eylül-Universität ab, bevor er sich an der Medizinischen Fakultät der Kocaeli-Universität auf Plastische, Rekonstruktive und Ästhetische Chirurgie spezialisierte, und hat im Laufe seiner Karriere zu international begutachteter Forschung beigetragen.",
+      cta: { label: "Profil von Dr. Serkan Dinar lesen", href: "/about-dr-serkan-dinar" },
       portraitPendingLabel: "Porträt des Arztes — folgt in Kürze",
     },
     topSurgeryOverview: {

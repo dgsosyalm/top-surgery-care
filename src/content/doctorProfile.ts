@@ -24,7 +24,23 @@ type DoctorProfileContent = {
   metaDescription: string;
   name: string;
   title: string;
+  /** Shared portrait alt — also used by the homepage and /top-surgery. */
   photoAlt: string;
+  /** Alt text for the portrait on this profile page only. */
+  profilePhotoAlt: string;
+  /** Lead paragraph under the H1. */
+  intro: string;
+  /** "FTM Top Surgery with Dr. Dinar" section, directly after the intro.
+   *  Only restates facts already published elsewhere on the site
+   *  (techniques, technique-selection factors, WhatsApp consultation, UK
+   *  patients travelling to Istanbul) plus the client-confirmed fact that
+   *  Dr. Dinar personally performs the operations. No numbers, rates,
+   *  hospital names or credentials beyond the CV. */
+  topSurgery: {
+    heading: string;
+    paragraphs: string[];
+    links: { label: string; href: string }[];
+  };
   biography: string[];
   education: EducationItem[];
   experience: ExperienceItem[];
@@ -133,15 +149,32 @@ const courses: string[] = [
 
 export const doctorProfileContent: { en: DoctorProfileContent; de: DoctorProfileContent } = {
   en: {
-    metaTitle: "Dr. Serkan Dinar — Surgeon for FTM Top Surgery",
+    metaTitle: "Dr. Serkan Dinar – FTM Top Surgery Surgeon in Istanbul",
     metaDescription:
-      "Dr. Serkan Dinar is a plastic, reconstructive, and aesthetic surgeon with 20+ years of experience, leading FTM top surgery care at Top Surgery Care.",
+      "Dr. Serkan Dinar personally performs FTM top surgery in Istanbul, Turkey. Plastic surgeon with 20+ years of experience: education, background and surgical approach.",
     name: "Dr. Serkan Dinar",
     title: "Plastic, Reconstructive and Aesthetic Surgery Specialist",
     photoAlt: "Dr. Serkan Dinar, plastic, reconstructive and aesthetic surgery specialist",
+    profilePhotoAlt: "Dr. Serkan Dinar, plastic surgeon performing FTM top surgery in Istanbul",
+    intro:
+      "Dr. Serkan Dinar is the plastic surgeon who personally performs FTM top surgery for Top Surgery Care patients in Istanbul, Turkey. Your surgical plan is agreed with him, and he carries out the operation himself.",
+    topSurgery: {
+      heading: "FTM Top Surgery with Dr. Dinar",
+      paragraphs: [
+        "Dr. Dinar performs FTM top surgery (chest masculinization) himself. Before any decision is made, your goals, medical history and chest anatomy are reviewed, and your surgical plan is agreed with him rather than picked from a menu or a fixed formula.",
+        "Three techniques are available: Double Incision, Periareolar and Keyhole. Which one is considered depends on your chest size, skin elasticity and the result you want, and it is decided together with Dr. Dinar during your consultation.",
+        "A number of his patients travel to Istanbul from abroad, including the UK. The process starts with an initial consultation over WhatsApp, and your plan is agreed before you travel.",
+      ],
+      links: [
+        { label: "Read the FTM top surgery guide", href: "/top-surgery" },
+        { label: "Compare top surgery techniques", href: "/top-surgery/techniques" },
+        { label: "View before-and-after results (18+)", href: "/results" },
+      ],
+    },
     biography: [
       "Dr. Serkan Dinar completed his medical degree at Dokuz Eylül University Faculty of Medicine before completing his specialization in Plastic, Reconstructive and Aesthetic Surgery at Kocaeli University Faculty of Medicine. With more than 20 years of experience in aesthetic and reconstructive surgery, he has worked throughout his career across public hospitals, university hospitals, and private healthcare institutions.",
       "His work has particularly focused on facial rejuvenation surgery, body contouring procedures, fat injection techniques, burn treatment, and reconstructive surgery. He has been treating patients at his own clinic since 2010.",
+      "Alongside this background in aesthetic and reconstructive surgery, Dr. Dinar performs FTM top surgery for patients of Top Surgery Care, including international patients who travel to Istanbul for their procedure.",
     ],
     education,
     experience: [
@@ -152,6 +185,7 @@ export const doctorProfileContent: { en: DoctorProfileContent; de: DoctorProfile
       { place: experiencePlacesAndPeriods[4].place, role: "General Surgery and Specialization Training", period: experiencePlacesAndPeriods[4].period },
     ],
     expertise: [
+      "FTM Top Surgery (Chest Masculinization)",
       "Face Lift Surgery",
       "BodyTite RF-Assisted Liposuction",
       "Fat Injection (Fat Transfer)",
@@ -172,9 +206,9 @@ export const doctorProfileContent: { en: DoctorProfileContent; de: DoctorProfile
       body: "Contributed to the free surgical treatment of hundreds of patients with cleft lip and palate, congenital facial anomalies, and burn deformities during international relief missions conducted in Nakhchivan and Iğdır.",
     },
     cta: {
-      heading: "Questions about your care team?",
-      body: "Get in touch and we'll help you find the answers you need.",
-      label: "Contact us",
+      heading: "Considering top surgery with Dr. Dinar?",
+      body: "Message us on WhatsApp or send a consultation request, and we'll help with your questions about the procedure, the techniques and travelling to Istanbul.",
+      label: "Request a consultation",
       href: "/contact",
     },
     topSurgeryNote: {
@@ -205,15 +239,32 @@ export const doctorProfileContent: { en: DoctorProfileContent; de: DoctorProfile
     },
   },
   de: {
-    metaTitle: "Dr. Serkan Dinar — Chirurg für FTM Top Surgery",
+    metaTitle: "Dr. Serkan Dinar – Chirurg für FTM Top Surgery in Istanbul",
     metaDescription:
-      "Dr. Serkan Dinar ist Facharzt für Plastische, Rekonstruktive und Ästhetische Chirurgie mit mehr als 20 Jahren Erfahrung und leitet die FTM-Top-Surgery bei Top Surgery Care.",
+      "Dr. Serkan Dinar führt FTM-Top-Surgery in Istanbul, Türkei, persönlich durch. Plastischer Chirurg mit über 20 Jahren Erfahrung: Ausbildung, Werdegang und chirurgischer Ansatz.",
     name: "Dr. Serkan Dinar",
     title: "Facharzt für Plastische, Rekonstruktive und Ästhetische Chirurgie",
     photoAlt: "Dr. Serkan Dinar, Facharzt für Plastische, Rekonstruktive und Ästhetische Chirurgie",
+    profilePhotoAlt: "Dr. Serkan Dinar, plastischer Chirurg für FTM-Top-Surgery in Istanbul",
+    intro:
+      "Dr. Serkan Dinar ist der plastische Chirurg, der die FTM-Top-Surgery für Patienten von Top Surgery Care in Istanbul, Türkei, persönlich durchführt. Ihr OP-Plan wird mit ihm abgestimmt, und er nimmt den Eingriff selbst vor.",
+    topSurgery: {
+      heading: "FTM Top Surgery bei Dr. Dinar",
+      paragraphs: [
+        "Dr. Dinar führt die FTM-Top-Surgery (Mastektomie zur Brustmaskulinisierung) selbst durch. Bevor eine Entscheidung fällt, werden Ihre Ziele, Ihre Krankengeschichte und Ihre Brustanatomie besprochen, und Ihr OP-Plan wird mit ihm abgestimmt — nicht aus einem Katalog oder nach einer festen Formel gewählt.",
+        "Drei Techniken stehen zur Verfügung: Double Incision, Periareolar und Keyhole. Welche infrage kommt, hängt von Ihrer Brustgröße, Ihrer Hautelastizität und dem gewünschten Ergebnis ab und wird gemeinsam mit Dr. Dinar im Beratungsgespräch entschieden.",
+        "Ein Teil seiner Patienten reist aus dem Ausland nach Istanbul, auch aus dem UK. Der Ablauf beginnt mit einem ersten Beratungsgespräch über WhatsApp, und Ihr Plan wird abgestimmt, bevor Sie anreisen.",
+      ],
+      links: [
+        { label: "Den Leitfaden zur FTM Top Surgery lesen", href: "/top-surgery" },
+        { label: "Top-Surgery-Techniken vergleichen", href: "/top-surgery/techniques" },
+        { label: "Vorher-Nachher-Ergebnisse ansehen (18+)", href: "/results" },
+      ],
+    },
     biography: [
       "Dr. Serkan Dinar schloss sein Medizinstudium an der Medizinischen Fakultät der Dokuz-Eylül-Universität ab, bevor er seine Facharztausbildung in Plastischer, Rekonstruktiver und Ästhetischer Chirurgie an der Medizinischen Fakultät der Kocaeli-Universität abschloss. Mit mehr als 20 Jahren Erfahrung in der ästhetischen und rekonstruktiven Chirurgie war er im Laufe seiner Karriere an öffentlichen Krankenhäusern, Universitätskliniken und privaten Gesundheitseinrichtungen tätig.",
       "Sein Schwerpunkt liegt insbesondere auf der Gesichtsverjüngung, Körperkonturierung, Fettinjektionstechniken, Verbrennungsbehandlung und rekonstruktiven Chirurgie. Seit 2010 behandelt er Patienten in seiner eigenen Praxis.",
+      "Neben diesem Hintergrund in der ästhetischen und rekonstruktiven Chirurgie führt Dr. Dinar die FTM-Top-Surgery für Patienten von Top Surgery Care durch, darunter internationale Patienten, die für ihren Eingriff nach Istanbul reisen.",
     ],
     education,
     experience: [
@@ -224,6 +275,7 @@ export const doctorProfileContent: { en: DoctorProfileContent; de: DoctorProfile
       { place: experiencePlacesAndPeriods[4].place, role: "Weiterbildung in Allgemeinchirurgie und Facharztausbildung", period: experiencePlacesAndPeriods[4].period },
     ],
     expertise: [
+      "FTM-Top-Surgery (Brustmaskulinisierung)",
       "Facelift-Chirurgie",
       "BodyTite RF-unterstützte Liposuktion",
       "Fettinjektion (Fetttransfer)",
@@ -244,9 +296,9 @@ export const doctorProfileContent: { en: DoctorProfileContent; de: DoctorProfile
       body: "Beteiligung an der kostenfreien chirurgischen Behandlung von hunderten Patienten mit Lippen-Kiefer-Gaumen-Spalten, angeborenen Gesichtsfehlbildungen und Verbrennungsdeformitäten im Rahmen internationaler Hilfseinsätze in Nachitschewan und Iğdır.",
     },
     cta: {
-      heading: "Fragen zu Ihrem Behandlungsteam?",
-      body: "Nehmen Sie Kontakt auf — wir helfen Ihnen, die Antworten zu finden, die Sie brauchen.",
-      label: "Kontaktieren Sie uns",
+      heading: "Top Surgery bei Dr. Dinar in Erwägung?",
+      body: "Schreiben Sie uns über WhatsApp oder senden Sie eine Beratungsanfrage — wir helfen Ihnen bei Fragen zum Eingriff, zu den Techniken und zur Anreise nach Istanbul.",
+      label: "Beratung anfragen",
       href: "/contact",
     },
     topSurgeryNote: {
