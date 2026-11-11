@@ -5,6 +5,7 @@ import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 import { GoogleAnalytics } from "@/components/layout/GoogleAnalytics";
 import { WhatsAppClickTracking } from "@/components/layout/WhatsAppClickTracking";
+import { OnlyContactChat } from "@/components/layout/OnlyContactChat";
 import { BgradientAnim } from "@/components/ui/soft-gradient-background-animation";
 import { LocaleProvider } from "@/i18n/LocaleProvider";
 import { getLocale } from "@/i18n/getLocale";
@@ -88,6 +89,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         </LocaleProvider>
         <GoogleAnalytics />
         <WhatsAppClickTracking />
+        <OnlyContactChat />
       </body>
     </html>
   );
