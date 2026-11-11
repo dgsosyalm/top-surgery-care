@@ -3,7 +3,7 @@
 // and in full on /results (src/app/results/page.tsx).
 //
 // Each file already contains a paired before/after composition in one
-// image. Never split, crop apart, or recreate these — every consumer must
+// image (case-11 is an after-only photo). Never split, crop apart, or recreate these — every consumer must
 // render the file whole. Image order and file paths are identical across
 // locales — only the alt text is translated.
 
@@ -25,6 +25,7 @@ export const results: { en: ResultImage[]; de: ResultImage[] } = {
     { id: "case-08", src: "/images/results/8.jpg", alt: "Top surgery before and after result — case 08" },
     { id: "case-09", src: "/images/results/9.jpg", alt: "Top surgery before and after result — case 09" },
     { id: "case-10", src: "/images/results/10.jpg", alt: "Top surgery before and after result — case 10" },
+    { id: "case-11", src: "/images/results/11.png", alt: "Top surgery result after surgery — case 11" },
   ],
   de: [
     { id: "case-01", src: "/images/results/1.jpg", alt: "Top Surgery Vorher-Nachher-Ergebnis — Fall 01" },
@@ -37,5 +38,6 @@ export const results: { en: ResultImage[]; de: ResultImage[] } = {
     { id: "case-08", src: "/images/results/8.jpg", alt: "Top Surgery Vorher-Nachher-Ergebnis — Fall 08" },
     { id: "case-09", src: "/images/results/9.jpg", alt: "Top Surgery Vorher-Nachher-Ergebnis — Fall 09" },
     { id: "case-10", src: "/images/results/10.jpg", alt: "Top Surgery Vorher-Nachher-Ergebnis — Fall 10" },
+    { id: "case-11", src: "/images/results/11.png", alt: "Top Surgery Ergebnis nach der Operation — Fall 11" },
   ],
 };
